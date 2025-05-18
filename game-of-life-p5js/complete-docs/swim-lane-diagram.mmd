@@ -1,0 +1,105 @@
+flowchart TD
+    %% User Interactions
+    subgraph User["User Interactions"]
+        U_Start([Start]) --> U_Click{User Input}
+        U_Click -->|Play/Pause| U_Toggle[Toggle simulation]
+        U_Click -->|Step| U_Step[Advance one generation]
+        U_Click -->|Clear| U_Clear[Clear grid]
+        U_Click -->|Random| U_Random[Randomize grid]
+        U_Click -->|Pattern| U_Pattern[Place pattern]
+        U_Click -->|Cell Click| U_Cell[Toggle cell state]
+        U_Click -->|Speed| U_Speed[Adjust speed]
+    end
+
+    %% Setup Phase
+    subgraph Setup["Setup Phase"]
+        S_Start([Start]) --> S_Canvas[Create canvas]
+        S_Canvas --> S_Grid[Initialize grid]
+        S_Grid --> S_UI[Create UI controls]
+        S_UI --> S_Random[Fill random cells]
+        S_Random --> S_End([End Setup])
+    end
+
+    %% Game Loop
+    subgraph Loop["Game Loop"]
+        L_Start([Start Loop]) --> L_Draw[Draw grid]
+        L_Draw --> L_Status[Display status]
+        L_Status --> L_Check{Is Running?}
+        L_Check -->|Yes| L_Update[Update grid]
+        L_Check -->|No| L_Wait[Wait for input]
+        L_Update --> L_Count[Count generation]
+        L_Count --> L_End([End Loop])
+        L_Wait --> L_End
+    end
+
+    %% Computation
+    subgraph Compute["Grid Computation"]
+        C_Start([Start]) --> C_Loop[For each cell]
+        C_Loop --> C_Count[Count neighbors]
+        C_Count --> C_Rules[Apply rules]
+        C_Rules --> C_Store[Store new state]
+        C_Store --> C_More{More cells?}
+        C_More -->|Yes| C_Loop
+        C_More -->|No| C_Swap[Swap grids]
+        C_Swap --> C_End([End])
+    end
+
+    %% Rendering
+    subgraph Display["Grid Rendering"]
+        D_Start([Start]) --> D_Loop[For each cell]
+        D_Loop --> D_Check{Is alive?}
+        D_Check -->|Yes| D_Live[Draw live cell]
+        D_Check -->|No| D_Dead[Draw dead cell]
+        D_Live --> D_More{More cells?}
+        D_Dead --> D_More
+        D_More -->|Yes| D_Loop
+        D_More -->|No| D_End([End])
+    end
+
+    %% Connections between swimlanes
+    U_Start -.-> S_Start
+    S_End -.-> L_Start
+    L_End -.-> L_Start
+
+    U_Toggle -.-> L_Check
+    U_Step -.-> C_Start
+    U_Clear -.-> L_Draw
+    U_Random -.-> L_Draw
+    U_Pattern -.-> L_Draw
+    U_Cell -.-> L_Draw
+    U_Speed -.-> L_Update
+
+    L_Update -.-> C_Start
+    C_End -.-> L_Count
+
+    L_Draw -.-> D_Start
+    D_End -.-> L_Status
+
+    %% Apply professional color scheme
+    classDef userActions fill:#5B8FF9,stroke:#1E3A8A,color:white;
+    classDef setupPhase fill:#61DDAA,stroke:#13795B,color:#333;
+    classDef gameLoop fill:#F6BD16,stroke:#946200,color:#333;
+    classDef computation fill:#F08BB4,stroke:#9D174D,color:white;
+    classDef display fill:#9661BC,stroke:#581C87,color:white;
+
+    classDef startEnd fill:#2F4858,stroke:#1C2B33,color:white,stroke-width:2px;
+    classDef process fill:#F8FAFC,stroke:#94A3B8,color:#333;
+    classDef decision fill:#FEF3C7,stroke:#D97706,color:#333,stroke-width:2px;
+    classDef connection stroke:#94A3B8,stroke-width:1.5px,stroke-dasharray:4;
+
+    %% Apply classes to nodes
+    class U_Start,S_Start,L_Start,C_Start,D_Start,S_End,L_End,C_End,D_End startEnd;
+    class U_Toggle,U_Step,U_Clear,U_Random,U_Pattern,U_Cell,U_Speed userActions;
+    class S_Canvas,S_Grid,S_UI,S_Random setupPhase;
+    class L_Draw,L_Status,L_Update,L_Wait,L_Count gameLoop;
+    class C_Loop,C_Count,C_Rules,C_Store,C_Swap computation;
+    class D_Loop,D_Live,D_Dead display;
+    class U_Click,L_Check,C_More,D_Check,D_More decision;
+
+    %% Apply colors to subgraphs
+    class User userActions;
+    class Setup setupPhase;
+    class Loop gameLoop;
+    class Compute computation;
+    class Display display;
+

@@ -1,0 +1,151 @@
+flowchart TD
+    %% External Entities
+    User((User))
+
+    %% Data Stores - positioned to minimize crossing lines
+    GridStore[/"Grid (2D Array)"/]
+    NextGridStore[/"NextGrid (2D Array)"/]
+    PatternsStore[/"Pattern Definitions"/]
+    ConfigStore[/"Configuration\nresolution, cols, rows"/]
+    StateStore[/"Application State\nisRunning, generation"/]
+
+    %% Main Modules - organized with more space
+    subgraph sketch["sketch.js Module"]
+        direction TB
+        Setup["setup()"]
+        Draw["draw()"]
+        MousePressed["mousePressed()"]
+
+        Setup --> Draw
+        Draw --> MousePressed
+    end
+
+    subgraph gameLogic["gameLogic.js Module"]
+        direction TB
+        CountNeighbors["countNeighbors()"]
+        ApplyRules["applyRules()"]
+        ComputeNextGen["computeNextGeneration()"]
+    end
+
+    subgraph gridModule["grid.js Module"]
+        direction TB
+        InitGrid["initializeGrid()"]
+        RandomizeGrid["randomizeGrid()"]
+        ClearGrid["clearGrid()"]
+        ToggleCell["toggleCell()"]
+    end
+
+    subgraph uiModule["ui.js Module"]
+        direction TB
+        CreateButtons["createButtons()"]
+        ToggleSim["toggleSimulation()"]
+        StepSim["stepSimulation()"]
+    end
+
+    subgraph displayModule["display.js Module"]
+        direction TB
+        DrawGrid["drawGrid()"]
+        DisplayStatus["displayStatus()"]
+    end
+
+    subgraph patternModule["patterns.js Module"]
+        direction TB
+        PlacePattern["placePattern()"]
+        CreatePatternButtons["createPatternButtons()"]
+    end
+
+    %% User Interactions - grouped for clarity
+    User -->|"Mouse Click"| MousePressed
+    User -->|"Button: Play/Pause"| ToggleSim
+    User -->|"Button: Step"| StepSim
+    User -->|"Button: Clear"| ClearGrid
+    User -->|"Button: Random"| RandomizeGrid
+    User -->|"Button: Pattern"| PlacePattern
+    User -->|"Slider: Speed"| Draw
+
+    %% Setup Phase Connections
+    Setup -->|"Initialize"| ConfigStore
+    Setup -->|"Call"| InitGrid
+    Setup -->|"Call"| CreateButtons
+    Setup -->|"Call"| CreatePatternButtons
+    Setup -->|"Call"| RandomizeGrid
+
+    %% Draw Loop Connections
+    Draw -->|"Read"| StateStore
+    Draw -->|"Call"| DisplayStatus
+    Draw -->|"Call"| DrawGrid
+    Draw -->|"Call if running"| ComputeNextGen
+
+    %% State Management
+    DisplayStatus -->|"Read"| StateStore
+    DisplayStatus -->|"Read"| ConfigStore
+    ToggleSim -->|"Toggle isRunning"| StateStore
+    StepSim -->|"Increment"| StateStore
+    Draw -->|"Update"| StateStore
+
+    %% Grid Management with clearer flow
+    InitGrid -->|"Create"| GridStore
+    InitGrid -->|"Create"| NextGridStore
+    InitGrid -->|"Reset"| StateStore
+
+    RandomizeGrid -->|"Fill with random values"| GridStore
+    RandomizeGrid -->|"Reset"| StateStore
+
+    ClearGrid -->|"Set all to 0"| GridStore
+    ClearGrid -->|"Reset"| StateStore
+
+    ToggleCell -->|"Flip cell value"| GridStore
+    MousePressed -->|"Call"| ToggleCell
+
+    %% Game Logic with improved layout
+    ComputeNextGen -->|"Read from"| GridStore
+    ComputeNextGen -->|"Call for each cell"| CountNeighbors
+    ComputeNextGen -->|"Call for each cell"| ApplyRules
+    ComputeNextGen -->|"Write to"| NextGridStore
+
+    %% Grid Swapping
+    ComputeNextGen -->|"Swap grids"| GridStore
+    ComputeNextGen -->|"Swap grids"| NextGridStore
+
+    CountNeighbors -->|"Read neighbors"| GridStore
+
+    %% Display
+    DrawGrid -->|"Read all cells"| GridStore
+    DrawGrid -->|"Use"| ConfigStore
+
+    %% More connections for completeness
+    StepSim -->|"Call"| ComputeNextGen
+
+    %% Patterns
+    PlacePattern -->|"Read from"| PatternsStore
+    PlacePattern -->|"Write to"| GridStore
+
+    CreatePatternButtons -->|"Reference"| PatternsStore
+
+    %% Style with professional color scheme
+    classDef user fill:#6366F1,stroke:#4F46E5,stroke-width:3px,color:white;
+    classDef dataStore fill:#FB923C,stroke:#EA580C,stroke-width:2px,color:white;
+    classDef module fill:#F9FAFB,stroke:#E5E7EB,stroke-width:1px,color:#111827;
+
+    classDef sketchModule fill:#DBEAFE,stroke:#93C5FD,stroke-width:1px,color:#1E40AF;
+    classDef gameLogicModule fill:#D1FAE5,stroke:#6EE7B7,stroke-width:1px,color:#065F46;
+    classDef gridModule fill:#FEF3C7,stroke:#FCD34D,stroke-width:1px,color:#92400E;
+    classDef uiModule fill:#FCE7F3,stroke:#F9A8D4,stroke-width:1px,color:#9D174D;
+    classDef displayModule fill:#E0E7FF,stroke:#A5B4FC,stroke-width:1px,color:#3730A3;
+    classDef patternModule fill:#ECFDF5,stroke:#A7F3D0,stroke-width:1px,color:#065F46;
+
+    classDef function fill:#F3F4F6,stroke:#D1D5DB,stroke-width:1px,color:#4B5563;
+    classDef flow stroke:#9CA3AF,stroke-width:1px;
+
+    %% Apply class styles
+    class User user;
+    class GridStore,NextGridStore,PatternsStore,ConfigStore,StateStore dataStore;
+    class sketch sketchModule;
+    class gameLogic gameLogicModule;
+    class gridModule gridModule;
+    class uiModule uiModule;
+    class displayModule displayModule;
+    class patternModule patternModule;
+
+    class Setup,Draw,MousePressed,CountNeighbors,ApplyRules,ComputeNextGen,InitGrid,RandomizeGrid,ClearGrid,ToggleCell,CreateButtons,ToggleSim,StepSim,DrawGrid,DisplayStatus,PlacePattern,CreatePatternButtons function;
+
