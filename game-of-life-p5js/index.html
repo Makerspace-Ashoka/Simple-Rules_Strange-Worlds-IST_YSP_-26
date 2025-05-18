@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.5/lib/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/addons/p5.sound.min.js"></script>
+
+  <!-- Link all the JavaScript files -->
+  <script src="globals.js"></script>
+  <script src="sketch.js"></script>
+  <script src="gameLogic.js"></script>
+  <script src="grid.js"></script>
+  <script src="ui.js"></script>
+  <script src="display.js"></script>
+  <script src="patterns.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <main>
+    <div class="container">
+      <h1>Conway's Game of Life</h1>
+      <p class="description">
+        Click on cells to toggle them, use the controls to manipulate the
+        simulation.
+      </p>
+
+      <div class="control-panel">
+        <!-- Buttons will be created here by JavaScript -->
+      </div>
+
+      <!-- canvas will be created here by p5.js -->
+
+      <div class="pattern-panel">
+        <!-- Pattern buttons will be created here by JavaScript -->
+      </div>
+
+      <div class="status-panel">
+        <!-- Status info will be updated here by JavaScript -->
+      </div>
+      <!-- p5.js will create and append the canvas here -->
+    </div>
+  </main>
+  <script src="sketch.js"></script>
+</body>
+
+</html>

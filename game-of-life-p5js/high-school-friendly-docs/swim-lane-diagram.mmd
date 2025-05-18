@@ -1,0 +1,119 @@
+flowchart TD
+    %% What You Do
+    subgraph You["What You Do"]
+        Y_Start([Start])
+        Y_Action{What do you do?}
+        Y_Toggle[Start/Stop simulation]
+        Y_Step[Move one generation]
+        Y_Clear[Empty the grid]
+        Y_Random[Random pattern]
+        Y_Cell[Make cell alive/dead]
+        Y_Speed[Change speed]
+
+        Y_Start --> Y_Action
+        Y_Action -->|Press Play/Pause| Y_Toggle
+        Y_Action -->|Press Step| Y_Step
+        Y_Action -->|Press Clear| Y_Clear
+        Y_Action -->|Press Random| Y_Random
+        Y_Action -->|Click a Cell| Y_Cell
+        Y_Action -->|Move Slider| Y_Speed
+    end
+
+    %% What the Program Does
+    subgraph Program["What the Program Does"]
+        P_Start([Start])
+        P_Setup[Setup everything]
+        P_Loop[Enter main loop]
+        P_Draw[Show current grid]
+        P_Check{Is game running?}
+        P_Update[Calculate next generation]
+        P_Wait[Wait for your input]
+        P_Count[Add to generation count]
+        P_Repeat[Start loop again]
+
+        P_Start --> P_Setup
+        P_Setup --> P_Loop
+        P_Loop --> P_Draw
+        P_Draw --> P_Check
+        P_Check -->|Yes| P_Update
+        P_Check -->|No| P_Wait
+        P_Update --> P_Count
+        P_Count --> P_Repeat
+        P_Wait --> P_Repeat
+        P_Repeat --> P_Draw
+    end
+
+    %% How Cells Live and Die
+    subgraph Rules["How Cells Live and Die"]
+        R_Start([Start])
+        R_Check[Check each cell]
+        R_Count[Count living neighbors]
+        R_Apply{Apply Rules}
+        R_Die1[Cell dies - lonely]
+        R_Live[Cell lives]
+        R_Die2[Cell dies - crowded]
+        R_Born[Cell becomes alive]
+        R_Next{More cells?}
+        R_Update[Update grid]
+        R_End([End])
+
+        R_Start --> R_Check
+        R_Check --> R_Count
+        R_Count --> R_Apply
+        R_Apply -->|<2 neighbors| R_Die1
+        R_Apply -->|2-3 neighbors| R_Live
+        R_Apply -->|\>3 neighbors| R_Die2
+        R_Apply -->|Dead with 3| R_Born
+        R_Die1 --> R_Next
+        R_Live --> R_Next
+        R_Die2 --> R_Next
+        R_Born --> R_Next
+        R_Next -->|Yes| R_Check
+        R_Next -->|No| R_Update
+        R_Update --> R_End
+    end
+
+    %% Connect swimlanes with simple dotted lines
+    Y_Start -.-> P_Start
+    Y_Toggle -.-> P_Check
+    Y_Step -.-> P_Update
+    Y_Clear -.-> P_Draw
+    Y_Random -.-> P_Draw
+    Y_Cell -.-> P_Draw
+    Y_Speed -.-> P_Update
+
+    P_Update -.-> R_Start
+    R_End -.-> P_Count
+
+    %% Apply student-friendly color scheme with good contrast
+    classDef userSection fill:#6366F1,stroke:#4338CA,color:white;
+    classDef programSection fill:#10B981,stroke:#065F46,color:white;
+    classDef rulesSection fill:#F59E0B,stroke:#B45309,color:white;
+
+    classDef startEndNode fill:#2A4365,stroke:#1A365D,color:white,stroke-width:3px;
+    classDef actionNode fill:#F8FAFC,stroke:#94A3B8,color:#333333,stroke-width:2px;
+    classDef decisionNode fill:#FEF9C3,stroke:#CA8A04,color:#333333,stroke-width:2px;
+    classDef connectionLine stroke:#64748B,stroke-width:2px,stroke-dasharray:4;
+
+    %% Special styling for rule outcomes
+    classDef dieNode fill:#FCA5A5,stroke:#B91C1C,color:#7F1D1D;
+    classDef liveNode fill:#A7F3D0,stroke:#047857,color:#064E3B;
+    classDef bornNode fill:#BFDBFE,stroke:#1D4ED8,color:#1E3A8A;
+
+    %% Apply classes to nodes
+    class Y_Start,P_Start,R_Start,R_End startEndNode;
+    class Y_Toggle,Y_Step,Y_Clear,Y_Random,Y_Cell,Y_Speed actionNode;
+    class P_Setup,P_Loop,P_Draw,P_Update,P_Wait,P_Count,P_Repeat actionNode;
+    class R_Check,R_Count,R_Update actionNode;
+    class Y_Action,P_Check,R_Apply,R_Next decisionNode;
+
+    %% Special highlighting for rule outcomes
+    class R_Die1,R_Die2 dieNode;
+    class R_Live liveNode;
+    class R_Born bornNode;
+
+    %% Apply colors to subgraphs
+    class You userSection;
+    class Program programSection;
+    class Rules rulesSection;
+

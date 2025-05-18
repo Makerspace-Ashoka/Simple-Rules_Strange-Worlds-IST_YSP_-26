@@ -1,0 +1,72 @@
+flowchart TD
+    %% Main components with student-friendly labels
+    User((You))
+    Grid[/"Game Grid\n(What you see)"/]
+    Rules["Game Rules\n(Birth & Death)"]
+    Controls["Control Panel\n(Buttons & Speed)"]
+    Patterns["Pattern Library\n(Glider, etc.)"]
+
+    %% Main processes with simpler explanations
+    Setup["Starting the Game"]
+    Update["Updating the Grid\n(Next Generation)"]
+    Display["Drawing Everything"]
+    Interact["Your Interactions"]
+
+    %% Simplified connections
+    User -->|"Click cells\nto toggle"| Grid
+    User -->|"Press buttons,\nadjust speed"| Controls
+    User -->|"Select patterns"| Patterns
+
+    Setup -->|"Creates"| Grid
+    Setup -->|"Sets up"| Controls
+
+    Controls -->|"Play/Pause"| Update
+    Controls -->|"Clear/Random"| Grid
+
+    Patterns -->|"Adds pre-made\nshapes"| Grid
+
+    Update -->|"Reads current\nstate"| Grid
+    Update -->|"Applies"| Rules
+    Rules -->|"Determines\nwhich cells live\nor die"| Update
+    Update -->|"Creates next\ngeneration"| Grid
+
+    Display -->|"Shows"| Grid
+    Display -->|"Shows"| Controls
+
+    %% The main game loop explained simply
+    subgraph GameLoop["The Game Loop"]
+        direction LR
+        Start(["Start"]) --> CheckRunning{"Is game\nrunning?"}
+        CheckRunning -->|"Yes"| Calculate["Calculate\nnext generation"]
+        CheckRunning -->|"No"| Wait["Wait for\nyour input"]
+        Calculate --> Draw["Draw\nthe grid"]
+        Wait --> Draw
+        Draw --> Start
+    end
+
+    %% Style with educational color scheme
+    classDef user fill:#4F46E5,stroke:#3730A3,stroke-width:3px,color:white;
+    classDef dataComponent fill:#F97316,stroke:#C2410C,stroke-width:3px,color:white;
+    classDef processComponent fill:#10B981,stroke:#047857,stroke-width:2px,color:white;
+    classDef controlComponent fill:#EC4899,stroke:#BE185D,stroke-width:2px,color:white;
+    classDef patternComponent fill:#8B5CF6,stroke:#6D28D9,stroke-width:2px,color:white;
+    classDef rulesComponent fill:#EAB308,stroke:#A16207,stroke-width:2px,color:white;
+
+    classDef gameLoopComponent fill:#E0F2FE,stroke:#7DD3FC,stroke-width:2px,color:#0369A1;
+    classDef flowStart fill:#4ADE80,stroke:#16A34A,stroke-width:2px,color:#14532D;
+    classDef flowDecision fill:#FDE68A,stroke:#F59E0B,stroke-width:2px,color:#B45309;
+    classDef flowProcess fill:#C7D2FE,stroke:#818CF8,stroke-width:2px,color:#4338CA;
+
+    %% Apply class styles
+    class User user;
+    class Grid dataComponent;
+    class Rules rulesComponent;
+    class Controls controlComponent;
+    class Patterns patternComponent;
+    class Setup,Update,Display,Interact processComponent;
+    class GameLoop gameLoopComponent;
+
+    class Start flowStart;
+    class CheckRunning flowDecision;
+    class Calculate,Wait,Draw flowProcess;
+
