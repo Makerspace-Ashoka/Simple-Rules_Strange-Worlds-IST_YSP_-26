@@ -1,20 +1,27 @@
 flowchart TD
     %% Main components with student-friendly labels
     User((You))
-    Grid[/"Game Grid\n(What you see)"/]
-    Rules["Game Rules\n(Birth & Death)"]
-    Controls["Control Panel\n(Buttons & Speed)"]
-    Patterns["Pattern Library\n(Glider, etc.)"]
+    Grid[/"Game Grid
+    (What you see)"/]
+    Rules["Game Rules
+    (Birth & Death)"]
+    Controls["Control Panel
+    (Buttons & Speed)"]
+    Patterns["Pattern Library
+    (Glider, etc.)"]
 
     %% Main processes with simpler explanations
     Setup["Starting the Game"]
-    Update["Updating the Grid\n(Next Generation)"]
+    Update["Updating the Grid
+    (Next Generation)"]
     Display["Drawing Everything"]
     Interact["Your Interactions"]
 
     %% Simplified connections
-    User -->|"Click cells\nto toggle"| Grid
-    User -->|"Press buttons,\nadjust speed"| Controls
+    User -->|"Click cells
+    to toggle"| Grid
+    User -->|"Press buttons,
+    adjust speed"| Controls
     User -->|"Select patterns"| Patterns
 
     Setup -->|"Creates"| Grid
@@ -23,12 +30,17 @@ flowchart TD
     Controls -->|"Play/Pause"| Update
     Controls -->|"Clear/Random"| Grid
 
-    Patterns -->|"Adds pre-made\nshapes"| Grid
+    Patterns -->|"Adds pre-made
+    shapes"| Grid
 
-    Update -->|"Reads current\nstate"| Grid
+    Update -->|"Reads current
+    state"| Grid
     Update -->|"Applies"| Rules
-    Rules -->|"Determines\nwhich cells live\nor die"| Update
-    Update -->|"Creates next\ngeneration"| Grid
+    Rules -->|"Determines
+    which cells live
+    or die"| Update
+    Update -->|"Creates next
+    generation"| Grid
 
     Display -->|"Shows"| Grid
     Display -->|"Shows"| Controls
@@ -36,15 +48,19 @@ flowchart TD
     %% The main game loop explained simply
     subgraph GameLoop["The Game Loop"]
         direction LR
-        Start(["Start"]) --> CheckRunning{"Is game\nrunning?"}
-        CheckRunning -->|"Yes"| Calculate["Calculate\nnext generation"]
-        CheckRunning -->|"No"| Wait["Wait for\nyour input"]
-        Calculate --> Draw["Draw\nthe grid"]
+        Start(["Start"]) --> CheckRunning{"Is game
+        running?"}
+        CheckRunning -->|"Yes"| Calculate["Calculate
+        next generation"]
+        CheckRunning -->|"No"| Wait["Wait for
+        your input"]
+        Calculate --> Draw["Draw
+        the grid"]
         Wait --> Draw
         Draw --> Start
     end
 
-    %% Style with educational color scheme
+    %% Style with a pop color scheme
     classDef user fill:#4F46E5,stroke:#3730A3,stroke-width:3px,color:white;
     classDef dataComponent fill:#F97316,stroke:#C2410C,stroke-width:3px,color:white;
     classDef processComponent fill:#10B981,stroke:#047857,stroke-width:2px,color:white;
