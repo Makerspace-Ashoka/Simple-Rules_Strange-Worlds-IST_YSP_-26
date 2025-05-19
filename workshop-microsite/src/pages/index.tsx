@@ -33,6 +33,9 @@ function CellularAutomataCanvas() {
       )
     );
 
+    // Animation frame ID to properly cancel animation
+    let animationFrameId: number;
+
     // Draw function
     function draw() {
       // Clear canvas with a slight fade effect for trails
@@ -95,7 +98,7 @@ function CellularAutomataCanvas() {
       }
 
       grid = nextGrid;
-      requestAnimationFrame(draw);
+      animationFrameId = window.requestAnimationFrame(draw);
     }
 
     // Helper function to count active neighbors
@@ -150,7 +153,9 @@ function CellularAutomataCanvas() {
     // Cleanup
     return () => {
       // Cancel animation frame if component unmounts
-      cancelAnimationFrame(draw);
+      if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
     };
   }, []);
 
