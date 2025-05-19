@@ -27,8 +27,8 @@ function CellularAutomataCanvas() {
     const colors = ['#E53935', '#1E88E5', '#FDD835', '#000000'];
 
     // Initialize grid with random states
-    let grid = Array(cols).fill().map(() =>
-      Array(rows).fill().map(() =>
+    let grid = Array(cols).fill(null).map(() =>
+      Array(rows).fill(null).map(() =>
         Math.random() > 0.8 ? Math.floor(Math.random() * colors.length) : -1
       )
     );
@@ -53,7 +53,7 @@ function CellularAutomataCanvas() {
       }
 
       // Update grid using a Bauhaus-inspired rule
-      const nextGrid = Array(cols).fill().map(() => Array(rows).fill(-1));
+      const nextGrid = Array(cols).fill(null).map(() => Array(rows).fill(-1));
 
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
