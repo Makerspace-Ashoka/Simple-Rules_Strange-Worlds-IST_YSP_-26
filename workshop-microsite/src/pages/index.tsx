@@ -35,48 +35,113 @@ function CellularAutomataCanvas() {
 
     // Draw function
     function draw() {
-      // Clear canvas
-      ctx.clearRect(0, 0, width, height);
+      // Clear canvas with a slight fade effect for trails
+      ctx.fillStyle = 'rgba(248, 248, 248, 0.1)';
+      ctx.fillRect(0, 0, width, height);
 
       // Draw cells
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
           if (grid[i][j] >= 0) {
             ctx.fillStyle = colors[grid[i][j]];
-            ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            // Draw rounded cells for a more playful look
+            ctx.beginPath();
+            ctx.roundRect(i * cellSize, j * cellSize, cellSize, cellSize, 3);
+            ctx.fill();
           }
         }
       }
 
-      // Update grid using a simple rule (horizontally expanding)
+      // Update grid using a Bauhaus-inspired rule
       const nextGrid = Array(cols).fill().map(() => Array(rows).fill(-1));
 
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
           if (grid[i][j] >= 0) {
-            // Keep current cell
-            nextGrid[i][j] = grid[i][j];
+            // Try to create geometric patterns with movement
+            const neighbors = countActiveNeighbors(i, j);
 
-            // Maybe expand in one direction
-            const expandDirection = Math.floor(Math.random() * 4);
-            const newI = i + (expandDirection === 0 ? 1 : (expandDirection === 1 ? -1 : 0));
-            const newJ = j + (expandDirection === 2 ? 1 : (expandDirection === 3 ? -1 : 0));
+            // Rules inspired by geometric patterns
+            if (neighbors < 2 || neighbors > 3) {
+              // Cell dies from isolation or overcrowding
+              if (Math.random() > 0.7) {
+                nextGrid[i][j] = -1;
+              } else {
+                nextGrid[i][j] = grid[i][j];
+              }
+            } else {
+              // Cell survives
+              nextGrid[i][j] = grid[i][j];
 
-            if (newI >= 0 && newI < cols && newJ >= 0 && newJ < rows && grid[newI][newJ] === -1) {
-              // 50% chance to spread with the same color
-              if (Math.random() > 0.5) {
-                nextGrid[newI][newJ] = grid[i][j];
+              // Sometimes change color for visual interest
+              if (Math.random() > 0.95) {
+                nextGrid[i][j] = (grid[i][j] + 1) % colors.length;
               }
             }
-          } else if (Math.random() < 0.001) {
-            // Small chance for a new random cell to appear
-            nextGrid[i][j] = Math.floor(Math.random() * colors.length);
+          } else {
+            // Empty cell
+            const neighbors = countActiveNeighbors(i, j);
+
+            // Birth rule
+            if (neighbors === 3) {
+              // Find the most common color among neighbors
+              nextGrid[i][j] = getMostCommonNeighborColor(i, j);
+            } else if (Math.random() < 0.001) {
+              // Small chance for a new random cell
+              nextGrid[i][j] = Math.floor(Math.random() * colors.length);
+            }
           }
         }
       }
 
       grid = nextGrid;
       requestAnimationFrame(draw);
+    }
+
+    // Helper function to count active neighbors
+    function countActiveNeighbors(x, y) {
+      let count = 0;
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) continue;
+
+          const ni = (x + i + cols) % cols;
+          const nj = (y + j + rows) % rows;
+
+          if (grid[ni][nj] >= 0) count++;
+        }
+      }
+      return count;
+    }
+
+    // Helper function to get most common neighbor color
+    function getMostCommonNeighborColor(x, y) {
+      const colorCounts = [0, 0, 0, 0];
+
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) continue;
+
+          const ni = (x + i + cols) % cols;
+          const nj = (y + j + rows) % rows;
+
+          if (grid[ni][nj] >= 0) {
+            colorCounts[grid[ni][nj]]++;
+          }
+        }
+      }
+
+      let maxCount = 0;
+      let maxColor = 0;
+
+      for (let i = 0; i < colorCounts.length; i++) {
+        if (colorCounts[i] > maxCount) {
+          maxCount = colorCounts[i];
+          maxColor = i;
+        }
+      }
+
+      return maxColor;
     }
 
     // Start animation
@@ -149,12 +214,12 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className={clsx("button", styles.buttonPrimary)}
-            to="/docs/intro">
+            to="/docs/1d-automata">
             Start Workshop
           </Link>
           <Link
             className={clsx("button", styles.buttonSecondary)}
-            to="/docs/pattern-exploration-handout">
+            to="/docs/explore-patterns">
             Exploration Guide
           </Link>
         </div>
