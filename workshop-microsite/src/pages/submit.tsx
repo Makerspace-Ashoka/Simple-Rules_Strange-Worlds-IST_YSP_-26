@@ -6,6 +6,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './submit.module.css';
 
+<input type="hidden" name="access_key" value="dbbd1b6a-8acf-487f-a291-61e154d58f0b" />
 // Define TypeScript interfaces for our state
 interface BasicInfoState {
   name: string;
@@ -31,10 +32,8 @@ const Submit: React.FC = () => {
   });
 
   const [activeTab, setActiveTab] = useState<string>('info');
-  const [statusMessage, setStatusMessage] = useState<StatusMessageState>({
-    type: '',
-    message: ''
-  });
+  const [projectResult, setProjectResult] = useState<string>("");
+  const [patternResult, setPatternResult] = useState<string>("");
 
   const [patternCount, setPatternCount] = useState<number>(0);
 
@@ -52,29 +51,22 @@ const Submit: React.FC = () => {
     e.preventDefault();
 
     if (!basicInfo.name || !basicInfo.email || !basicInfo.permission) {
-      setStatusMessage({
-        type: 'error',
-        message: 'Please fill out all required fields in the Basic Info tab.'
-      });
+      setProjectResult('Please fill out all required fields in the Basic Info tab.');
       setActiveTab('info');
       return;
     }
 
-    const projectForm = formRef.current;
+    setProjectResult("Sending...");
 
-    if (!projectForm || !projectForm.checkValidity()) {
-      projectForm?.reportValidity();
-      return;
-    }
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    // Add basic info fields to form data
+    formData.append('name', basicInfo.name);
+    formData.append('email', basicInfo.email);
+    formData.append('form_type', 'project_submission');
+    formData.append('access_key', 'dbbd1b6a-8acf-487f-a291-61e154d58f0b');
 
     try {
-      const formData = new FormData(projectForm);
-
-      // Add basic info fields to form data
-      formData.append('name', basicInfo.name);
-      formData.append('email', basicInfo.email);
-      formData.append('form_type', 'project_submission');
-
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formData
@@ -83,21 +75,16 @@ const Submit: React.FC = () => {
       const data = await response.json();
 
       if (data.success) {
-        setStatusMessage({
-          type: 'success',
-          message: 'Your project has been submitted successfully! You can now submit your start patterns.'
-        });
-        projectForm.reset();
+        setProjectResult('Your project has been submitted successfully!');
+        (e.target as HTMLFormElement).reset();
         setActiveTab('patterns');
       } else {
-        throw new Error(data.message || 'Something went wrong');
+        console.log("Error", data);
+        setProjectResult(data.message || 'Something went wrong');
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
-      setStatusMessage({
-        type: 'error',
-        message: errorMessage
-      });
+      setProjectResult(errorMessage);
     }
   };
 
@@ -106,29 +93,22 @@ const Submit: React.FC = () => {
     e.preventDefault();
 
     if (!basicInfo.name || !basicInfo.email) {
-      setStatusMessage({
-        type: 'error',
-        message: 'Please fill out all required fields in the Basic Info tab.'
-      });
+      setPatternResult('Please fill out all required fields in the Basic Info tab.');
       setActiveTab('info');
       return;
     }
 
-    const patternForm = patternFormRef.current;
+    setPatternResult("Sending...");
 
-    if (!patternForm || !patternForm.checkValidity()) {
-      patternForm?.reportValidity();
-      return;
-    }
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    // Add basic info fields to form data
+    formData.append('name', basicInfo.name);
+    formData.append('email', basicInfo.email);
+    formData.append('form_type', 'pattern_submission');
+    formData.append('access_key', 'dbbd1b6a-8acf-487f-a291-61e154d58f0b');
 
     try {
-      const formData = new FormData(patternForm);
-
-      // Add basic info fields to form data
-      formData.append('name', basicInfo.name);
-      formData.append('email', basicInfo.email);
-      formData.append('form_type', 'pattern_submission');
-
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formData
@@ -137,21 +117,16 @@ const Submit: React.FC = () => {
       const data = await response.json();
 
       if (data.success) {
-        setStatusMessage({
-          type: 'success',
-          message: 'Your pattern has been submitted successfully!'
-        });
-        patternForm.reset();
+        setPatternResult('Your pattern has been submitted successfully!');
+        (e.target as HTMLFormElement).reset();
         setPatternCount(patternCount + 1);
       } else {
-        throw new Error(data.message || 'Something went wrong');
+        console.log("Error", data);
+        setPatternResult(data.message || 'Something went wrong');
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
-      setStatusMessage({
-        type: 'error',
-        message: errorMessage
-      });
+      setPatternResult(errorMessage);
     }
   };
 
@@ -262,7 +237,6 @@ const Submit: React.FC = () => {
                 className={styles.bauhausForm}
               >
                 {/* Web3Forms required fields */}
-                <input type="hidden" name="access_key" value="dbbd1b6a-8acf-487f-a291-61e154d58f0b" />
                 <input type="hidden" name="subject" value="New Cellular Automata Project Submission" />
                 <input type="hidden" name="redirect" value="false" />
                 <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
@@ -341,7 +315,6 @@ const Submit: React.FC = () => {
                 className={styles.bauhausForm}
               >
                 {/* Web3Forms required fields */}
-                <input type="hidden" name="access_key" value="dbbd1b6a-8acf-487f-a291-61e154d58f0b" />
                 <input type="hidden" name="subject" value="New Cellular Automata Pattern Submission" />
                 <input type="hidden" name="redirect" value="false" />
                 <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
@@ -411,9 +384,15 @@ const Submit: React.FC = () => {
           </TabItem>
         </Tabs>
 
-        {statusMessage.message && (
-          <div className={`${styles.formStatus} ${styles[statusMessage.type]}`}>
-            {statusMessage.message}
+        {projectResult && activeTab === 'project' && (
+          <div className={`${styles.formStatus} ${projectResult.includes('success') ? styles.success : styles.error}`}>
+            {projectResult}
+          </div>
+        )}
+
+        {patternResult && activeTab === 'patterns' && (
+          <div className={`${styles.formStatus} ${patternResult.includes('success') ? styles.success : styles.error}`}>
+            {patternResult}
           </div>
         )}
       </main>
