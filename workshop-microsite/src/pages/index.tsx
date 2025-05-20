@@ -5,13 +5,17 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import styles from './index.module.css';
+import useIsBrowser from '@docusaurus/useIsBrowser';
+import { useColorMode } from '@docusaurus/theme-common';
 
 // Simple cellular automata visualization component
 function CellularAutomataCanvas() {
   const canvasRef = useRef(null);
+  const { colorMode } = useColorMode();
+  const isBrowser = useIsBrowser();
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!canvasRef.current || !isBrowser) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -23,8 +27,15 @@ function CellularAutomataCanvas() {
     const cols = Math.floor(width / cellSize);
     const rows = Math.floor(height / cellSize);
 
-    // Bauhaus-inspired colors
-    const colors = ['#E53935', '#1E88E5', '#FDD835', '#000000'];
+    // Bauhaus-inspired colors - adjusted for dark mode compatibility
+    const colors = colorMode === 'dark'
+      ? ['#FF5252', '#42A5F5', '#FFEB3B', '#FFFFFF']
+      : ['#E53935', '#1E88E5', '#FDD835', '#000000'];
+
+    // Background color for clear effect
+    const bgColor = colorMode === 'dark'
+      ? 'rgba(18, 18, 18, 0.1)'
+      : 'rgba(248, 248, 248, 0.1)';
 
     // Initialize grid with random states
     let grid = Array(cols).fill(null).map(() =>
@@ -34,12 +45,12 @@ function CellularAutomataCanvas() {
     );
 
     // Animation frame ID to properly cancel animation
-    let animationFrameId: number;
+    let animationFrameId;
 
     // Draw function
     function draw() {
       // Clear canvas with a slight fade effect for trails
-      ctx.fillStyle = 'rgba(248, 248, 248, 0.1)';
+      ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, width, height);
 
       // Draw cells
@@ -157,7 +168,7 @@ function CellularAutomataCanvas() {
         window.cancelAnimationFrame(animationFrameId);
       }
     };
-  }, []);
+  }, [colorMode, isBrowser]);
 
   return (
     <canvas
@@ -171,18 +182,24 @@ function CellularAutomataCanvas() {
 
 // Bauhaus-inspired decorative elements
 function BauhausShapes() {
+  const { colorMode } = useColorMode();
+
   return (
     <div className={styles.bauhausShapes}>
-      <div className={styles.circle}></div>
-      <div className={styles.square}></div>
-      <div className={styles.triangle}></div>
-      <div className={styles.rectangle}></div>
+      <div className={clsx(styles.circle, colorMode === 'dark' ? styles.darkCircle : '')}></div>
+      <div className={clsx(styles.square, colorMode === 'dark' ? styles.darkSquare : '')}></div>
+      <div className={clsx(styles.triangle, colorMode === 'dark' ? styles.darkTriangle : '')}></div>
+      <div className={clsx(styles.rectangle, colorMode === 'dark' ? styles.darkRectangle : '')}></div>
     </div>
   );
 }
 
 // Fun interactive floating pixels
 function FloatingPixels() {
+  const { colorMode } = useColorMode();
+  const darkModeColors = ['#FF5252', '#42A5F5', '#FFEB3B', '#FFFFFF'];
+  const lightModeColors = ['#E53935', '#1E88E5', '#FDD835', '#000000'];
+
   return (
     <div className={styles.floatingPixels}>
       {[...Array(15)].map((_, i) => (
@@ -192,7 +209,9 @@ function FloatingPixels() {
           style={{
             animationDelay: `${i * 0.7}s`,
             left: `${10 + (i * 5) % 80}%`,
-            backgroundColor: ['#E53935', '#1E88E5', '#FDD835', '#000000'][i % 4]
+            backgroundColor: colorMode === 'dark'
+              ? darkModeColors[i % 4]
+              : lightModeColors[i % 4]
           }}
         ></div>
       ))}
@@ -202,6 +221,7 @@ function FloatingPixels() {
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
+
   return (
     <header className={clsx('hero', styles.heroBanner)}>
       <div className="container">
@@ -235,6 +255,7 @@ function HomepageHeader() {
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
+
   return (
     <Layout
       title={siteConfig.title}

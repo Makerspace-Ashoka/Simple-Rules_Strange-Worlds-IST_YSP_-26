@@ -1,5 +1,5 @@
 /**
- * CSS styles for the homepage with Bauhaus design inspiration
+ * CSS styles for the homepage with Bauhaus design inspiration and dark mode support
  */
 
 .heroBanner {
@@ -8,7 +8,8 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  background-color: #ffffff;
+  background-color: var(--ifm-background-color);
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 /* Typography with Bauhaus inspiration */
@@ -21,6 +22,8 @@
   text-transform: uppercase;
   position: relative;
   display: inline-block;
+  color: var(--ifm-heading-color);
+  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 /* Add a decorative underline to the title */
@@ -34,21 +37,30 @@
   background-color: #FDD835;
 }
 
+html[data-theme='dark'] .title::after {
+  background-color: #FFEB3B;
+}
+
 .subtitle {
   font-size: 1.8rem;
   line-height: 1.5;
   max-width: 800px;
   margin: 2rem auto 3rem;
   font-weight: 300;
+  color: var(--ifm-color-content);
+  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 /* Canvas styling */
 .canvas {
-  border: 2px solid #000;
+  border: 2px solid var(--ifm-color-emphasis-700);
   max-width: 100%;
   height: auto;
-  background-color: #f8f8f8;
-  box-shadow: 5px 5px 0 #000;
+  background-color: var(--ifm-background-surface-color);
+  box-shadow: 5px 5px 0 var(--ifm-color-emphasis-700);
+  transition: border-color var(--ifm-transition-fast) var(--ifm-transition-timing-default),
+    box-shadow var(--ifm-transition-fast) var(--ifm-transition-timing-default),
+    background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 .visualization {
@@ -79,6 +91,11 @@
   top: 15%;
   left: 10%;
   opacity: 0.7;
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+.darkCircle {
+  background-color: #FFEB3B;
 }
 
 .square {
@@ -90,6 +107,11 @@
   right: 10%;
   transform: rotate(15deg);
   opacity: 0.7;
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+.darkSquare {
+  background-color: #FF5252;
 }
 
 .triangle {
@@ -102,6 +124,11 @@
   bottom: 10%;
   left: 15%;
   opacity: 0.7;
+  transition: border-bottom-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+.darkTriangle {
+  border-bottom-color: #42A5F5;
 }
 
 .rectangle {
@@ -113,6 +140,11 @@
   right: 15%;
   transform: rotate(-10deg);
   opacity: 0.7;
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+.darkRectangle {
+  background-color: #FFFFFF;
 }
 
 /* Bauhaus-inspired buttons */
@@ -129,47 +161,70 @@
 .buttonPrimary {
   background-color: #E53935;
   color: white;
-  border: 2px solid #000;
+  border: 2px solid var(--ifm-color-emphasis-700);
   padding: 0.8rem 1.5rem;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 0.05em;
   transition: all 0.2s ease;
-  box-shadow: 3px 3px 0 #000;
+  box-shadow: 3px 3px 0 var(--ifm-color-emphasis-700);
+}
+
+html[data-theme='dark'] .buttonPrimary {
+  background-color: #FF5252;
+  border-color: var(--ifm-color-emphasis-600);
+  box-shadow: 3px 3px 0 var(--ifm-color-emphasis-600);
 }
 
 .buttonPrimary:hover {
   background-color: #C62828;
   transform: translate(1px, 1px);
-  box-shadow: 2px 2px 0 #000;
+  box-shadow: 2px 2px 0 var(--ifm-color-emphasis-700);
   text-decoration: none;
   color: white;
+}
+
+html[data-theme='dark'] .buttonPrimary:hover {
+  background-color: #D32F2F;
+  box-shadow: 2px 2px 0 var(--ifm-color-emphasis-600);
 }
 
 .buttonSecondary {
   background-color: #1E88E5;
   color: white;
-  border: 2px solid #000;
+  border: 2px solid var(--ifm-color-emphasis-700);
   padding: 0.8rem 1.5rem;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 0.05em;
   transition: all 0.2s ease;
-  box-shadow: 3px 3px 0 #000;
+  box-shadow: 3px 3px 0 var(--ifm-color-emphasis-700);
+}
+
+html[data-theme='dark'] .buttonSecondary {
+  background-color: #42A5F5;
+  border-color: var(--ifm-color-emphasis-600);
+  box-shadow: 3px 3px 0 var(--ifm-color-emphasis-600);
 }
 
 .buttonSecondary:hover {
   background-color: #1565C0;
   transform: translate(1px, 1px);
-  box-shadow: 2px 2px 0 #000;
+  box-shadow: 2px 2px 0 var(--ifm-color-emphasis-700);
   text-decoration: none;
   color: white;
+}
+
+html[data-theme='dark'] .buttonSecondary:hover {
+  background-color: #1976D2;
+  box-shadow: 2px 2px 0 var(--ifm-color-emphasis-600);
 }
 
 /* Main content area */
 .main {
   padding: 4rem 0;
-  background-color: #f8f8f8;
+  background-color: var(--ifm-background-surface-color);
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 .workshopInfo {
@@ -180,12 +235,18 @@
 }
 
 .infoBlock {
-  background-color: #fff;
+  background-color: var(--ifm-card-background-color);
   padding: 3rem;
-  border-left: 5px solid #000;
+  border-left: 5px solid var(--ifm-color-emphasis-700);
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease,
+    background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default),
+    border-left-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+html[data-theme='dark'] .infoBlock {
+  box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Add a subtle hover effect to info blocks */
@@ -200,6 +261,8 @@
   text-transform: uppercase;
   letter-spacing: 0.03em;
   position: relative;
+  color: var(--ifm-heading-color);
+  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 .infoHeading::after {
@@ -210,6 +273,11 @@
   width: 50px;
   height: 3px;
   background-color: #FDD835;
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+html[data-theme='dark'] .infoHeading::after {
+  background-color: #FFEB3B;
 }
 
 .infoList {
@@ -223,6 +291,8 @@
   padding-left: 1.5rem;
   position: relative;
   line-height: 1.6;
+  color: var(--ifm-font-color-base);
+  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 .infoList li::before {
@@ -233,6 +303,11 @@
   width: 8px;
   height: 8px;
   background-color: #E53935;
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+html[data-theme='dark'] .infoList li::before {
+  background-color: #FF5252;
 }
 
 .timeline {
@@ -245,6 +320,8 @@
   margin-bottom: 1.5rem;
   padding-left: 1rem;
   position: relative;
+  color: var(--ifm-font-color-base);
+  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 .timelineDot {
@@ -252,6 +329,66 @@
   height: 12px;
   background-color: #1E88E5;
   margin-right: 1rem;
+  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+html[data-theme='dark'] .timelineDot {
+  background-color: #42A5F5;
+}
+
+/* Add floating pixels animation */
+.floatingPixels {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pixel {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  opacity: 0.7;
+  top: 100%;
+  animation: floatUp 15s infinite linear;
+}
+
+@keyframes floatUp {
+  0% {
+    top: 100%;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.7;
+  }
+
+  90% {
+    opacity: 0.7;
+  }
+
+  100% {
+    top: -5%;
+    opacity: 0;
+    transform: rotate(360deg);
+  }
+}
+
+/* Add a fun hover effect to the canvas */
+.canvas {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.canvas:hover {
+  transform: scale(1.02);
+  box-shadow: 8px 8px 0 var(--ifm-color-emphasis-700);
+}
+
+html[data-theme='dark'] .canvas:hover {
+  box-shadow: 8px 8px 0 var(--ifm-color-emphasis-600);
 }
 
 /* Responsive styles */
@@ -302,83 +439,3 @@
     padding: 1.5rem;
   }
 }
-
-
-
-
-
-
-/* Add floating pixels animation */
-.floatingPixels {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.pixel {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  opacity: 0.7;
-  top: 100%;
-  animation: floatUp 15s infinite linear;
-}
-
-@keyframes floatUp {
-  0% {
-    top: 100%;
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 0.7;
-  }
-
-  90% {
-    opacity: 0.7;
-  }
-
-  100% {
-    top: -5%;
-    opacity: 0;
-    transform: rotate(360deg);
-  }
-}
-
-/* Add a fun hover effect to the canvas */
-.canvas {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.canvas:hover {
-  transform: scale(1.02);
-  box-shadow: 8px 8px 0 #000;
-}
-
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
-
-.heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
- */
