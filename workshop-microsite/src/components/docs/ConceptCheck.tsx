@@ -1,23 +1,52 @@
-// ConceptCheck.jsx - Quick knowledge check component
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import styles from './ConceptCheck.module.css';
 
-const ConceptCheck = ({ children }) => {
+interface ConceptCheckProps {
+  children: ReactNode;
+}
+
+interface AnswerProps {
+  children: ReactNode;
+}
+
+/**
+ * A component for quick knowledge checks with immediate feedback
+ */
+const ConceptCheck: React.FC<ConceptCheckProps> = ({ children }) => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [userAnswer, setUserAnswer] = useState('');
-  const [isCorrect, setIsCorrect] = useState(null);
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-  // Extract the question and answer
-  const childArray = React.Children.toArray(children);
-  const question = childArray.filter(child => typeof child === 'string' || typeof child === 'number').join('');
-  const answerElement = childArray.find(child => child.type && child.type.name === 'answer');
-  const answer = answerElement ? answerElement.props.children : '';
+  // Extract the question and answer elements
+  const childrenArray = React.Children.toArray(children);
+
+  // Get the question text (all string/number children)
+  const questionText = childrenArray
+    .filter(child => typeof child === 'string' || typeof child === 'number')
+    .join('');
+
+  // Find the answer element
+  const answerElement = childrenArray.find(
+    child => React.isValidElement(child) &&
+      (child.type as any).displayName === 'Answer'
+  ) as React.ReactElement<AnswerProps> | undefined;
+
+  // Extract answer text
+  const answerText = answerElement
+    ? React.Children.toArray(answerElement.props.children)
+      .filter(child => typeof child === 'string' || typeof child === 'number')
+      .join('')
+    : '';
 
   const handleCheckAnswer = () => {
-    const correct = userAnswer.toLowerCase().trim() === answer.toLowerCase().trim();
+    if (!userAnswer.trim()) return;
+
+    const correct = userAnswer.toLowerCase().trim() === answerText.toLowerCase().trim();
     setIsCorrect(correct);
+
+    // Auto-reset status after delay if incorrect
     if (!correct) {
-      setTimeout(() => setIsCorrect(null), 2000);
+      setTimeout(() => setIsCorrect(null), 3000);
     }
   };
 
@@ -25,7 +54,7 @@ const ConceptCheck = ({ children }) => {
     <div className={styles.conceptCheckContainer}>
       <div className={styles.questionContainer}>
         <div className={styles.conceptIcon}>💡</div>
-        <div className={styles.questionText}>{question}</div>
+        <div className={styles.questionText}>{questionText}</div>
       </div>
 
       {!showAnswer ? (
@@ -36,6 +65,9 @@ const ConceptCheck = ({ children }) => {
             onChange={(e) => setUserAnswer(e.target.value)}
             placeholder="Type your answer"
             className={styles.answerInput}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') handleCheckAnswer();
+            }}
           />
           <button
             className={styles.checkButton}
@@ -53,7 +85,7 @@ const ConceptCheck = ({ children }) => {
       ) : (
         <div className={styles.answerContainer}>
           <div className={styles.answerLabel}>Answer:</div>
-          <div className={styles.answerText}>{answer}</div>
+          <div className={styles.answerText}>{answerText}</div>
           <button
             className={styles.hideButton}
             onClick={() => setShowAnswer(false)}
@@ -72,12 +104,25 @@ const ConceptCheck = ({ children }) => {
   );
 };
 
-// Answer component to hold the correct answer
-const Answer = ({ children }) => {
-  return null; // This component doesn't render anything
+/**
+ * A component to hold the correct answer for a ConceptCheck
+ */
+const Answer: React.FC<AnswerProps> = ({ children }) => {
+  // This component doesn't render anything
+  return null;
 };
 
-ConceptCheck.answer = Answer;
+// Set displayName to allow for filtering in ConceptCheck component
+Answer.displayName = 'Answer';
 
-export default ConceptCheck;
+// Export both components
+export { ConceptCheck, Answer };
+
+// Create a namespace object for easier imports
+const ConceptCheckComponents = {
+  ConceptCheck,
+  Answer
+};
+
+export default ConceptCheckComponents;
 
