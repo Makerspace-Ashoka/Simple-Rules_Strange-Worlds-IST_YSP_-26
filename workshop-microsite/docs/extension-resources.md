@@ -1,7 +1,7 @@
 ---
 id: extension-resources
 title: Extension Resources
-sidebar_position: 8
+sidebar_position: 9
 sidebar_label: Extension Resources
 description: Curated resources for further exploration of cellular automata concepts, tools, and project ideas.
 keywords: [cellular automata, resources, tools, simulators, educational resources, project ideas]

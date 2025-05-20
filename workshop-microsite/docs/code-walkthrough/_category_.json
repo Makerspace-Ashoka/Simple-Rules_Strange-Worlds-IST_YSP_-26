@@ -1,6 +1,6 @@
 {
   "label": "Code Walkthrough",
-  "position": 3,
+  "position": 4,
   "link": {
     "type": "generated-index",
     "description": "This guide will help you explore Conway's Game of Life through a series of questions and activities. Rather than simply explaining how the code works, this guide encourages you to discover key concepts through inquiry and reflection. Work through the questions at your own pace, discussing with peers when you get stuck."
