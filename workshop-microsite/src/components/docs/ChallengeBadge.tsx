@@ -1,9 +1,24 @@
-// ChallengeBadge.jsx - Badge for challenge/difficulty level
 import React from 'react';
 import styles from './ChallengeBadge.module.css';
 
-const ChallengeBadge = ({ level, concepts = [] }) => {
-  const getBadgeColor = () => {
+type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced';
+
+interface ChallengeBadgeProps {
+  level: DifficultyLevel;
+  concepts?: string[];
+}
+
+/**
+ * A component that displays a badge indicating difficulty level and concepts
+ *
+ * @param level - The difficulty level of the challenge
+ * @param concepts - An array of concept tags related to the challenge
+ */
+const ChallengeBadge: React.FC<ChallengeBadgeProps> = ({
+  level,
+  concepts = []
+}) => {
+  const getBadgeColor = (level: DifficultyLevel): string => {
     switch (level) {
       case 'beginner':
         return styles.beginner;
@@ -18,7 +33,7 @@ const ChallengeBadge = ({ level, concepts = [] }) => {
 
   return (
     <div className={styles.badgeContainer}>
-      <div className={`${styles.levelBadge} ${getBadgeColor()}`}>
+      <div className={`${styles.levelBadge} ${getBadgeColor(level)}`}>
         {level.charAt(0).toUpperCase() + level.slice(1)}
       </div>
 
