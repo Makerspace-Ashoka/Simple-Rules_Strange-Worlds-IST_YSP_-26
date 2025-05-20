@@ -1,7 +1,7 @@
-import React, { useState, useRef, FormEvent, ChangeEvent } from 'react';
+import React, { useState, FormEvent, ChangeEvent } from 'react';
 import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+
 import styles from './submit.module.css';
 
 // Define TypeScript interfaces for our state
@@ -23,10 +23,12 @@ const Submit: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState<string>('info');
   const [patternCount, setPatternCount] = useState<number>(0);
+  const [formError, setFormError] = useState<string>('');
 
   // Handle tab changes
   const handleTabChange = (tab: string): void => {
     setActiveTab(tab);
+    setFormError(''); // Clear any error when changing tabs
   };
 
   // Handle changes in the basic info form
@@ -72,6 +74,12 @@ const Submit: React.FC = () => {
           <div className={styles.bauhausFormSection}>
             <h2>Your Information</h2>
             <p>This information will be used for all your submissions.</p>
+
+            {formError && (
+              <div className={styles.formError}>
+                {formError}
+              </div>
+            )}
 
             <div className={styles.formField}>
               <label htmlFor="student-name">Your Name</label>
@@ -129,10 +137,20 @@ const Submit: React.FC = () => {
             <h2>Project Submission</h2>
             <p>Share your p5.js implementation</p>
 
+            {/* Simplified form using direct HTML approach */}
             <form
               action="https://api.web3forms.com/submit"
               method="POST"
               className={styles.bauhausForm}
+              onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                // Validate if name and email are filled
+                if (!basicInfo.name || !basicInfo.email) {
+                  e.preventDefault();
+                  setFormError('Please fill your name and email');
+                  setActiveTab('info');
+                  window.scrollTo(0, 0);
+                }
+              }}
             >
               {/* Web3Forms required fields */}
               <input type="hidden" name="access_key" value="dbbd1b6a-8acf-487f-a291-61e154d58f0b" />
@@ -146,7 +164,7 @@ const Submit: React.FC = () => {
               <input type="hidden" name="email" value={basicInfo.email} />
 
               <div className={styles.formField}>
-                <label htmlFor="project-url">p5.js Web Editor Project URL</label>
+                <label htmlFor="project-url">p5.js Web Editor URL</label>
                 <input
                   type="url"
                   id="project-url"
@@ -214,11 +232,21 @@ const Submit: React.FC = () => {
               <strong>{patternCount}</strong>
             </div>
 
+            {/* Simplified form using direct HTML approach */}
             <form
               action="https://api.web3forms.com/submit"
               method="POST"
               className={styles.bauhausForm}
-              onSubmit={(e) => {
+              onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                // Validate if name and email are filled
+                if (!basicInfo.name || !basicInfo.email || !basicInfo.permission) {
+                  e.preventDefault();
+                  setFormError('Please fill out your name, email, and permission in the Basic Info tab.');
+                  setActiveTab('info');
+                  window.scrollTo(0, 0);
+                  return;
+                }
+
                 // Simple client-side handler to track pattern count
                 const form = e.target as HTMLFormElement;
                 form.addEventListener('submit', () => {
@@ -287,7 +315,7 @@ const Submit: React.FC = () => {
                         if (!input) return;
 
                         // Handle different input formats
-                        let matrix;
+                        let matrix: number[][];
                         if (input.startsWith('[') && input.endsWith(']')) {
                           // Try to parse as JSON
                           matrix = JSON.parse(input);
@@ -406,4 +434,3 @@ const Submit: React.FC = () => {
 };
 
 export default Submit;
-
