@@ -337,13 +337,79 @@ const Submit: React.FC = () => {
 
               <div className={styles.formField}>
                 <label htmlFor="pattern-representation">Pattern Representation</label>
+                <div className={styles.patternInputHelp}>
+                  <p>Paste your 2D array pattern below. Format example:</p>
+                  <pre className={styles.codeExample}>
+                    [
+                    [0, 0, 0, 0, 0],
+                    [0, 0, 1, 0, 0],
+                    [0, 0, 1, 0, 0],
+                    [0, 0, 1, 0, 0],
+                    [0, 0, 0, 0, 0]
+                    ]
+                  </pre>
+                  <button
+                    type="button"
+                    className={styles.patternFormatButton}
+                    onClick={() => {
+                      // Get the textarea
+                      const textarea = document.getElementById('pattern-representation') as HTMLTextAreaElement;
+                      // Format the input if it's valid
+                      try {
+                        // Try to parse as JavaScript
+                        const input = textarea.value.trim();
+                        // Skip if empty
+                        if (!input) return;
+
+                        // Handle different input formats
+                        let matrix;
+                        if (input.startsWith('[') && input.endsWith(']')) {
+                          // Try to parse as JSON
+                          matrix = JSON.parse(input);
+                        } else {
+                          // Try to parse as space/newline separated format
+                          matrix = input.split('\n').map(line =>
+                            line.trim().split(/\s+/).map(cell =>
+                              cell === '1' ? 1 : 0
+                            )
+                          );
+                        }
+
+                        // Validate it's a 2D array of 0s and 1s
+                        if (!Array.isArray(matrix) || !matrix.every(row =>
+                          Array.isArray(row) && row.every(cell =>
+                            cell === 0 || cell === 1
+                          )
+                        )) {
+                          throw new Error('Invalid pattern format');
+                        }
+
+                        // Format nicely with indentation
+                        const formatted = '[\n' + matrix.map(row =>
+                          '  [' + row.join(', ') + ']'
+                        ).join(',\n') + '\n]';
+
+                        // Update the textarea
+                        textarea.value = formatted;
+                      } catch (error) {
+                        alert('Could not format pattern. Make sure it\'s a valid 2D array of 0s and 1s.');
+                      }
+                    }}
+                  >
+                    Format Pattern
+                  </button>
+                </div>
                 <textarea
                   id="pattern-representation"
                   name="pattern_representation"
-                  placeholder="Represent your pattern using text (e.g., using 1s and 0s or other notation)"
-                  rows={6}
+                  placeholder="Paste or type your pattern as a 2D array of 1s and 0s"
+                  rows={10}
+                  className={styles.codeTextarea}
                   required
                 ></textarea>
+                <div className={styles.patternPreview} id="pattern-preview">
+                  {/* Pattern preview will be shown here */}
+                </div>
               </div>
 
               <div className={styles.formField}>

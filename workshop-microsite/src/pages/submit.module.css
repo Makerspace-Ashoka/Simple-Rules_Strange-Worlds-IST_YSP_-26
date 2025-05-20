@@ -291,6 +291,86 @@ bauhausFormHeader h1 {
   font-weight: bold;
 }
 
+/* Pattern representation styles */
+.patternInputHelp {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-left: 4px solid #1E88E5;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.codeExample {
+  background-color: #2b2b2d;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: monospace;
+  white-space: pre;
+  margin: 0.5rem 0;
+}
+
+.codeTextarea {
+  font-family: monospace !important;
+  letter-spacing: 0 !important;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.patternFormatButton {
+  background-color: #1E88E5;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.patternFormatButton:hover {
+  background-color: #1565C0;
+  transform: translateY(-2px);
+}
+
+.patternPreview {
+  margin-top: 1rem;
+  border: 1px dashed #ccc;
+  padding: 1rem;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.patternGrid {
+  display: inline-block;
+}
+
+.patternRow {
+  display: flex;
+}
+
+.patternCell {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #ddd;
+  margin: 1px;
+  background-color: #f8f8f8;
+}
+
+.patternCellAlive {
+  background-color: #000;
+}
+
+.patternError {
+  color: #E53935;
+  font-style: italic;
+}
+
 /* Status messages */
 .formStatus {
   margin-top: 2rem;
@@ -413,6 +493,25 @@ bauhausFormHeader h1 {
 
 :global(html[data-theme='dark']) .bauhausFormSection h2::after {
   background-color: #fbc02d;
+}
+
+/* Pattern representation styles */
+:global(html[data-theme='dark']) .patternInputHelp {
+  background-color: #3a3a3c;
+  border-left-color: #64B5F6;
+}
+
+:global(html[data-theme='dark']) .codeExample {
+  background-color: #1a1a1a;
+}
+
+:global(html[data-theme='dark']) .patternCell {
+  border-color: #444;
+  background-color: #333;
+}
+
+:global(html[data-theme='dark']) .patternCellAlive {
+  background-color: #fff;
 }
 
 /* Custom tabs */
