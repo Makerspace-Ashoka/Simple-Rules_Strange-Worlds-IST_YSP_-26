@@ -3,7 +3,7 @@
  * Follows Bauhaus design principles with primary colors, geometric shapes, and functional design
  */
 
-.bauhasuFormContainer {
+.bauhausFormContainer {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
@@ -11,12 +11,12 @@
   overflow: hidden;
 }
 
-.bauhasuFormHeader {
+bauhausFormHeader {
   margin-bottom: 3rem;
   position: relative;
 }
 
-.bauhasuFormHeader h1 {
+bauhausFormHeader h1 {
   font-size: 3rem;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -122,6 +122,47 @@
   color: white;
   box-shadow: 4px 4px 0 black;
   transform: translateY(-4px);
+}
+
+/* Custom tab navigation */
+.customTabNavigation {
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.customTabNavigation ul {
+  border: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.customTabNavigation li {
+  background: white;
+  border: 2px solid black;
+  border-radius: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-align: center;
+}
+
+.customTabNavigation li.activeTab {
+  background: #E53935;
+  color: white;
+  box-shadow: 4px 4px 0 black;
+  transform: translateY(-4px);
+}
+
+.tabContent {
+  position: relative;
 }
 
 /* Form sections */
@@ -282,11 +323,11 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .bauhasuFormContainer {
+  bauhausFormContainer {
     padding: 1rem;
   }
 
-  .bauhasuFormHeader h1 {
+  bauhausFormHeader h1 {
     font-size: 2.2rem;
   }
 
@@ -304,6 +345,10 @@
 
   .decorativeElements {
     opacity: 0.4;
+  }
+
+  .customTabNavigation ul {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -368,4 +413,16 @@
 
 :global(html[data-theme='dark']) .bauhausFormSection h2::after {
   background-color: #fbc02d;
+}
+
+/* Custom tabs */
+:global(html[data-theme='dark']) .customTabNavigation li {
+  background: #2b2b2d;
+  color: white;
+  border-color: #666;
+}
+
+:global(html[data-theme='dark']) .customTabNavigation li.activeTab {
+  background: #E53935;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
 }
