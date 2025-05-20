@@ -62,6 +62,11 @@ const config: Config = {
           label: 'Workshop',
         },
         {
+          position: 'left',
+          label: 'Submit Your Work',
+          href: '/cellular-automata-workshop/submit'
+        },
+        {
           href: 'https://github.com/Makerspace-Ashoka',
           label: 'GitHub',
           position: 'right',

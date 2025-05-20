@@ -13,8 +13,6 @@ interface BasicInfoState {
 
 const Submit: React.FC = () => {
   const { siteConfig } = useDocusaurusContext();
-  const formRef = useRef<HTMLFormElement>(null);
-  const patternFormRef = useRef<HTMLFormElement>(null);
 
   // State for form data and status messages
   const [basicInfo, setBasicInfo] = useState<BasicInfoState>({
@@ -24,8 +22,6 @@ const Submit: React.FC = () => {
   });
 
   const [activeTab, setActiveTab] = useState<string>('info');
-  const [projectResult, setProjectResult] = useState<string>("");
-  const [patternResult, setPatternResult] = useState<string>("");
   const [patternCount, setPatternCount] = useState<number>(0);
 
   // Handle tab changes
@@ -40,90 +36,6 @@ const Submit: React.FC = () => {
       ...basicInfo,
       [name]: type === 'checkbox' ? checked : value
     });
-  };
-
-  // Handle project form submission
-  const handleProjectSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-
-    if (!basicInfo.name || !basicInfo.email || !basicInfo.permission) {
-      setProjectResult('Please fill out all required fields in the Basic Info tab.');
-      setActiveTab('info');
-      return;
-    }
-
-    setProjectResult("Sending...");
-
-    const formData = new FormData(e.target as HTMLFormElement);
-
-    // Add basic info fields to form data
-    formData.append('name', basicInfo.name);
-    formData.append('email', basicInfo.email);
-    formData.append('form_type', 'project_submission');
-    formData.append('access_key', 'dbbd1b6a-8acf-487f-a291-61e154d58f0b');
-
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setProjectResult('Your project has been submitted successfully!');
-        (e.target as HTMLFormElement).reset();
-        setActiveTab('patterns');
-      } else {
-        console.log("Error", data);
-        setProjectResult(data.message || 'Something went wrong');
-      }
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
-      setProjectResult(errorMessage);
-    }
-  };
-
-  // Handle pattern form submission
-  const handlePatternSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-
-    if (!basicInfo.name || !basicInfo.email) {
-      setPatternResult('Please fill out all required fields in the Basic Info tab.');
-      setActiveTab('info');
-      return;
-    }
-
-    setPatternResult("Sending...");
-
-    const formData = new FormData(e.target as HTMLFormElement);
-
-    // Add basic info fields to form data
-    formData.append('name', basicInfo.name);
-    formData.append('email', basicInfo.email);
-    formData.append('form_type', 'pattern_submission');
-    formData.append('access_key', 'dbbd1b6a-8acf-487f-a291-61e154d58f0b');
-
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setPatternResult('Your pattern has been submitted successfully!');
-        (e.target as HTMLFormElement).reset();
-        setPatternCount(patternCount + 1);
-      } else {
-        console.log("Error", data);
-        setPatternResult(data.message || 'Something went wrong');
-      }
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
-      setPatternResult(errorMessage);
-    }
   };
 
   // A simple custom tabs component
@@ -218,17 +130,23 @@ const Submit: React.FC = () => {
             <p>Share your p5.js implementation</p>
 
             <form
-              ref={formRef}
-              onSubmit={handleProjectSubmit}
+              action="https://api.web3forms.com/submit"
+              method="POST"
               className={styles.bauhausForm}
             >
               {/* Web3Forms required fields */}
+              <input type="hidden" name="access_key" value="dbbd1b6a-8acf-487f-a291-61e154d58f0b" />
               <input type="hidden" name="subject" value="New Cellular Automata Project Submission" />
+              <input type="hidden" name="form_type" value="project_submission" />
               <input type="hidden" name="redirect" value="false" />
               <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
 
+              {/* Pass basic info fields as hidden fields */}
+              <input type="hidden" name="name" value={basicInfo.name} />
+              <input type="hidden" name="email" value={basicInfo.email} />
+
               <div className={styles.formField}>
-                <label htmlFor="project-url">p5.js Web Editor URL</label>
+                <label htmlFor="project-url">p5.js Web Editor Project URL</label>
                 <input
                   type="url"
                   id="project-url"
@@ -282,12 +200,6 @@ const Submit: React.FC = () => {
                 </button>
               </div>
             </form>
-
-            {projectResult && (
-              <div className={`${styles.formStatus} ${projectResult.includes('success') ? styles.success : styles.error}`}>
-                {projectResult}
-              </div>
-            )}
           </div>
         );
 
@@ -303,14 +215,27 @@ const Submit: React.FC = () => {
             </div>
 
             <form
-              ref={patternFormRef}
-              onSubmit={handlePatternSubmit}
+              action="https://api.web3forms.com/submit"
+              method="POST"
               className={styles.bauhausForm}
+              onSubmit={(e) => {
+                // Simple client-side handler to track pattern count
+                const form = e.target as HTMLFormElement;
+                form.addEventListener('submit', () => {
+                  setPatternCount(patternCount + 1);
+                });
+              }}
             >
               {/* Web3Forms required fields */}
+              <input type="hidden" name="access_key" value="dbbd1b6a-8acf-487f-a291-61e154d58f0b" />
               <input type="hidden" name="subject" value="New Cellular Automata Pattern Submission" />
+              <input type="hidden" name="form_type" value="pattern_submission" />
               <input type="hidden" name="redirect" value="false" />
               <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
+
+              {/* Pass basic info fields as hidden fields */}
+              <input type="hidden" name="name" value={basicInfo.name} />
+              <input type="hidden" name="email" value={basicInfo.email} />
 
               <div className={styles.formField}>
                 <label htmlFor="pattern-name">Pattern Name</label>
@@ -439,12 +364,6 @@ const Submit: React.FC = () => {
                 </button>
               </div>
             </form>
-
-            {patternResult && (
-              <div className={`${styles.formStatus} ${patternResult.includes('success') ? styles.success : styles.error}`}>
-                {patternResult}
-              </div>
-            )}
           </div>
         );
 
