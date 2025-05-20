@@ -149,8 +149,23 @@ const getCategoryColorClass = (category: PatternCategory): string => {
   return colorClasses[category];
 };
 
+// Debug function to validate pattern format
+const debugPatternGrid = (pattern: number[][]) => {
+  console.log('Pattern representation:', pattern);
+  if (!Array.isArray(pattern) || pattern.some(row => !Array.isArray(row))) {
+    console.error('Invalid pattern format:', pattern);
+    return false;
+  }
+  return true;
+};
+
 // Pattern Grid Visualization Component
 const PatternGrid: React.FC<{ pattern: number[][] }> = ({ pattern }) => {
+  // DEBUG: Add debug validation
+  if (!debugPatternGrid(pattern)) {
+    return <div className={styles.patternError}>Invalid pattern format</div>;
+  }
+
   // Ensure the pattern has content
   if (!pattern || pattern.length === 0) {
     return <div className={styles.patternError}>Invalid pattern data</div>;
@@ -172,15 +187,17 @@ const PatternGrid: React.FC<{ pattern: number[][] }> = ({ pattern }) => {
   );
 };
 
-const handleCardClick = (e: React.MouseEvent, pattern: PatternData) => {
-  console.log('Card clicked:', pattern.id);
-  // You can add more detailed logging here
-};
-
 // Pattern Card Component
 const PatternCard: React.FC<{ pattern: PatternData }> = ({ pattern }) => {
+  // Add click handler for debugging
+  const handleCardClick = (e: React.MouseEvent, pattern: PatternData) => {
+    // DEBUG
+    console.log('Card clicked:', pattern.id);
+  };
+
   return (
-    <div className={styles.patternCard}
+    <div
+      className={styles.patternCard}
       onClick={(e) => handleCardClick(e, pattern)}
     >
       <div className={`${styles.patternCategory} ${getCategoryColorClass(pattern.category)}`}>
@@ -216,20 +233,23 @@ const GalleryPage: React.FC = () => {
 
   // Fetch patterns from the JSON file
   useEffect(() => {
-    // Load patterns from the static JSON file, accounting for baseUrl
+    // More detailed fetch error handling
     fetch(`${baseUrl}data/patterns.json`)
       .then(response => {
+        console.log('Fetch response status:', response.status);
         if (!response.ok) {
           throw new Error(`Failed to load patterns data: ${response.status}`);
         }
         return response.json();
       })
       .then(data => {
+        console.log('Patterns loaded:', data.length);
         setPatterns(data);
       })
       .catch(error => {
         console.error('Error loading patterns:', error);
         // Fall back to sample data if the fetch fails
+        console.log('Using sample patterns');
         setPatterns(SAMPLE_PATTERNS);
       });
   }, [baseUrl]);
@@ -239,17 +259,29 @@ const GalleryPage: React.FC = () => {
     ? patterns
     : patterns.filter(pattern => pattern.category === activeCategory);
 
-  // Sort patterns based on current sort selection
+  // Sort patterns based on current sort selection with error handling
   const sortedPatterns = [...filteredPatterns].sort((a, b) => {
-    if (sortBy === 'date') {
-      return new Date(b.submissionDate).getTime() - new Date(a.submissionDate).getTime();
-    } else if (sortBy === 'name') {
-      return a.patternName.localeCompare(b.patternName);
-    } else if (sortBy === 'student') {
-      return a.studentName.localeCompare(b.studentName);
+    console.log(`Sorting ${a.id} vs ${b.id} by ${sortBy}`);
+    try {
+      if (sortBy === 'date') {
+        return new Date(b.submissionDate).getTime() - new Date(a.submissionDate).getTime();
+      } else if (sortBy === 'name') {
+        return a.patternName.localeCompare(b.patternName);
+      } else if (sortBy === 'student') {
+        return a.studentName.localeCompare(b.studentName);
+      }
+    } catch (err) {
+      console.error('Error during sort:', err);
     }
     return 0;
   });
+
+  // Handle category change with debugging
+  const handleCategoryChange = (category: string) => {
+    console.log('Changing category to:', category);
+    setActiveCategory(category);
+    console.log('Category changed');
+  };
 
   // Available categories for filtering
   const categories: { value: string, label: string }[] = [
@@ -299,7 +331,7 @@ const GalleryPage: React.FC = () => {
                 <button
                   key={category.value}
                   className={`${styles.filterButton} ${activeCategory === category.value ? styles.filterButtonActive : ''}`}
-                  onClick={() => setActiveCategory(category.value)}
+                  onClick={() => handleCategoryChange(category.value)}
                 >
                   {category.label}
                 </button>
