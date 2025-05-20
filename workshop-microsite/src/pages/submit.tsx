@@ -125,7 +125,14 @@ const Submit: React.FC = () => {
                 type="button"
                 onClick={() => handleTabChange('project')}
               >
-                Next: Submit Project
+                Submit my p5js project
+              </button>
+              <button
+                className={`${styles.bauhausButton} ${styles.next}`}
+                type="button"
+                onClick={() => handleTabChange('patterns')}
+              >
+                Submit a start state
               </button>
             </div>
           </div>
@@ -208,13 +215,6 @@ const Submit: React.FC = () => {
                   type="submit"
                 >
                   Submit Project
-                </button>
-                <button
-                  className={`${styles.bauhausButton} ${styles.next}`}
-                  type="button"
-                  onClick={() => handleTabChange('patterns')}
-                >
-                  Next: Submit Start States
                 </button>
               </div>
             </form>
