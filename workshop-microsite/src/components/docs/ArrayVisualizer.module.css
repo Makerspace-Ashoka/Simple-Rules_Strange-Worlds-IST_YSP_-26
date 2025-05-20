@@ -1,0 +1,126 @@
+.arrayVisualizerContainer {
+  margin: 1.5rem 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.array {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #f8f9fa;
+}
+
+.arrayItem {
+  padding: 0.5rem 1rem;
+  min-width: 2rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #e0e0e0;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.arrayItem:last-child {
+  border-right: none;
+}
+
+.highlight {
+  background-color: #ffefba;
+  font-weight: bold;
+  color: #333;
+  box-shadow: inset 0 0 0 1px #ffd152;
+}
+
+.indices {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.indexCell {
+  padding: 0.25rem 1rem;
+  min-width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 0.85rem;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+.highlightedIndices {
+  font-weight: bold;
+  color: #333;
+}
+
+.highlightedIndex {
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+.caption {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: #666;
+  text-align: center;
+  font-style: italic;
+}
+
+.error {
+  padding: 1rem;
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .arrayItem {
+    padding: 0.5rem;
+    min-width: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .indexCell {
+    padding: 0.25rem 0.5rem;
+    min-width: 1.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Dark mode support */
+:global(.dark-theme) .array {
+  background-color: #2d333b;
+  border-color: #444c56;
+}
+
+:global(.dark-theme) .arrayItem {
+  border-color: #444c56;
+  color: #e6edf3;
+}
+
+:global(.dark-theme) .highlight {
+  background-color: #4d2f00;
+  color: #e6edf3;
+  box-shadow: inset 0 0 0 1px #a76e00;
+}
+
+:global(.dark-theme) .indexCell {
+  color: #adbac7;
+}
+
+:global(.dark-theme) .highlightedIndex {
+  color: #ff9292;
+}
+
+:global(.dark-theme) .caption {
+  color: #adbac7;
+}
