@@ -172,10 +172,17 @@ const PatternGrid: React.FC<{ pattern: number[][] }> = ({ pattern }) => {
   );
 };
 
+const handleCardClick = (e: React.MouseEvent, pattern: PatternData) => {
+  console.log('Card clicked:', pattern.id);
+  // You can add more detailed logging here
+};
+
 // Pattern Card Component
 const PatternCard: React.FC<{ pattern: PatternData }> = ({ pattern }) => {
   return (
-    <div className={styles.patternCard}>
+    <div className={styles.patternCard}
+      onClick={(e) => handleCardClick(e, pattern)}
+    >
       <div className={`${styles.patternCategory} ${getCategoryColorClass(pattern.category)}`}>
         {getCategoryDisplayName(pattern.category)}
       </div>
@@ -205,12 +212,27 @@ const GalleryPage: React.FC = () => {
   const [patterns, setPatterns] = useState<PatternData[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('date');
+  const baseUrl = siteConfig.baseUrl;
 
-  // In a real application, you would fetch data from an API here
+  // Fetch patterns from the JSON file
   useEffect(() => {
-    // Simulating data fetch
-    setPatterns(SAMPLE_PATTERNS);
-  }, []);
+    // Load patterns from the static JSON file, accounting for baseUrl
+    fetch(`${baseUrl}data/patterns.json`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to load patterns data: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setPatterns(data);
+      })
+      .catch(error => {
+        console.error('Error loading patterns:', error);
+        // Fall back to sample data if the fetch fails
+        setPatterns(SAMPLE_PATTERNS);
+      });
+  }, [baseUrl]);
 
   // Filter patterns by category
   const filteredPatterns = activeCategory === 'all'
