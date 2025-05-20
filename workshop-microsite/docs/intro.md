@@ -44,3 +44,20 @@ Throughout the workshop, we'll explore these key ideas:
 - **Computational universality**: How cellular automata can perform calculations
 - **Pattern formation**: How patterns in nature might emerge from simple interactions
 
+## Getting Started
+
+Ready to begin? Follow this sequence:
+
+1. Start with [Pattern Exploration](explore-patterns.md) to see cellular automata in action
+2. Explore [1D Cellular Automata](1d-automata.md) for a deeper understanding of rules
+3. Use the [Discovery Journal](discovery-journal.mdx) to document your observations
+4. Continue to [Code Walkthrough](code-walkthrough/01-project-structure.md) to understand the implementation
+5. Try the coding challenges for your grade level: [9-10th Grade](basics/code-templates-9-10.md) or [11-12th Grade](advanced/code-templates-11-12.md)
+
+## Need Help?
+
+- Refer to the [Rule Reference Card](rule-reference-card.md) for a quick guide to cellular automaton rules
+- Check the [Extension Resources](extension-resources.md) for additional learning materials
+- Ask your instructor for assistance with challenging concepts
+
+Let's begin exploring how pixels can think!
