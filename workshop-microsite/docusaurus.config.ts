@@ -45,9 +45,18 @@ const config: Config = {
     ],
   ],
 
+  plugins: ['@docusaurus/theme-live-codeblock'],
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/cellular-automata-workshop-social-card.png',
+    liveCodeBlock: {
+      /**
+       * The position of the live playground, above or under the editor
+       * Possible values: "top" | "bottom"
+       */
+      playgroundPosition: 'bottom',
+    },
     navbar: {
       title: 'Home',
       logo: {
@@ -81,7 +90,7 @@ const config: Config = {
           items: [
             {
               label: 'Workshop',
-              to: '/docs/explore-patterns',
+              to: '/docs/intro',
             },
           ],
         },
