@@ -1,17 +1,49 @@
-// PatternDemo.jsx - Game of Life pattern demonstration
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './PatternDemo.module.css';
 
-const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
-  const [grid, setGrid] = useState([]);
+type PatternType = 'blinker' | 'glider' | 'pulsar' | 'checkerboard' | 'random' | string;
+
+interface PatternDemoProps {
+  pattern: PatternType;
+  steps?: number;
+  speed?: number;
+  size?: number;
+  cellSize?: number;
+  caption?: string;
+  autoPlay?: boolean;
+}
+
+/**
+ * A component that demonstrates Conway's Game of Life patterns
+ *
+ * @param pattern - The pattern to demonstrate
+ * @param steps - Number of generations to pre-compute
+ * @param speed - Animation speed (frames per second)
+ * @param size - Size of the grid (number of cells)
+ * @param cellSize - Size of each cell in pixels
+ * @param caption - Optional caption for the demonstration
+ * @param autoPlay - Whether to automatically play the animation
+ */
+const PatternDemo: React.FC<PatternDemoProps> = ({
+  pattern,
+  steps = 10,
+  speed = 2,
+  size = 20,
+  cellSize = 12,
+  caption,
+  autoPlay = true
+}) => {
+  const [grid, setGrid] = useState<number[][][]>([]);
   const [currentStep, setCurrentStep] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const animationRef = useRef();
+  const [isPlaying, setIsPlaying] = useState(autoPlay);
+  const animationRef = useRef<number>(0);
   const lastUpdateTime = useRef(0);
 
   // Initialize the grid with the selected pattern
   useEffect(() => {
-    const initialGrid = createInitialGrid(pattern);
+    // Create initial grid based on pattern
+    const initialGrid = createInitialGrid(pattern, size);
+
     if (initialGrid) {
       // Pre-compute all steps to show in the animation
       const allSteps = [initialGrid];
@@ -23,12 +55,22 @@ const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
       }
 
       setGrid(allSteps);
+      setCurrentStep(0);
+      setIsPlaying(autoPlay);
     }
-  }, [pattern, steps]);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [pattern, steps, size, autoPlay]);
 
   // Animation loop
   useEffect(() => {
-    const animate = (timestamp) => {
+    if (!grid.length) return;
+
+    const animate = (timestamp: number) => {
       if (!lastUpdateTime.current) lastUpdateTime.current = timestamp;
 
       const elapsed = timestamp - lastUpdateTime.current;
@@ -51,13 +93,12 @@ const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isPlaying, steps, speed]);
+  }, [isPlaying, steps, speed, grid.length]);
 
   // Create initial grid based on pattern name
-  const createInitialGrid = (patternName) => {
-    const size = 20; // Default grid size
-    const grid = Array(size).fill().map(() => Array(size).fill(0));
-    const center = Math.floor(size / 2);
+  const createInitialGrid = (patternName: PatternType, gridSize: number): number[][] => {
+    const grid = Array(gridSize).fill(0).map(() => Array(gridSize).fill(0));
+    const center = Math.floor(gridSize / 2);
 
     // Add cells based on pattern
     switch (patternName) {
@@ -66,6 +107,7 @@ const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
         grid[center][center] = 1;
         grid[center][center + 1] = 1;
         break;
+
       case 'glider':
         grid[center - 1][center] = 1;
         grid[center][center + 1] = 1;
@@ -73,6 +115,7 @@ const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
         grid[center + 1][center] = 1;
         grid[center + 1][center + 1] = 1;
         break;
+
       case 'pulsar':
         // Pulsar pattern (period 3 oscillator)
         const positions = [
@@ -87,35 +130,31 @@ const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
           [12, 2], [12, 7], [12, 9], [12, 14],
           [14, 4], [14, 5], [14, 6], [14, 10], [14, 11], [14, 12]
         ];
+
+        // Offset to center
+        const offset = center - 8;
         positions.forEach(([i, j]) => {
-          grid[i][j] = 1;
+          const row = i + offset;
+          const col = j + offset;
+          if (row >= 0 && row < gridSize && col >= 0 && col < gridSize) {
+            grid[row][col] = 1;
+          }
         });
         break;
+
       case 'checkerboard':
-        for (let i = 0; i < size; i++) {
-          for (let j = 0; j < size; j++) {
+        for (let i = 0; i < gridSize; i++) {
+          for (let j = 0; j < gridSize; j++) {
             grid[i][j] = (i + j) % 2;
           }
         }
         break;
-      case 'vertical-stripes':
-        for (let i = 0; i < size; i++) {
-          for (let j = 0; j < size; j++) {
-            grid[i][j] = i % 3 === 0 ? 1 : 0;
-          }
-        }
-        break;
-      case 'horizontal-stripes':
-        for (let i = 0; i < size; i++) {
-          for (let j = 0; j < size; j++) {
-            grid[i][j] = j % 3 === 0 ? 1 : 0;
-          }
-        }
-        break;
+
+      case 'random':
       default:
-        // Random pattern
-        for (let i = 0; i < size; i++) {
-          for (let j = 0; j < size; j++) {
+        // Random pattern with 30% live cells
+        for (let i = 0; i < gridSize; i++) {
+          for (let j = 0; j < gridSize; j++) {
             grid[i][j] = Math.random() < 0.3 ? 1 : 0;
           }
         }
@@ -125,10 +164,10 @@ const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
   };
 
   // Compute next generation of cells (Game of Life rules)
-  const computeNextGeneration = (currentGrid) => {
+  const computeNextGeneration = (currentGrid: number[][]): number[][] => {
     const rows = currentGrid.length;
     const cols = currentGrid[0].length;
-    const newGrid = Array(rows).fill().map(() => Array(cols).fill(0));
+    const newGrid = Array(rows).fill(0).map(() => Array(cols).fill(0));
 
     // Apply Game of Life rules
     for (let i = 0; i < rows; i++) {
@@ -148,7 +187,7 @@ const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
           }
         }
 
-        // Apply rules
+        // Apply Conway's rules
         if (state === 1) {
           newGrid[i][j] = (neighbors === 2 || neighbors === 3) ? 1 : 0;
         } else {
@@ -168,8 +207,8 @@ const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
             className={styles.grid}
             style={{
               display: 'grid',
-              gridTemplateRows: `repeat(${grid[currentStep].length}, 12px)`,
-              gridTemplateColumns: `repeat(${grid[currentStep][0].length}, 12px)`
+              gridTemplateRows: `repeat(${grid[currentStep].length}, ${cellSize}px)`,
+              gridTemplateColumns: `repeat(${grid[currentStep][0].length}, ${cellSize}px)`
             }}
           >
             {grid[currentStep].map((row, i) =>
@@ -199,7 +238,7 @@ const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
           value={currentStep}
           onChange={(e) => {
             setCurrentStep(parseInt(e.target.value));
-            if (!isPlaying) setIsPlaying(true);
+            if (isPlaying) setIsPlaying(false);
           }}
           className={styles.slider}
         />
@@ -208,8 +247,13 @@ const PatternDemo = ({ pattern, steps = 5, speed = 1 }) => {
           Generation: {currentStep}
         </div>
       </div>
+
+      {caption && (
+        <div className={styles.caption}>{caption}</div>
+      )}
     </div>
   );
 };
 
 export default PatternDemo;
+
