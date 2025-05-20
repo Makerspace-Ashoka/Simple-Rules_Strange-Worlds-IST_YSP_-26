@@ -20,6 +20,7 @@ interface CodeEditorProps {
 /**
  * An interactive code editor component with syntax highlighting,
  * live preview, and solution display functionality
+ * Optimized for static sites like GitHub Pages
  */
 const CodeEditor: React.FC<CodeEditorProps> = ({
   id,
@@ -36,8 +37,15 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   const [showSolution, setShowSolution] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [mounted, setMounted] = useState(false);
 
-  const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
+  // Use effect to handle client-side only code
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Get theme when mounted (client-side only)
+  const isDarkTheme = mounted ? document.documentElement.getAttribute('data-theme') === 'dark' : false;
 
   // Reset states when id changes
   useEffect(() => {
@@ -78,6 +86,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       setTimeout(() => setIsCorrect(null), 3000);
     }
   };
+
+  // For static site, show nothing until client-side hydration
+  if (!mounted) {
+    return <div className={styles.codeEditorContainer}></div>;
+  }
 
   return (
     <div className={styles.codeEditorContainer} data-testid={`code-editor-${id}`}>
