@@ -1,8 +1,51 @@
-// VisualDemo.jsx - Interactive demonstrations for various concepts
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './VisualDemo.module.css';
 
-const VisualDemo = ({
+// Types of demos
+type DemoType =
+  | 'grid-creation'
+  | 'nested-loops'
+  | 'random-distribution'
+  | 'array-modification'
+  | 'create-2d-array'
+  | 'grid-wrapping'
+  | 'nested-loops-grid'
+  | 'pattern'
+  | 'neighbors';
+
+interface GridDimensions {
+  rows: number;
+  cols: number;
+}
+
+interface VisualDemoProps {
+  type: DemoType;
+  width?: number;
+  height?: number;
+  resolution?: number;
+  pattern?: string;
+  grid?: GridDimensions;
+  samples?: number;
+  steps?: number;
+  speed?: number;
+  autoPlay?: boolean;
+}
+
+/**
+ * A component for visualizing programming concepts through interactive demonstrations
+ *
+ * @param type - The type of demonstration to show
+ * @param width - Width of the demo area in pixels
+ * @param height - Height of the demo area in pixels
+ * @param resolution - Size of grid cells in pixels
+ * @param pattern - Pattern name for pattern demos
+ * @param grid - Grid dimensions for grid-based demos
+ * @param samples - Number of samples for statistical demos
+ * @param steps - Number of animation steps
+ * @param speed - Animation speed
+ * @param autoPlay - Whether to auto-play animations
+ */
+const VisualDemo: React.FC<VisualDemoProps> = ({
   type,
   width = 300,
   height = 200,
@@ -10,16 +53,22 @@ const VisualDemo = ({
   pattern = null,
   grid = null,
   samples = 50,
-  steps = 10,
-  speed = 1
+  steps = 20,
+  speed = 1,
+  autoPlay = true
 }) => {
-  const canvasRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [currentStep, setCurrentStep] = useState(0);
-  const [gridState, setGridState] = useState([]);
+  const [gridState, setGridState] = useState<any[][][]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const animationRef = useRef<number>(0);
+  const lastUpdateTime = useRef(0);
 
-  // Setup function for different demo types
+  // Initialize based on demo type
   useEffect(() => {
+    if (isInitialized) return;
+
     const setupDemo = () => {
       switch (type) {
         case 'grid-creation':
@@ -46,103 +95,308 @@ const VisualDemo = ({
     };
 
     setupDemo();
-
-    // Animation loop for dynamic visualizations
-    let animationId;
-    if (isPlaying) {
-      animationId = requestAnimationFrame(animate);
-    }
+    setIsInitialized(true);
 
     return () => {
-      if (animationId) cancelAnimationFrame(animationId);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
-  }, [type, isPlaying, currentStep]);
+  }, [type, isInitialized, width, height, resolution, grid, samples, steps, pattern]);
 
-  // Animation function
-  const animate = () => {
-    // Animation logic would go here based on demo type
-    // For example, stepping through grid creation or looping visualization
-    setCurrentStep(prev => (prev + 1) % steps);
-  };
+  // Animation loop
+  useEffect(() => {
+    if (!isInitialized || !isPlaying) return;
+
+    const animate = (timestamp: number) => {
+      if (!lastUpdateTime.current) lastUpdateTime.current = timestamp;
+
+      const elapsed = timestamp - lastUpdateTime.current;
+      const frameInterval = 1000 / (speed * 2); // Control animation speed
+
+      if (elapsed > frameInterval) {
+        lastUpdateTime.current = timestamp;
+        setCurrentStep(prev => (prev + 1) % steps);
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isPlaying, steps, speed, isInitialized]);
 
   // Setup functions for different demos
   const setupGridCreation = () => {
-    // Visual demonstration of creating a 2D grid
     const cols = Math.floor(width / resolution);
     const rows = Math.floor(height / resolution);
-    const newGridState = Array(steps).fill().map((_, step) => {
+    const newGridState = Array(steps).fill(0).map((_, step) => {
       // For each step, show a different stage of grid creation
-      const grid = [];
-      for (let i = 0; i < cols; i++) {
-        if (i <= (step * cols / steps)) {
-          grid[i] = Array(rows).fill().map((_, j) => {
-            if (j <= (step * rows / steps)) return 0;
-            return null; // Not yet created
-          });
+      const grid: (number | null)[][] = Array(cols).fill(0).map(() => Array(rows).fill(null));
+      const completionRatio = (step + 1) / steps;
+
+      const colsToShow = Math.floor(cols * completionRatio);
+      const rowsToShow = Math.floor(rows * completionRatio);
+
+      for (let i = 0; i < colsToShow; i++) {
+        for (let j = 0; j < rowsToShow; j++) {
+          grid[i][j] = 0; // Created but empty
         }
       }
+
       return grid;
     });
+
     setGridState(newGridState);
   };
 
   const setupNestedLoops = () => {
-    // Visual demonstration of nested loops iteration
-    const { rows, cols } = grid || { rows: 5, cols: 5 };
+    const { rows = 5, cols = 5 } = grid || {};
     const totalCells = rows * cols;
-    const stepsPerCell = steps / totalCells;
+    const cellsPerStep = Math.max(1, Math.ceil(totalCells / steps));
 
-    const newGridState = Array(steps).fill().map((_, step) => {
-      const grid = Array(cols).fill().map(() => Array(rows).fill(0));
-      const visitedCells = Math.floor(step / stepsPerCell);
+    const newGridState = Array(steps).fill(0).map((_, step) => {
+      const visitedCells = Math.min(totalCells, (step + 1) * cellsPerStep);
+      const grid = Array(cols).fill(0).map(() => Array(rows).fill(0));
 
-      for (let idx = 0; idx <= visitedCells; idx++) {
+      for (let idx = 0; idx < visitedCells; idx++) {
         const i = Math.floor(idx / rows);
         const j = idx % rows;
         if (i < cols && j < rows) {
           grid[i][j] = 1; // Visited
         }
       }
+
       return grid;
     });
+
     setGridState(newGridState);
   };
 
-  // Render function based on demo type
-  const renderDemo = () => {
-    switch (type) {
-      case 'grid-creation':
-      case 'nested-loops':
-      case 'nested-loops-grid':
-      case 'grid-wrapping':
-        return renderGridDemo();
-      case 'random-distribution':
-        return renderRandomDistribution();
-      case 'array-modification':
-        return renderArrayModification();
-      case 'create-2d-array':
-        return renderCreate2DArray();
-      case 'pattern':
-        return renderPattern();
-      case 'neighbors':
-        return renderNeighbors();
-      default:
-        return <div>Unknown demo type</div>;
-    }
+  const setupNestedLoopsGrid = () => {
+    // Similar to nested loops but shows row/column traversal more clearly
+    const { rows = 5, cols = 5 } = grid || {};
+    const totalCells = rows * cols;
+
+    const newGridState = Array(steps).fill(0).map((_, step) => {
+      const grid = Array(cols).fill(0).map(() => Array(rows).fill(0));
+      const stepsPerRow = Math.ceil(steps / rows);
+      const currentRow = Math.floor(step / stepsPerRow);
+      const cellsInCurrentRow = (step % stepsPerRow) * Math.ceil(cols / stepsPerRow);
+
+      // Fill complete rows
+      for (let i = 0; i < currentRow; i++) {
+        for (let j = 0; j < cols; j++) {
+          grid[j][i] = 1;
+        }
+      }
+
+      // Fill cells in current row
+      for (let j = 0; j < cellsInCurrentRow; j++) {
+        if (j < cols) {
+          grid[j][currentRow] = 1;
+        }
+      }
+
+      return grid;
+    });
+
+    setGridState(newGridState);
   };
 
-  // Render a grid-based demo
+  const setupRandomDistribution = () => {
+    // For this demo we'll simulate random() distribution
+    const newGridState = Array(steps).fill(0).map((_, step) => {
+      const grid = Array(10).fill(0).map(() => Array(10).fill(0));
+      const sampleCount = Math.ceil(((step + 1) / steps) * samples);
+
+      // Generate random samples
+      for (let i = 0; i < sampleCount; i++) {
+        const randomVal = Math.random();
+        const col = Math.min(9, Math.floor(randomVal * 10));
+        grid[col][0] = (grid[col][0] || 0) + 1;
+      }
+
+      return grid;
+    });
+
+    setGridState(newGridState);
+  };
+
+  const setupArrayModification = () => {
+    // Visualization for array modification
+    const initialArray = [10, 20, 30, 40, 50];
+    const operations = [
+      { type: 'initial', array: [...initialArray] },
+      { type: 'change', array: [10, 25, 30, 40, 50], index: 1 },
+      { type: 'add', array: [10, 25, 30, 40, 50, 60], index: 5 },
+      { type: 'remove', array: [10, 25, 30, 50, 60], index: 3 },
+      { type: 'insert', array: [10, 25, 35, 30, 50, 60], index: 2 }
+    ];
+
+    const stepsPerOperation = Math.floor(steps / operations.length);
+
+    const newGridState = Array(steps).fill(0).map((_, step) => {
+      const opIndex = Math.min(operations.length - 1, Math.floor(step / stepsPerOperation));
+      const { array, type, index } = operations[opIndex];
+
+      // Create a grid to represent the array
+      const grid = Array(array.length).fill(0).map((_, i) => {
+        return [array[i], i === index ? type : null];
+      });
+
+      return grid;
+    });
+
+    setGridState(newGridState);
+  };
+
+  const setupCreate2DArray = () => {
+    // Visualization for creating a 2D array
+    const { rows = 3, cols = 4 } = grid || {};
+
+    const newGridState = Array(steps).fill(0).map((_, step) => {
+      const completionRatio = (step + 1) / steps;
+      const grid: (number | null)[][] = Array(cols).fill(0).map(() => Array(rows).fill(null));
+
+      // Phase 1: Create the outer array
+      if (completionRatio < 0.2) {
+        return grid;
+      }
+
+      // Phase 2: Create each row array
+      const rowsToCreate = Math.floor(cols * Math.min(1, (completionRatio - 0.2) / 0.4));
+      for (let i = 0; i < rowsToCreate; i++) {
+        for (let j = 0; j < rows; j++) {
+          grid[i][j] = null; // Row created but not filled
+        }
+      }
+
+      // Phase 3: Fill with values
+      if (completionRatio >= 0.6) {
+        const cellsToFill = Math.floor(rows * cols * ((completionRatio - 0.6) / 0.4));
+        let filled = 0;
+
+        for (let i = 0; i < cols && filled < cellsToFill; i++) {
+          for (let j = 0; j < rows && filled < cellsToFill; j++) {
+            grid[i][j] = 0; // Fill with zero
+            filled++;
+          }
+        }
+      }
+
+      return grid;
+    });
+
+    setGridState(newGridState);
+  };
+
+  const setupGridWrapping = () => {
+    // Visualization for grid wrapping (toroidal)
+    const gridSize = 7;
+    const center = Math.floor(gridSize / 2);
+
+    const newGridState = Array(steps).fill(0).map((_, step) => {
+      const grid = Array(gridSize).fill(0).map(() => Array(gridSize).fill(0));
+
+      // Highlight a cell moving past the edge and wrapping around
+      const progress = step / (steps - 1);
+      let x, y;
+
+      if (progress < 0.25) {
+        // Move right
+        x = Math.floor(center + (gridSize - center) * (progress * 4));
+        y = center;
+      } else if (progress < 0.5) {
+        // Move down
+        x = (gridSize - 1);
+        y = Math.floor(center + (gridSize - center) * ((progress - 0.25) * 4));
+      } else if (progress < 0.75) {
+        // Move left
+        x = Math.floor((gridSize - 1) - (gridSize - 1) * ((progress - 0.5) * 4));
+        y = (gridSize - 1);
+      } else {
+        // Move up
+        x = 0;
+        y = Math.floor((gridSize - 1) - (gridSize - 1) * ((progress - 0.75) * 4));
+      }
+
+      // Wrap coordinates
+      x = (x + gridSize) % gridSize;
+      y = (y + gridSize) % gridSize;
+
+      grid[x][y] = 1;
+
+      // Show the wrapped coordinates
+      if (x === 0) grid[gridSize - 1][y] = 2;
+      if (x === gridSize - 1) grid[0][y] = 2;
+      if (y === 0) grid[x][gridSize - 1] = 2;
+      if (y === gridSize - 1) grid[x][0] = 2;
+
+      return grid;
+    });
+
+    setGridState(newGridState);
+  };
+
+  const setupPattern = () => {
+    // Simply delegate to PatternDemo for pattern visualization
+    return null;
+  };
+
+  const setupNeighbors = () => {
+    // Visualization for counting neighbors
+    const gridSize = 5;
+    const center = Math.floor(gridSize / 2);
+
+    const newGridState = Array(steps).fill(0).map((_, step) => {
+      const grid = Array(gridSize).fill(0).map(() => Array(gridSize).fill(0));
+
+      // Place a cell in the center
+      grid[center][center] = 1;
+
+      // Highlight neighbors one by one
+      if (step > 0) {
+        const neighborPositions = [
+          [center - 1, center - 1], [center - 1, center], [center - 1, center + 1],
+          [center, center - 1], /* center */[center, center + 1],
+          [center + 1, center - 1], [center + 1, center], [center + 1, center + 1]
+        ];
+
+        const highlightIndex = Math.min(neighborPositions.length - 1, step - 1);
+        const [nx, ny] = neighborPositions[highlightIndex];
+        grid[nx][ny] = 2; // 2 represents highlighted neighbor
+      }
+
+      return grid;
+    });
+
+    setGridState(newGridState);
+  };
+
+  // Render functions for different demo types
   const renderGridDemo = () => {
-    const currentGrid = gridState[currentStep] || [];
+    if (!gridState.length || !gridState[currentStep]) {
+      return <div className={styles.loading}>Loading visualization...</div>;
+    }
+
+    const currentGrid = gridState[currentStep];
 
     return (
-      <div className={styles.demoContainer}>
-        <div className={styles.grid}
+      <div className={styles.gridDemo}>
+        <div
+          className={styles.grid}
           style={{
             width: `${width}px`,
             height: `${height}px`,
             gridTemplateColumns: `repeat(${currentGrid.length}, 1fr)`
-          }}>
+          }}
+        >
           {currentGrid.map((col, i) =>
             col.map((cell, j) => (
               <div
@@ -150,6 +404,7 @@ const VisualDemo = ({
                 className={`
                   ${styles.cell}
                   ${cell === 1 ? styles.visited : ''}
+                  ${cell === 2 ? styles.highlighted : ''}
                   ${cell === 0 ? styles.empty : ''}
                   ${cell === null ? styles.notCreated : ''}
                 `}
@@ -171,7 +426,69 @@ const VisualDemo = ({
             min="0"
             max={steps - 1}
             value={currentStep}
-            onChange={(e) => setCurrentStep(parseInt(e.target.value))}
+            onChange={(e) => {
+              setCurrentStep(parseInt(e.target.value));
+              if (isPlaying) setIsPlaying(false);
+            }}
+            className={styles.slider}
+          />
+
+          <div className={styles.stepLabel}>
+            Step: {currentStep + 1} of {steps}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderRandomDistribution = () => {
+    if (!gridState.length || !gridState[currentStep]) {
+      return <div className={styles.loading}>Loading visualization...</div>;
+    }
+
+    const currentGrid = gridState[currentStep];
+    const maxValue = Math.max(...currentGrid.map(col => Math.max(...col)));
+
+    return (
+      <div className={styles.distributionDemo}>
+        <div className={styles.histogram}>
+          {currentGrid.map((col, i) => {
+            const height = col[0] ? (col[0] / maxValue) * 100 : 0;
+            return (
+              <div key={i} className={styles.histogramColumn}>
+                <div
+                  className={styles.histogramBar}
+                  style={{ height: `${height}%` }}
+                />
+                <div className={styles.histogramLabel}>
+                  {(i / 10).toFixed(1)}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className={styles.distributionLabel}>
+          random() value distribution ({Math.ceil(((currentStep + 1) / steps) * samples)} samples)
+        </div>
+
+        <div className={styles.controls}>
+          <button
+            className={styles.playButton}
+            onClick={() => setIsPlaying(!isPlaying)}
+          >
+            {isPlaying ? '⏸ Pause' : '▶️ Play'}
+          </button>
+
+          <input
+            type="range"
+            min="0"
+            max={steps - 1}
+            value={currentStep}
+            onChange={(e) => {
+              setCurrentStep(parseInt(e.target.value));
+              if (isPlaying) setIsPlaying(false);
+            }}
             className={styles.slider}
           />
         </div>
@@ -179,30 +496,87 @@ const VisualDemo = ({
     );
   };
 
-  // Simplified render for other demo types
-  const renderRandomDistribution = () => {
-    // A visualization showing random distribution
-    return <div>Random Distribution Demo (implementation simplified for example)</div>;
-  };
-
   const renderArrayModification = () => {
-    // A visualization showing array modification
-    return <div>Array Modification Demo (implementation simplified for example)</div>;
+    if (!gridState.length || !gridState[currentStep]) {
+      return <div className={styles.loading}>Loading visualization...</div>;
+    }
+
+    const currentGrid = gridState[currentStep];
+
+    return (
+      <div className={styles.arrayDemo}>
+        <div className={styles.arrayContainer}>
+          {currentGrid.map((item, i) => {
+            const [value, operation] = item;
+            return (
+              <div
+                key={i}
+                className={`
+                  ${styles.arrayCell}
+                  ${operation === 'change' ? styles.changed : ''}
+                  ${operation === 'add' ? styles.added : ''}
+                  ${operation === 'remove' ? styles.removed : ''}
+                  ${operation === 'insert' ? styles.inserted : ''}
+                `}
+              >
+                {value}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className={styles.controls}>
+          <button
+            className={styles.playButton}
+            onClick={() => setIsPlaying(!isPlaying)}
+          >
+            {isPlaying ? '⏸ Pause' : '▶️ Play'}
+          </button>
+
+          <input
+            type="range"
+            min="0"
+            max={steps - 1}
+            value={currentStep}
+            onChange={(e) => {
+              setCurrentStep(parseInt(e.target.value));
+              if (isPlaying) setIsPlaying(false);
+            }}
+            className={styles.slider}
+          />
+        </div>
+      </div>
+    );
   };
 
-  const renderCreate2DArray = () => {
-    // A visualization showing 2D array creation
-    return <div>2D Array Creation Demo (implementation simplified for example)</div>;
-  };
-
-  const renderPattern = () => {
-    // A visualization showing a specific pattern
-    return <div>Pattern Demo: {pattern} (implementation simplified for example)</div>;
-  };
-
-  const renderNeighbors = () => {
-    // A visualization showing cell neighbors
-    return <div>Cell Neighbors Demo (implementation simplified for example)</div>;
+  // Main render method
+  const renderDemo = () => {
+    switch (type) {
+      case 'grid-creation':
+      case 'nested-loops':
+      case 'nested-loops-grid':
+      case 'grid-wrapping':
+      case 'create-2d-array':
+      case 'neighbors':
+        return renderGridDemo();
+      case 'random-distribution':
+        return renderRandomDistribution();
+      case 'array-modification':
+        return renderArrayModification();
+      case 'pattern':
+        // This would normally be handled by PatternDemo
+        return (
+          <div className={styles.fallback}>
+            Pattern visualization. For actual implementation, use PatternDemo component.
+          </div>
+        );
+      default:
+        return (
+          <div className={styles.fallback}>
+            Visualization type "{type}" not implemented
+          </div>
+        );
+    }
   };
 
   return (
@@ -213,5 +587,4 @@ const VisualDemo = ({
 };
 
 export default VisualDemo;
-
 

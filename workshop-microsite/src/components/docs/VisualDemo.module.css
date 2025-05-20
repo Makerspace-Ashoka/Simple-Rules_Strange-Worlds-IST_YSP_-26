@@ -1,0 +1,359 @@
+.visualDemoContainer {
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.loading {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.fallback {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  font-style: italic;
+}
+
+/* Grid Demo Styles */
+.gridDemo {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.grid {
+  display: grid;
+  gap: 1px;
+  background-color: #dee2e6;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.cell {
+  aspect-ratio: 1;
+  transition: all 0.2s ease;
+}
+
+.empty {
+  background-color: #fff;
+}
+
+.visited {
+  background-color: #339af0;
+}
+
+.highlighted {
+  background-color: #fcc419;
+}
+
+.notCreated {
+  background-color: #e9ecef;
+  background-image: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 5px,
+      rgba(0, 0, 0, 0.05) 5px,
+      rgba(0, 0, 0, 0.05) 10px);
+}
+
+/* Array Modification Styles */
+.arrayDemo {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.arrayContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  gap: 2px;
+}
+
+.arrayCell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e9ecef;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.changed {
+  background-color: #339af0;
+  color: white;
+  transform: scale(1.1);
+}
+
+.added {
+  background-color: #40c057;
+  color: white;
+  animation: slideIn 0.5s ease;
+}
+
+.removed {
+  background-color: #fa5252;
+  color: white;
+  animation: fadeOut 0.5s ease;
+  opacity: 0.5;
+}
+
+.inserted {
+  background-color: #fcc419;
+  animation: slideIn 0.5s ease;
+}
+
+/* Random Distribution Styles */
+.distributionDemo {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  text-align: center;
+}
+
+.histogram {
+  display: flex;
+  height: 200px;
+  margin: 1rem auto;
+  align-items: flex-end;
+  justify-content: space-between;
+  max-width: 600px;
+}
+
+.histogramColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.histogramBar {
+  width: 100%;
+  background-color: #339af0;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.3s ease;
+}
+
+.histogramLabel {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.distributionLabel {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.playButton {
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  background-color: #339af0;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.playButton:hover {
+  background-color: #1c7ed6;
+}
+
+.slider {
+  flex: 1;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #dee2e6;
+  border-radius: 3px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #339af0;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #339af0;
+  cursor: pointer;
+  border: none;
+}
+
+.stepLabel {
+  font-size: 0.9rem;
+  color: #495057;
+  min-width: 100px;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .slider {
+    width: 100%;
+  }
+
+  .histogram {
+    height: 150px;
+  }
+
+  .histogramLabel {
+    font-size: 0.7rem;
+  }
+}
+
+/* Dark Mode Support */
+:global(.dark-theme) .loading,
+:global(.dark-theme) .fallback,
+:global(.dark-theme) .gridDemo,
+:global(.dark-theme) .arrayDemo,
+:global(.dark-theme) .distributionDemo {
+  background-color: #2d333b;
+  border-color: #444c56;
+}
+
+:global(.dark-theme) .loading,
+:global(.dark-theme) .fallback {
+  color: #adbac7;
+}
+
+:global(.dark-theme) .grid {
+  background-color: #444c56;
+}
+
+:global(.dark-theme) .empty {
+  background-color: #22272e;
+}
+
+:global(.dark-theme) .visited {
+  background-color: #1f6feb;
+}
+
+:global(.dark-theme) .highlighted {
+  background-color: #d29922;
+}
+
+:global(.dark-theme) .notCreated {
+  background-color: #373e47;
+  background-image: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 5px,
+      rgba(255, 255, 255, 0.05) 5px,
+      rgba(255, 255, 255, 0.05) 10px);
+}
+
+:global(.dark-theme) .arrayCell {
+  background-color: #2d333b;
+  border-color: #444c56;
+  color: #adbac7;
+}
+
+:global(.dark-theme) .changed {
+  background-color: #1f6feb;
+}
+
+:global(.dark-theme) .added {
+  background-color: #2b8a3e;
+}
+
+:global(.dark-theme) .removed {
+  background-color: #c92a2a;
+}
+
+:global(.dark-theme) .inserted {
+  background-color: #d29922;
+  color: #22272e;
+}
+
+:global(.dark-theme) .histogramBar {
+  background-color: #1f6feb;
+}
+
+:global(.dark-theme) .histogramLabel,
+:global(.dark-theme) .distributionLabel,
+:global(.dark-theme) .stepLabel {
+  color: #adbac7;
+}
+
+:global(.dark-theme) .playButton {
+  background-color: #1f6feb;
+}
+
+:global(.dark-theme) .playButton:hover {
+  background-color: #1a56c5;
+}
+
+:global(.dark-theme) .slider {
+  background-color: #444c56;
+}
+
+:global(.dark-theme) .slider::-webkit-slider-thumb {
+  background-color: #1f6feb;
+}
+
+:global(.dark-theme) .slider::-moz-range-thumb {
+  background-color: #1f6feb;
+}
