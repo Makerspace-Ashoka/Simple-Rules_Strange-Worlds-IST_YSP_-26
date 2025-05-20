@@ -219,12 +219,12 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className={clsx("button", styles.buttonPrimary)}
-            to="/docs/intro">
+            to="/cellular-automata-workshop/docs/intro">
             Start Workshop
           </Link>
           <Link
             className={clsx("button", styles.buttonSecondary)}
-            to="/docs/explore-patterns">
+            to="/cellular-automata-workshop/docs/explore-patterns">
             Exploration Guide
           </Link>
         </div>
