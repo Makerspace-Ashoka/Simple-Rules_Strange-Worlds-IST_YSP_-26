@@ -3,23 +3,23 @@ import { marked } from 'marked';
 // This function will load gallery items from the content folder
 export async function loadGallery() {
   const galleryElement = document.getElementById('gallery');
-  
+
   try {
     // In a real implementation, this would fetch from a directory or API
     // For demo purposes, we'll use sample data
     const galleryItems = await fetchGalleryItems();
-    
+
     // Remove loading indicator
     const loadingIndicator = document.querySelector('.loading-indicator');
     if (loadingIndicator) {
       loadingIndicator.remove();
     }
-    
+
     // Append gallery items to the gallery container
     galleryItems.forEach(item => {
       galleryElement.appendChild(createGalleryItemElement(item));
     });
-    
+
     return galleryItems;
   } catch (error) {
     console.error('Error loading gallery items:', error);
@@ -32,12 +32,12 @@ function createGalleryItemElement(item) {
   const galleryItem = document.createElement('div');
   galleryItem.className = 'gallery-item';
   galleryItem.dataset.category = item.category;
-  
+
   galleryItem.innerHTML = `
-    <img 
-      src="${item.imageSrc}" 
-      alt="${item.title}" 
-      class="gallery-item-image" 
+    <img
+      src="${item.imageSrc}"
+      alt="${item.title}"
+      class="gallery-item-image"
       loading="lazy"
     >
     <div class="gallery-item-info">
@@ -46,7 +46,7 @@ function createGalleryItemElement(item) {
       <span class="gallery-item-category">${item.category}</span>
     </div>
   `;
-  
+
   // Add click event to open modal
   galleryItem.addEventListener('click', () => {
     const modal = document.getElementById('image-modal');
@@ -54,17 +54,17 @@ function createGalleryItemElement(item) {
     const modalTitle = document.getElementById('modal-title');
     const modalAuthor = document.getElementById('modal-author');
     const modalDescription = document.getElementById('modal-description');
-    
+
     modalImage.src = item.imageSrc;
     modalImage.alt = item.title;
     modalTitle.textContent = item.title;
     modalAuthor.textContent = `By ${item.author}`;
     modalDescription.innerHTML = marked.parse(item.description);
-    
+
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
   });
-  
+
   return galleryItem;
 }
 
