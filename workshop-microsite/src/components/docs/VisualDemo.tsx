@@ -1,24 +1,37 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './VisualDemo.module.css';
 
-// Types of demos
-type DemoType =
-  | 'grid-creation'
-  | 'nested-loops'
-  | 'random-distribution'
-  | 'array-modification'
-  | 'create-2d-array'
-  | 'grid-wrapping'
-  | 'nested-loops-grid'
-  | 'pattern'
-  | 'neighbors';
+// Demo type enum for better type safety
+export enum DemoType {
+  GRID_CREATION = 'grid-creation',
+  NESTED_LOOPS = 'nested-loops',
+  RANDOM_DISTRIBUTION = 'random-distribution',
+  ARRAY_MODIFICATION = 'array-modification',
+  CREATE_2D_ARRAY = 'create-2d-array',
+  GRID_WRAPPING = 'grid-wrapping',
+  NESTED_LOOPS_GRID = 'nested-loops-grid',
+  PATTERN = 'pattern',
+  NEIGHBORS = 'neighbors'
+}
 
-interface GridDimensions {
+// More specific types
+export interface GridDimensions {
   rows: number;
   cols: number;
 }
 
-interface VisualDemoProps {
+// Cell types for better readability
+export enum CellState {
+  EMPTY = 0,
+  VISITED = 1,
+  HIGHLIGHTED = 2,
+  NOT_CREATED = null
+}
+
+// Define specific grid state type
+type GridState = (CellState | number)[][][] | any[][][];
+
+export interface VisualDemoProps {
   type: DemoType;
   width?: number;
   height?: number;
@@ -33,17 +46,6 @@ interface VisualDemoProps {
 
 /**
  * A component for visualizing programming concepts through interactive demonstrations
- *
- * @param type - The type of demonstration to show
- * @param width - Width of the demo area in pixels
- * @param height - Height of the demo area in pixels
- * @param resolution - Size of grid cells in pixels
- * @param pattern - Pattern name for pattern demos
- * @param grid - Grid dimensions for grid-based demos
- * @param samples - Number of samples for statistical demos
- * @param steps - Number of animation steps
- * @param speed - Animation speed
- * @param autoPlay - Whether to auto-play animations
  */
 const VisualDemo: React.FC<VisualDemoProps> = ({
   type,
@@ -57,56 +59,26 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
   speed = 1,
   autoPlay = true
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [currentStep, setCurrentStep] = useState(0);
-  const [gridState, setGridState] = useState<any[][][]>([]);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [gridState, setGridState] = useState<GridState>([]);
   const animationRef = useRef<number>(0);
   const lastUpdateTime = useRef(0);
 
-  // Initialize based on demo type
+  // Setup the initial state based on demo type
   useEffect(() => {
-    if (isInitialized) return;
-
-    const setupDemo = () => {
-      switch (type) {
-        case 'grid-creation':
-          return setupGridCreation();
-        case 'nested-loops':
-          return setupNestedLoops();
-        case 'random-distribution':
-          return setupRandomDistribution();
-        case 'array-modification':
-          return setupArrayModification();
-        case 'create-2d-array':
-          return setupCreate2DArray();
-        case 'grid-wrapping':
-          return setupGridWrapping();
-        case 'nested-loops-grid':
-          return setupNestedLoopsGrid();
-        case 'pattern':
-          return setupPattern();
-        case 'neighbors':
-          return setupNeighbors();
-        default:
-          return null;
-      }
-    };
-
     setupDemo();
-    setIsInitialized(true);
 
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [type, isInitialized, width, height, resolution, grid, samples, steps, pattern]);
+  }, [type, width, height, resolution, pattern, grid, samples, steps]);
 
   // Animation loop
   useEffect(() => {
-    if (!isInitialized || !isPlaying) return;
+    if (!gridState.length || !isPlaying) return;
 
     const animate = (timestamp: number) => {
       if (!lastUpdateTime.current) lastUpdateTime.current = timestamp;
@@ -129,15 +101,55 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isPlaying, steps, speed, isInitialized]);
+  }, [isPlaying, steps, speed, gridState.length]);
 
-  // Setup functions for different demos
-  const setupGridCreation = () => {
+  // Unified setup function
+  const setupDemo = () => {
+    let newGridState: GridState = [];
+
+    switch (type) {
+      case DemoType.GRID_CREATION:
+        newGridState = createGridCreationState();
+        break;
+      case DemoType.NESTED_LOOPS:
+        newGridState = createNestedLoopsState();
+        break;
+      case DemoType.RANDOM_DISTRIBUTION:
+        newGridState = createRandomDistributionState();
+        break;
+      case DemoType.ARRAY_MODIFICATION:
+        newGridState = createArrayModificationState();
+        break;
+      case DemoType.CREATE_2D_ARRAY:
+        newGridState = createCreate2DArrayState();
+        break;
+      case DemoType.GRID_WRAPPING:
+        newGridState = createGridWrappingState();
+        break;
+      case DemoType.NESTED_LOOPS_GRID:
+        newGridState = createNestedLoopsGridState();
+        break;
+      case DemoType.NEIGHBORS:
+        newGridState = createNeighborsState();
+        break;
+      case DemoType.PATTERN:
+        // Pattern demo has no state initialization
+        newGridState = [];
+        break;
+    }
+
+    setGridState(newGridState);
+  };
+
+  // Individual state generators (moved out for clarity)
+  const createGridCreationState = (): GridState => {
     const cols = Math.floor(width / resolution);
     const rows = Math.floor(height / resolution);
-    const newGridState = Array(steps).fill(0).map((_, step) => {
-      // For each step, show a different stage of grid creation
-      const grid: (number | null)[][] = Array(cols).fill(0).map(() => Array(rows).fill(null));
+
+    return Array(steps).fill(0).map((_, step) => {
+      const grid: (CellState)[][] = Array(cols).fill(0).map(() =>
+        Array(rows).fill(CellState.NOT_CREATED)
+      );
       const completionRatio = (step + 1) / steps;
 
       const colsToShow = Math.floor(cols * completionRatio);
@@ -145,46 +157,40 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
 
       for (let i = 0; i < colsToShow; i++) {
         for (let j = 0; j < rowsToShow; j++) {
-          grid[i][j] = 0; // Created but empty
+          grid[i][j] = CellState.EMPTY;
         }
       }
 
       return grid;
     });
-
-    setGridState(newGridState);
   };
 
-  const setupNestedLoops = () => {
+  const createNestedLoopsState = (): GridState => {
     const { rows = 5, cols = 5 } = grid || {};
     const totalCells = rows * cols;
     const cellsPerStep = Math.max(1, Math.ceil(totalCells / steps));
 
-    const newGridState = Array(steps).fill(0).map((_, step) => {
+    return Array(steps).fill(0).map((_, step) => {
       const visitedCells = Math.min(totalCells, (step + 1) * cellsPerStep);
-      const grid = Array(cols).fill(0).map(() => Array(rows).fill(0));
+      const grid = Array(cols).fill(0).map(() => Array(rows).fill(CellState.EMPTY));
 
       for (let idx = 0; idx < visitedCells; idx++) {
         const i = Math.floor(idx / rows);
         const j = idx % rows;
         if (i < cols && j < rows) {
-          grid[i][j] = 1; // Visited
+          grid[i][j] = CellState.VISITED;
         }
       }
 
       return grid;
     });
-
-    setGridState(newGridState);
   };
 
-  const setupNestedLoopsGrid = () => {
-    // Similar to nested loops but shows row/column traversal more clearly
+  const createNestedLoopsGridState = (): GridState => {
     const { rows = 5, cols = 5 } = grid || {};
-    const totalCells = rows * cols;
 
-    const newGridState = Array(steps).fill(0).map((_, step) => {
-      const grid = Array(cols).fill(0).map(() => Array(rows).fill(0));
+    return Array(steps).fill(0).map((_, step) => {
+      const grid = Array(cols).fill(0).map(() => Array(rows).fill(CellState.EMPTY));
       const stepsPerRow = Math.ceil(steps / rows);
       const currentRow = Math.floor(step / stepsPerRow);
       const cellsInCurrentRow = (step % stepsPerRow) * Math.ceil(cols / stepsPerRow);
@@ -192,26 +198,23 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
       // Fill complete rows
       for (let i = 0; i < currentRow; i++) {
         for (let j = 0; j < cols; j++) {
-          grid[j][i] = 1;
+          grid[j][i] = CellState.VISITED;
         }
       }
 
       // Fill cells in current row
       for (let j = 0; j < cellsInCurrentRow; j++) {
         if (j < cols) {
-          grid[j][currentRow] = 1;
+          grid[j][currentRow] = CellState.VISITED;
         }
       }
 
       return grid;
     });
-
-    setGridState(newGridState);
   };
 
-  const setupRandomDistribution = () => {
-    // For this demo we'll simulate random() distribution
-    const newGridState = Array(steps).fill(0).map((_, step) => {
+  const createRandomDistributionState = (): GridState => {
+    return Array(steps).fill(0).map((_, step) => {
       const grid = Array(10).fill(0).map(() => Array(10).fill(0));
       const sampleCount = Math.ceil(((step + 1) / steps) * samples);
 
@@ -224,12 +227,9 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
 
       return grid;
     });
-
-    setGridState(newGridState);
   };
 
-  const setupArrayModification = () => {
-    // Visualization for array modification
+  const createArrayModificationState = (): GridState => {
     const initialArray = [10, 20, 30, 40, 50];
     const operations = [
       { type: 'initial', array: [...initialArray] },
@@ -241,28 +241,25 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
 
     const stepsPerOperation = Math.floor(steps / operations.length);
 
-    const newGridState = Array(steps).fill(0).map((_, step) => {
+    return Array(steps).fill(0).map((_, step) => {
       const opIndex = Math.min(operations.length - 1, Math.floor(step / stepsPerOperation));
       const { array, type, index } = operations[opIndex];
 
       // Create a grid to represent the array
-      const grid = Array(array.length).fill(0).map((_, i) => {
+      return Array(array.length).fill(0).map((_, i) => {
         return [array[i], i === index ? type : null];
       });
-
-      return grid;
     });
-
-    setGridState(newGridState);
   };
 
-  const setupCreate2DArray = () => {
-    // Visualization for creating a 2D array
+  const createCreate2DArrayState = (): GridState => {
     const { rows = 3, cols = 4 } = grid || {};
 
-    const newGridState = Array(steps).fill(0).map((_, step) => {
+    return Array(steps).fill(0).map((_, step) => {
       const completionRatio = (step + 1) / steps;
-      const grid: (number | null)[][] = Array(cols).fill(0).map(() => Array(rows).fill(null));
+      const grid: (CellState)[][] = Array(cols).fill(0).map(() =>
+        Array(rows).fill(CellState.NOT_CREATED)
+      );
 
       // Phase 1: Create the outer array
       if (completionRatio < 0.2) {
@@ -273,7 +270,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
       const rowsToCreate = Math.floor(cols * Math.min(1, (completionRatio - 0.2) / 0.4));
       for (let i = 0; i < rowsToCreate; i++) {
         for (let j = 0; j < rows; j++) {
-          grid[i][j] = null; // Row created but not filled
+          grid[i][j] = CellState.NOT_CREATED;
         }
       }
 
@@ -284,7 +281,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
 
         for (let i = 0; i < cols && filled < cellsToFill; i++) {
           for (let j = 0; j < rows && filled < cellsToFill; j++) {
-            grid[i][j] = 0; // Fill with zero
+            grid[i][j] = CellState.EMPTY;
             filled++;
           }
         }
@@ -292,17 +289,14 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
 
       return grid;
     });
-
-    setGridState(newGridState);
   };
 
-  const setupGridWrapping = () => {
-    // Visualization for grid wrapping (toroidal)
+  const createGridWrappingState = (): GridState => {
     const gridSize = 7;
     const center = Math.floor(gridSize / 2);
 
-    const newGridState = Array(steps).fill(0).map((_, step) => {
-      const grid = Array(gridSize).fill(0).map(() => Array(gridSize).fill(0));
+    return Array(steps).fill(0).map((_, step) => {
+      const grid = Array(gridSize).fill(0).map(() => Array(gridSize).fill(CellState.EMPTY));
 
       // Highlight a cell moving past the edge and wrapping around
       const progress = step / (steps - 1);
@@ -330,35 +324,27 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
       x = (x + gridSize) % gridSize;
       y = (y + gridSize) % gridSize;
 
-      grid[x][y] = 1;
+      grid[x][y] = CellState.VISITED;
 
       // Show the wrapped coordinates
-      if (x === 0) grid[gridSize - 1][y] = 2;
-      if (x === gridSize - 1) grid[0][y] = 2;
-      if (y === 0) grid[x][gridSize - 1] = 2;
-      if (y === gridSize - 1) grid[x][0] = 2;
+      if (x === 0) grid[gridSize - 1][y] = CellState.HIGHLIGHTED;
+      if (x === gridSize - 1) grid[0][y] = CellState.HIGHLIGHTED;
+      if (y === 0) grid[x][gridSize - 1] = CellState.HIGHLIGHTED;
+      if (y === gridSize - 1) grid[x][0] = CellState.HIGHLIGHTED;
 
       return grid;
     });
-
-    setGridState(newGridState);
   };
 
-  const setupPattern = () => {
-    // Simply delegate to PatternDemo for pattern visualization
-    return null;
-  };
-
-  const setupNeighbors = () => {
-    // Visualization for counting neighbors
+  const createNeighborsState = (): GridState => {
     const gridSize = 5;
     const center = Math.floor(gridSize / 2);
 
-    const newGridState = Array(steps).fill(0).map((_, step) => {
-      const grid = Array(gridSize).fill(0).map(() => Array(gridSize).fill(0));
+    return Array(steps).fill(0).map((_, step) => {
+      const grid = Array(gridSize).fill(0).map(() => Array(gridSize).fill(CellState.EMPTY));
 
       // Place a cell in the center
-      grid[center][center] = 1;
+      grid[center][center] = CellState.VISITED;
 
       // Highlight neighbors one by one
       if (step > 0) {
@@ -370,16 +356,14 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
 
         const highlightIndex = Math.min(neighborPositions.length - 1, step - 1);
         const [nx, ny] = neighborPositions[highlightIndex];
-        grid[nx][ny] = 2; // 2 represents highlighted neighbor
+        grid[nx][ny] = CellState.HIGHLIGHTED;
       }
 
       return grid;
     });
-
-    setGridState(newGridState);
   };
 
-  // Render functions for different demo types
+  // Component renderers
   const renderGridDemo = () => {
     if (!gridState.length || !gridState[currentStep]) {
       return <div className={styles.loading}>Loading visualization...</div>;
@@ -397,46 +381,32 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
             gridTemplateColumns: `repeat(${currentGrid.length}, 1fr)`
           }}
         >
-          {currentGrid.map((col, i) =>
-            col.map((cell, j) => (
+          {currentGrid.map((col: any[], i: number) =>
+            col.map((cell: any, j: number) => (
               <div
                 key={`${i}-${j}`}
                 className={`
                   ${styles.cell}
-                  ${cell === 1 ? styles.visited : ''}
-                  ${cell === 2 ? styles.highlighted : ''}
-                  ${cell === 0 ? styles.empty : ''}
-                  ${cell === null ? styles.notCreated : ''}
+                  ${cell === CellState.VISITED ? styles.visited : ''}
+                  ${cell === CellState.HIGHLIGHTED ? styles.highlighted : ''}
+                  ${cell === CellState.EMPTY ? styles.empty : ''}
+                  ${cell === CellState.NOT_CREATED ? styles.notCreated : ''}
                 `}
               />
             ))
           )}
         </div>
 
-        <div className={styles.controls}>
-          <button
-            className={styles.playButton}
-            onClick={() => setIsPlaying(!isPlaying)}
-          >
-            {isPlaying ? '⏸ Pause' : '▶️ Play'}
-          </button>
-
-          <input
-            type="range"
-            min="0"
-            max={steps - 1}
-            value={currentStep}
-            onChange={(e) => {
-              setCurrentStep(parseInt(e.target.value));
-              if (isPlaying) setIsPlaying(false);
-            }}
-            className={styles.slider}
-          />
-
-          <div className={styles.stepLabel}>
-            Step: {currentStep + 1} of {steps}
-          </div>
-        </div>
+        <DemoControls
+          currentStep={currentStep}
+          steps={steps}
+          isPlaying={isPlaying}
+          onPlayPause={() => setIsPlaying(!isPlaying)}
+          onStepChange={(step) => {
+            setCurrentStep(step);
+            if (isPlaying) setIsPlaying(false);
+          }}
+        />
       </div>
     );
   };
@@ -447,12 +417,12 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
     }
 
     const currentGrid = gridState[currentStep];
-    const maxValue = Math.max(...currentGrid.map(col => Math.max(...col)));
+    const maxValue = Math.max(...currentGrid.map((col: number[]) => Math.max(...col)));
 
     return (
       <div className={styles.distributionDemo}>
         <div className={styles.histogram}>
-          {currentGrid.map((col, i) => {
+          {currentGrid.map((col: number[], i: number) => {
             const height = col[0] ? (col[0] / maxValue) * 100 : 0;
             return (
               <div key={i} className={styles.histogramColumn}>
@@ -472,26 +442,17 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
           random() value distribution ({Math.ceil(((currentStep + 1) / steps) * samples)} samples)
         </div>
 
-        <div className={styles.controls}>
-          <button
-            className={styles.playButton}
-            onClick={() => setIsPlaying(!isPlaying)}
-          >
-            {isPlaying ? '⏸ Pause' : '▶️ Play'}
-          </button>
-
-          <input
-            type="range"
-            min="0"
-            max={steps - 1}
-            value={currentStep}
-            onChange={(e) => {
-              setCurrentStep(parseInt(e.target.value));
-              if (isPlaying) setIsPlaying(false);
-            }}
-            className={styles.slider}
-          />
-        </div>
+        <DemoControls
+          currentStep={currentStep}
+          steps={steps}
+          isPlaying={isPlaying}
+          onPlayPause={() => setIsPlaying(!isPlaying)}
+          onStepChange={(step) => {
+            setCurrentStep(step);
+            if (isPlaying) setIsPlaying(false);
+          }}
+          showStepLabel={false}
+        />
       </div>
     );
   };
@@ -506,7 +467,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
     return (
       <div className={styles.arrayDemo}>
         <div className={styles.arrayContainer}>
-          {currentGrid.map((item, i) => {
+          {currentGrid.map((item: [number, string | null], i: number) => {
             const [value, operation] = item;
             return (
               <div
@@ -525,46 +486,79 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
           })}
         </div>
 
-        <div className={styles.controls}>
-          <button
-            className={styles.playButton}
-            onClick={() => setIsPlaying(!isPlaying)}
-          >
-            {isPlaying ? '⏸ Pause' : '▶️ Play'}
-          </button>
-
-          <input
-            type="range"
-            min="0"
-            max={steps - 1}
-            value={currentStep}
-            onChange={(e) => {
-              setCurrentStep(parseInt(e.target.value));
-              if (isPlaying) setIsPlaying(false);
-            }}
-            className={styles.slider}
-          />
-        </div>
+        <DemoControls
+          currentStep={currentStep}
+          steps={steps}
+          isPlaying={isPlaying}
+          onPlayPause={() => setIsPlaying(!isPlaying)}
+          onStepChange={(step) => {
+            setCurrentStep(step);
+            if (isPlaying) setIsPlaying(false);
+          }}
+          showStepLabel={false}
+        />
       </div>
     );
   };
 
-  // Main render method
+  // Reusable controls component
+  interface DemoControlsProps {
+    currentStep: number;
+    steps: number;
+    isPlaying: boolean;
+    onPlayPause: () => void;
+    onStepChange: (step: number) => void;
+    showStepLabel?: boolean;
+  }
+
+  const DemoControls: React.FC<DemoControlsProps> = ({
+    currentStep,
+    steps,
+    isPlaying,
+    onPlayPause,
+    onStepChange,
+    showStepLabel = true
+  }) => (
+    <div className={styles.controls}>
+      <button
+        className={styles.playButton}
+        onClick={onPlayPause}
+      >
+        {isPlaying ? '⏸ Pause' : '▶️ Play'}
+      </button>
+
+      <input
+        type="range"
+        min="0"
+        max={steps - 1}
+        value={currentStep}
+        onChange={(e) => onStepChange(parseInt(e.target.value))}
+        className={styles.slider}
+      />
+
+      {showStepLabel && (
+        <div className={styles.stepLabel}>
+          Step: {currentStep + 1} of {steps}
+        </div>
+      )}
+    </div>
+  );
+
+  // Main render logic
   const renderDemo = () => {
     switch (type) {
-      case 'grid-creation':
-      case 'nested-loops':
-      case 'nested-loops-grid':
-      case 'grid-wrapping':
-      case 'create-2d-array':
-      case 'neighbors':
+      case DemoType.GRID_CREATION:
+      case DemoType.NESTED_LOOPS:
+      case DemoType.NESTED_LOOPS_GRID:
+      case DemoType.GRID_WRAPPING:
+      case DemoType.CREATE_2D_ARRAY:
+      case DemoType.NEIGHBORS:
         return renderGridDemo();
-      case 'random-distribution':
+      case DemoType.RANDOM_DISTRIBUTION:
         return renderRandomDistribution();
-      case 'array-modification':
+      case DemoType.ARRAY_MODIFICATION:
         return renderArrayModification();
-      case 'pattern':
-        // This would normally be handled by PatternDemo
+      case DemoType.PATTERN:
         return (
           <div className={styles.fallback}>
             Pattern visualization. For actual implementation, use PatternDemo component.
