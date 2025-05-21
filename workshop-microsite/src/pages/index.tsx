@@ -244,8 +244,8 @@ function HomepageHeader() {
           </Link>
           <Link
             className={clsx("button", styles.buttonSecondary)}
-            to="/cellular-automata-workshop/docs/explore-patterns">
-            Exploration Guide
+            to="/cellular-automata-workshop/docs/category/programming-fundamentals">
+            Learn JavaScript
           </Link>
         </div>
       </div>
