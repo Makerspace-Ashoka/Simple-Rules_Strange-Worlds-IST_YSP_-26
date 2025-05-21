@@ -1,0 +1,260 @@
+---
+title: "Arrays and 2D Arrays"
+sidebar_position: 4
+description: "Understanding how to use arrays to store multiple values"
+tags: ["programming", "concepts", "arrays", "data structures"]
+---
+
+import { Quiz, Question, Option } from '@site/src/components/docs/Quiz';
+import ConceptCheck from '@site/src/components/docs/ConceptCheck';
+import CodeEditor from '@site/src/components/docs/CodeEditor';
+import ArrayVisualizer from '@site/src/components/docs/ArrayVisualizer';
+import GridVisualizer from '@site/src/components/docs/GridVisualizer';
+import VisualDemo from '@site/src/components/docs/VisualDemo';
+import ChallengeBadge from '@site/src/components/docs/ChallengeBadge';
+
+# Arrays and 2D Arrays
+
+<div className="concept-intro">
+  <div className="concept-intro__icon"></div>
+  <div className="concept-intro__text">
+    <p>Arrays let you store multiple values in a single variable - like a row of boxes where each box holds a value.</p>
+  </div>
+</div>
+
+## What is an Array?
+
+An array is a collection of values. In JavaScript, we create arrays using square brackets:
+
+```javascript
+let fruits = ["apple", "banana", "orange", "grape", "kiwi"];
+```
+
+<ArrayVisualizer
+  array={["apple", "banana", "orange", "grape", "kiwi"]}
+  caption="An array of fruit names"
+  highlightIndices={true}
+/>
+
+### Accessing Array Elements
+
+Each element has a position called an **index**, starting at 0. To access an element, use its index:
+
+```javascript
+let fruits = ["apple", "banana", "orange"];
+let firstFruit = fruits[0];  // "apple"
+let secondFruit = fruits[1];  // "banana"
+```
+
+<ConceptCheck
+  question={<>If `let colors = ["red", "green", "blue", "yellow"]`, what is `colors[3]`?</>}
+  answer="yellow"
+/>
+
+### Modifying Arrays
+
+You can change array values or find out how many items are in an array:
+
+```javascript
+let numbers = [10, 20, 30, 40, 50];
+numbers[2] = 35;  // Changes third element to 35
+console.log(numbers.length);  // 5
+```
+
+## 2D Arrays (Grids)
+
+A 2D array is an array of arrays - like a grid with rows and columns.
+
+<GridVisualizer
+  grid={[
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+  ]}
+  caption="A 3×3 grid represented as a 2D array"
+  showIndices={true}
+/>
+
+Creating a 2D array:
+
+```javascript
+let grid = [
+  [1, 2, 3],  // Row 0
+  [4, 5, 6],  // Row 1
+  [7, 8, 9]   // Row 2
+];
+```
+
+### Accessing Grid Elements
+
+To access elements in a 2D array, we need two indices: row and column.
+
+```javascript
+let value = grid[1][2];  // Row 1, Column 2: value 6
+```
+
+<ConceptCheck
+  question={<>What is the value of `grid[2][0]` in the example above?</>}
+  answer="7"
+/>
+
+## Arrays in Conway's Game of Life
+
+In our Game of Life simulation, we use a 2D array to represent the grid:
+- Each cell can be 0 (dead) or 1 (alive)
+- We need to loop through all cells to apply the rules
+
+<GridVisualizer
+  grid={[
+    [0, 1, 0, 0, 1],
+    [0, 0, 1, 0, 0],
+    [1, 1, 1, 0, 0],
+    [0, 0, 0, 0, 1],
+    [0, 1, 0, 0, 0]
+  ]}
+  caption="Game of Life grid (1 = alive, 0 = dead)"
+  aliveColor="#000"
+  deadColor="#fff"
+/>
+
+### Creating the Game Grid
+
+```javascript
+// Calculate grid dimensions
+cols = Math.floor(width / resolution);
+rows = Math.floor(height / resolution);
+
+// Create and initialize the grid
+grid = new Array(cols);
+for (let i = 0; i < cols; i++) {
+  grid[i] = new Array(rows);
+  for (let j = 0; j < rows; j++) {
+    grid[i][j] = 0;  // All cells start dead
+  }
+}
+```
+
+### Looping Through the Grid
+
+To apply rules to each cell, we use nested loops:
+
+```javascript
+// Loop through every cell
+for (let i = 0; i < cols; i++) {
+  for (let j = 0; j < rows; j++) {
+    // Do something with grid[i][j]
+  }
+}
+```
+
+<VisualDemo type="nested-loops-grid" rows={4} cols={4} />
+<VisualDemo type="nested-loops-grid" rows={4} cols={4} />
+
+### Finding Neighbors
+
+In Conway's Game of Life, we need to check the 8 surrounding cells:
+
+```javascript
+// Count neighbors around cell at (x,y)
+function countNeighbors(grid, x, y) {
+  let sum = 0;
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      // Skip the cell itself
+      if (i === 0 && j === 0) continue;
+
+      // Handle edge wrapping
+      let col = (x + i + cols) % cols;
+      let row = (y + j + rows) % rows;
+
+      sum += grid[col][row];
+    }
+  }
+  return sum;
+}
+```
+
+<GridVisualizer
+  grid={[
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0]
+  ]}
+  highlightCell={[2, 2]}
+  highlightNeighbors={true}
+  caption="The 8 neighbors of a cell"
+/>
+
+## Practice: Count Live Neighbors
+
+<ChallengeBadge level="intermediate" concepts={["arrays", "loops", "conditionals"]} />
+
+Complete the function to count the number of live neighbors for a cell:
+
+<CodeEditor
+  id="count-neighbors"
+  mode="javascript"
+  initialCode={`// Count neighbors for a cell at (x,y)
+function countNeighbors(grid, x, y) {
+  let sum = 0;
+
+  // YOUR CODE: Check all 8 surrounding cells
+  // Remember to handle grid wrapping
+
+
+
+
+  return sum;
+}`}
+  solution={`// Count neighbors for a cell at (x,y)
+function countNeighbors(grid, x, y) {
+  let sum = 0;
+
+  // Check all 8 surrounding cells
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      // Skip the cell itself
+      if (i === 0 && j === 0) continue;
+
+      // Calculate wrapped coordinates
+      let col = (x + i + cols) % cols;
+      let row = (y + j + rows) % rows;
+
+      // Add this neighbor's state (0 or 1)
+      sum += grid[col][row];
+    }
+  }
+
+  return sum;
+}`}
+  hint="Use nested loops from -1 to 1 to check all 8 positions. Skip the center cell and use modulo (%) for wrapping."
+/>
+
+## Quick Check
+
+<Quiz>
+  <Question type="multiple-choice" answer={1}>
+    What is the index of the first element in a JavaScript array?
+    <Option>1</Option>
+    <Option>0</Option>
+    <Option>-1</Option>
+    <Option>Depends on the array</Option>
+  </Question>
+</Quiz>
+
+<Quiz>
+  <Question type="multiple-choice" answer={1}>
+    How would you access the element at the second row, third column of a 2D array?
+    <Option>array[1, 2]</Option>
+    <Option>array[1][2]</Option>
+    <Option>array[2][3]</Option>
+    <Option>array(1)(2)</Option>
+  </Question>
+</Quiz>
+
+<div className="navigation-buttons">
+  <a className="button" href="loops">Previous: Loops and Iteration</a>
+  <a className="button button--primary" href="functions">Next: Functions</a>
+</div>

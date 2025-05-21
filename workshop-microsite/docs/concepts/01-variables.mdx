@@ -1,0 +1,125 @@
+---
+title: "Variables in JavaScript"
+sidebar_position: 1
+description: "Understanding how to store and use data with variables"
+tags: ["programming", "concepts", "variables", "javascript"]
+---
+
+# Variables in JavaScript
+
+## What Are Variables?
+
+Variables are containers for storing data values. Think of them like labeled boxes where you can put information and then use or change it later.
+
+In programming, we use variables to store things like numbers, text, or more complex data.
+
+## Creating Variables in JavaScript
+
+In JavaScript, we create variables using the `let` keyword:
+
+```javascript
+let score = 10;
+let playerName = "Alex";
+let isGameOver = false;
+```
+
+## Types of Variables
+
+JavaScript has several basic types of data you can store in variables:
+
+| Type | Example | Description |
+|------|---------|-------------|
+| Number | `let age = 15;` | Whole numbers or decimals |
+| String | `let name = "Jamie";` | Text (always in quotes) |
+| Boolean | `let isReady = true;` | True or false values |
+| Array | `let colors = ["red", "blue"];` | A list of values |
+
+## Using Variables
+
+Once you create a variable, you can use its value in your program:
+
+```javascript
+let x = 5;
+let y = 10;
+let sum = x + y;  // sum is now 15
+
+console.log(sum);  // Displays 15 in the console
+```
+
+## Changing Variable Values
+
+You can change the value stored in a variable:
+
+```javascript
+let score = 0;  // Start with score of 0
+console.log(score);  // Displays 0
+
+score = 10;  // Change score to 10
+console.log(score);  // Displays 10
+```
+
+## Variables in Conway's Game of Life
+
+In our Game of Life project, we use variables to keep track of important information:
+
+```javascript
+// Grid variables
+let grid;             // Current state of cells
+let cols;             // Number of columns in our grid
+let rows;             // Number of rows in our grid
+let resolution = 20;  // Size of each cell in pixels
+
+// Simulation control
+let isRunning = false;  // Is the simulation currently running?
+let generation = 0;     // Current generation counter
+```
+
+These variables help us:
+- Store the grid of cells (`grid`)
+- Track the grid size (`cols` and `rows`)
+- Control how the simulation runs (`isRunning`)
+- Count generations (`generation`)
+
+## Naming Variables
+
+Good variable names make your code easier to understand:
+
+- Use descriptive names that explain what the variable stores
+- Start with a lowercase letter
+- For multiple words, use camelCase (like `playerScore` or `isGameOver`)
+- Avoid single letters except for simple counters (like `i`, `j` in loops)
+
+## Global vs. Local Variables
+
+**Global variables** are defined outside of functions and can be used anywhere in your program:
+
+```javascript
+let playerScore = 0;  // Global variable
+
+function updateScore() {
+  playerScore = playerScore + 10;  // Can use the global variable here
+}
+```
+
+**Local variables** are defined inside functions and can only be used within that function:
+
+```javascript
+function calculateArea() {
+  let width = 5;  // Local variable
+  let height = 10;  // Local variable
+  let area = width * height;
+  return area;
+}
+// Can't use width, height, or area outside the function
+```
+
+## Key Points to Remember
+
+- Variables store data you need to use later
+- Use `let` to create a variable in JavaScript
+- Choose clear, descriptive names
+- Variables can hold different types of data
+- You can change the value of a variable
+- Global variables can be used throughout your program
+- Local variables can only be used within their function
+
