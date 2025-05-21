@@ -1,0 +1,168 @@
+.patternDemoContainer {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.gridContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  overflow: auto;
+  max-width: 100%;
+}
+
+.grid {
+  background-color: #e0e0e0;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  gap: 1px;
+}
+
+.cell {
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.alive {
+  background-color: #333;
+}
+
+.dead {
+  background-color: #fff;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.playButton {
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  background-color: #339af0;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.playButton:hover {
+  background-color: #1c7ed6;
+}
+
+.slider {
+  flex: 1;
+  min-width: 100px;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #dee2e6;
+  border-radius: 3px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #339af0;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #339af0;
+  cursor: pointer;
+  border: none;
+}
+
+.generationLabel {
+  font-size: 0.9rem;
+  color: #495057;
+  font-weight: 500;
+  min-width: 110px;
+}
+
+.caption {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .slider {
+    width: 100%;
+  }
+
+  .generationLabel {
+    text-align: center;
+  }
+}
+
+/* Dark Mode Support */
+:global(.dark-theme) .patternDemoContainer {
+  background-color: #2d333b;
+  border-color: #444c56;
+}
+
+:global(.dark-theme) .grid {
+  background-color: #444c56;
+  border-color: #575f6a;
+}
+
+:global(.dark-theme) .alive {
+  background-color: #adbac7;
+}
+
+:global(.dark-theme) .dead {
+  background-color: #22272e;
+}
+
+:global(.dark-theme) .slider {
+  background-color: #444c56;
+}
+
+:global(.dark-theme) .slider::-webkit-slider-thumb {
+  background-color: #1f6feb;
+}
+
+:global(.dark-theme) .slider::-moz-range-thumb {
+  background-color: #1f6feb;
+}
+
+:global(.dark-theme) .generationLabel {
+  color: #adbac7;
+}
+
+:global(.dark-theme) .caption {
+  color: #adbac7;
+}
+
+:global(.dark-theme) .playButton {
+  background-color: #1f6feb;
+}
+
+:global(.dark-theme) .playButton:hover {
+  background-color: #1a56c5;
+}

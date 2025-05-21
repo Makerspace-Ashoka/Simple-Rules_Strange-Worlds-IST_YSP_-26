@@ -1,0 +1,258 @@
+.conceptCheckContainer {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: 0;
+  /* Bauhaus prefers clean lines and geometric shapes */
+  background-color: white;
+  border-left: 6px solid #E53935;
+  /* Bauhaus primary red */
+  border-bottom: 2px solid black;
+  font-family: 'Helvetica Neue', sans-serif;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
+}
+
+.questionContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.conceptIcon {
+  font-size: 1.25rem;
+  margin-top: 0.1rem;
+  color: #1E88E5;
+  /* Bauhaus blue */
+}
+
+.questionText {
+  font-size: 1.05rem;
+  color: black;
+  flex: 1;
+}
+
+.questionText code {
+  background-color: #FDD835;
+  /* Bauhaus yellow */
+  color: black;
+  padding: 2px 4px;
+  font-family: monospace;
+  font-weight: 500;
+}
+
+.inputContainer {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.answerInput {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0;
+  /* Bauhaus geometric style */
+  border: 2px solid black;
+  font-size: 0.95rem;
+  background-color: white;
+}
+
+.answerInput:focus {
+  outline: none;
+  border-color: #1E88E5;
+  /* Bauhaus blue */
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.checkButton {
+  padding: 0.6rem 1rem;
+  border-radius: 0;
+  /* Bauhaus geometric style */
+  background-color: #1E88E5;
+  /* Bauhaus blue */
+  color: white;
+  border: 2px solid black;
+  cursor: pointer;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 2px 2px 0 black;
+}
+
+.checkButton:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 black;
+}
+
+.revealButton,
+.hideButton {
+  padding: 0.6rem 1rem;
+  border-radius: 0;
+  /* Bauhaus geometric style */
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+  cursor: pointer;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.revealButton:hover,
+.hideButton:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.answerContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.answerLabel {
+  font-weight: 600;
+  color: black;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.answerText {
+  font-weight: 500;
+  color: black;
+  border-radius: 0;
+  /* Bauhaus geometric style */
+  background-color: #FDD835;
+  /* Bauhaus yellow */
+  padding: 0.5rem 0.75rem;
+  flex: 1;
+  border-bottom: 2px solid black;
+}
+
+.feedback {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0;
+  /* Bauhaus geometric style */
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+  border-bottom: 2px solid black;
+}
+
+.correctFeedback {
+  background-color: #FDD835;
+  /* Bauhaus yellow */
+  color: black;
+  border-left: 4px solid #FDD835;
+}
+
+.incorrectFeedback {
+  background-color: #E53935;
+  /* Bauhaus red */
+  color: white;
+  border-left: 4px solid #E53935;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+
+  .inputContainer,
+  .answerContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .answerInput {
+    width: 100%;
+  }
+}
+
+/* Dark Mode Support */
+:global(.dark-theme) .conceptCheckContainer {
+  background-color: #121212;
+  border-left: 6px solid #FF5252;
+  /* Darker Bauhaus red */
+  border-bottom: 2px solid white;
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.2);
+}
+
+:global(.dark-theme) .questionText {
+  color: white;
+}
+
+:global(.dark-theme) .questionText code {
+  background-color: #FFEB3B;
+  /* Brighter Bauhaus yellow for dark mode */
+  color: black;
+}
+
+:global(.dark-theme) .answerInput {
+  background-color: #1E1E1E;
+  border-color: white;
+  color: white;
+}
+
+:global(.dark-theme) .answerInput:focus {
+  border-color: #42A5F5;
+  /* Brighter Bauhaus blue for dark mode */
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark-theme) .checkButton {
+  background-color: #42A5F5;
+  /* Brighter Bauhaus blue for dark mode */
+  border-color: white;
+  box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+:global(.dark-theme) .revealButton,
+:global(.dark-theme) .hideButton {
+  background-color: #333;
+  border-color: white;
+  box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+:global(.dark-theme) .answerLabel {
+  color: white;
+}
+
+:global(.dark-theme) .answerText {
+  background-color: #FFEB3B;
+  /* Brighter Bauhaus yellow for dark mode */
+  color: black;
+  border-bottom: 2px solid white;
+}
+
+:global(.dark-theme) .correctFeedback {
+  background-color: #FFEB3B;
+  /* Brighter Bauhaus yellow for dark mode */
+  border-left: 4px solid #FFEB3B;
+  border-bottom: 2px solid white;
+}
+
+:global(.dark-theme) .incorrectFeedback {
+  background-color: #FF5252;
+  /* Brighter Bauhaus red for dark mode */
+  border-left: 4px solid #FF5252;
+  border-bottom: 2px solid white;
+}

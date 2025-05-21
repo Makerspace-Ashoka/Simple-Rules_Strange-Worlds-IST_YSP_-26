@@ -1,0 +1,199 @@
+---
+title: "Conditionals in JavaScript"
+sidebar_position: 2
+description: "Making decisions in your code with if statements"
+tags: ["programming", "concepts", "conditionals", "javascript"]
+---
+
+# Conditionals in JavaScript
+
+## What Are Conditionals?
+
+Conditionals are programming structures that let your code make decisions. They're like forks in a road - depending on certain conditions, your program will take different paths.
+
+In JavaScript, the main way to create conditionals is with **if statements**.
+
+## Basic If Statements
+
+The simplest conditional uses the `if` keyword to execute code only when a condition is true:
+
+```javascript
+let temperature = 75;
+
+if (temperature > 70) {
+  console.log("It's warm outside!");
+}
+```
+
+This code will only print the message if the temperature is above 70.
+
+## If-Else Statements
+
+Often, you'll want to do one thing if a condition is true and something else if it's false. For this, use `if-else`:
+
+```javascript
+let hour = 15;  // 3:00 PM in 24-hour time
+
+if (hour < 12) {
+  console.log("Good morning!");
+} else {
+  console.log("Good afternoon/evening!");
+}
+```
+
+## Multiple Conditions with Else-If
+
+For more than two possibilities, use `else if`:
+
+```javascript
+let score = 85;
+
+if (score >= 90) {
+  console.log("You got an A!");
+} else if (score >= 80) {
+  console.log("You got a B!");
+} else if (score >= 70) {
+  console.log("You got a C!");
+} else {
+  console.log("You need to study more.");
+}
+```
+
+## Comparison Operators
+
+To create conditions, we use comparison operators:
+
+| Operator | Meaning | Example |
+|----------|---------|---------|
+| `==` | Equal to | `if (x == 5)` |
+| `===` | Equal value and type | `if (x === 5)` |
+| `!=` | Not equal | `if (x != 10)` |
+| `!==` | Not equal value or type | `if (x !== "5")` |
+| `>` | Greater than | `if (x > 7)` |
+| `<` | Less than | `if (x < 3)` |
+| `>=` | Greater than or equal | `if (x >= 5)` |
+| `<=` | Less than or equal | `if (x <= 9)` |
+
+**Note**: In JavaScript, use `===` (three equals signs) for comparison, not `=` (which is for assignment).
+
+## Logical Operators
+
+You can combine conditions using logical operators:
+
+| Operator | Meaning | Example |
+|----------|---------|---------|
+| `&&` | AND | `if (x > 5 && x < 10)` |
+| `||` | OR | `if (x < 5 || x > 10)` |
+| `!` | NOT | `if (!isPaused)` |
+
+The `&&` (AND) operator means both conditions must be true.
+The `||` (OR) operator means at least one condition must be true.
+The `!` (NOT) operator reverses a condition.
+
+## Conditionals in Conway's Game of Life
+
+In our Game of Life project, conditionals determine whether cells live or die:
+
+```javascript
+// Applying Conway's rules to a cell
+function applyRules(cellState, neighbors) {
+  // For a living cell (state = 1)
+  if (cellState === 1) {
+    if (neighbors < 2) {
+      return 0;  // Dies from underpopulation
+    } else if (neighbors === 2 || neighbors === 3) {
+      return 1;  // Survives
+    } else {
+      return 0;  // Dies from overpopulation
+    }
+  }
+  // For a dead cell (state = 0)
+  else {
+    if (neighbors === 3) {
+      return 1;  // Becomes alive
+    } else {
+      return 0;  // Stays dead
+    }
+  }
+}
+```
+
+This function determines a cell's next state by applying Conway's four rules through a series of conditionals.
+
+## The Ternary Operator: A Shorthand Conditional
+
+For simple if-else conditions, JavaScript offers a compact form called the ternary operator:
+
+```javascript
+// Long form
+let message;
+if (age >= 18) {
+  message = "You can vote!";
+} else {
+  message = "Too young to vote.";
+}
+
+// Ternary form
+let message = age >= 18 ? "You can vote!" : "Too young to vote.";
+```
+
+The syntax is: `condition ? valueIfTrue : valueIfFalse`
+
+## Switch Statements
+
+When you have many possible values for a single variable, a `switch` statement can be clearer than multiple `if/else` statements:
+
+```javascript
+let day = "Tuesday";
+
+switch (day) {
+  case "Monday":
+    console.log("Start of the work week");
+    break;
+  case "Tuesday":
+  case "Wednesday":
+  case "Thursday":
+    console.log("Middle of the work week");
+    break;
+  case "Friday":
+    console.log("End of the work week");
+    break;
+  default:
+    console.log("It's the weekend!");
+}
+```
+
+The `break` statements are important - they make sure only one case executes.
+
+## Common Patterns and Best Practices
+
+1. **Check boundaries** to prevent errors:
+   ```javascript
+   if (index >= 0 && index < array.length) {
+     // Now it's safe to access array[index]
+   }
+   ```
+
+2. **Early returns** can simplify complex logic:
+   ```javascript
+   function isValidMove(x, y) {
+     // Return false early if out of bounds
+     if (x < 0 || x >= boardWidth) return false;
+     if (y < 0 || y >= boardHeight) return false;
+
+     // Otherwise check other conditions...
+     return true;
+   }
+   ```
+
+3. **Avoid unnecessary nesting** of if statements when possible.
+
+## Summary
+
+- Conditionals let your program make decisions
+- `if` statements execute code only when conditions are true
+- `else` provides an alternative option
+- `else if` handles multiple conditions
+- Comparison operators (`===`, `>`, `<=`, etc.) create conditions
+- Logical operators (`&&`, `||`, `!`) combine conditions
+

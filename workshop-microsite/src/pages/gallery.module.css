@@ -1,0 +1,432 @@
+/**
+ * CSS Module for Pattern Gallery
+ * Following Bauhaus design principles with primary colors, geometric shapes, and functional layout
+ */
+
+.galleryContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  position: relative;
+}
+
+/* Gallery Header Styling */
+.galleryHeader {
+  position: relative;
+  padding: 4rem 0 2rem;
+  background-color: var(--ifm-background-color);
+  overflow: hidden;
+}
+
+.galleryTitle {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+
+.galleryTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background-color: #FDD835;
+}
+
+.galleryDescription {
+  font-size: 1.2rem;
+  max-width: 700px;
+  line-height: 1.5;
+  margin: 2rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Bauhaus Decorative Elements */
+.decorativeElements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.redSquare {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background-color: #E53935;
+  top: 30%;
+  right: 15%;
+  transform: rotate(15deg);
+  opacity: 0.7;
+}
+
+.blueCircle {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #1E88E5;
+  bottom: -50px;
+  left: 10%;
+  opacity: 0.7;
+}
+
+.yellowTriangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 70px solid transparent;
+  border-right: 70px solid transparent;
+  border-bottom: 120px solid #FDD835;
+  top: 20%;
+  left: 15%;
+  opacity: 0.5;
+}
+
+.blackRectangle {
+  position: absolute;
+  width: 180px;
+  height: 60px;
+  background-color: #000000;
+  top: 40%;
+  right: 5%;
+  transform: rotate(-10deg);
+  opacity: 0.5;
+}
+
+/* Filter and Sort Controls */
+.galleryControls {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.filterLabel,
+.sortLabel {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+
+.filterContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+.filterButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filterButton {
+  background: white;
+  border: 2px solid black;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 0 black;
+}
+
+.filterButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0 black;
+}
+
+.filterButtonActive {
+  background-color: #E53935;
+  color: white;
+  box-shadow: 3px 3px 0 black;
+  transform: translateY(-2px);
+}
+
+.sortContainer {
+  display: flex;
+  align-items: center;
+}
+
+.sortSelect {
+  border: 2px solid black;
+  padding: 0.5rem;
+  font-family: inherit;
+  font-weight: bold;
+  background: white;
+  box-shadow: 2px 2px 0 black;
+  cursor: pointer;
+}
+
+/* Pattern Grid Layout */
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Pattern Card Styling */
+.patternCard {
+  background-color: white;
+  border: 2px solid black;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.8);
+  position: relative;
+  transition: all 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.patternCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.8);
+}
+
+.patternCategory {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.3rem 0.8rem;
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: white;
+}
+
+.categoryStillLife {
+  background-color: #1E88E5;
+  /* Blue */
+}
+
+.categoryOscillator {
+  background-color: #E53935;
+  /* Red */
+}
+
+.categorySpaceship {
+  background-color: #43A047;
+  /* Green */
+}
+
+.categoryMethuselah {
+  background-color: #FDD835;
+  /* Yellow */
+  color: black;
+}
+
+.categoryOther {
+  background-color: #616161;
+  /* Gray */
+}
+
+.patternName {
+  margin: 0;
+  padding: 1.5rem 1rem 0.5rem;
+  font-size: 1.3rem;
+  line-height: 1.3;
+  border-bottom: 3px solid #FDD835;
+}
+
+.patternVisualization {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  min-height: 150px;
+}
+
+.patternGrid {
+  display: inline-block;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  background-color: white;
+}
+
+.patternRow {
+  display: flex;
+}
+
+.patternCell {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ddd;
+  margin: 1px;
+  background-color: white;
+}
+
+.patternCellAlive {
+  background-color: black;
+}
+
+.patternInfo {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.patternBehavior {
+  margin: 0 0 1rem;
+  flex-grow: 1;
+}
+
+.patternMeta {
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #ddd;
+  padding-top: 0.5rem;
+}
+
+.studentName {
+  font-weight: bold;
+}
+
+.submissionDate {
+  color: #666;
+}
+
+.patternError {
+  color: #E53935;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* No Results Message */
+.noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+  background-color: #f5f5f5;
+  border: 2px solid #ddd;
+}
+
+/* Submission CTA Section */
+.submissionCta {
+  margin-top: 3rem;
+  padding: 2rem;
+  text-align: center;
+  background-color: #f5f5f5;
+  border-left: 5px solid #E53935;
+}
+
+.submissionCta h2 {
+  margin-bottom: 0.5rem;
+}
+
+.submissionButton {
+  display: inline-block;
+  margin-top: 1rem;
+  background-color: #E53935;
+  color: white;
+  border: 2px solid black;
+  padding: 0.8rem 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  box-shadow: 3px 3px 0 black;
+  text-decoration: none;
+}
+
+.submissionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0 black;
+  text-decoration: none;
+  color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .galleryTitle {
+    font-size: 2.5rem;
+  }
+
+  .galleryControls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sortContainer {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .sortSelect {
+    flex-grow: 1;
+  }
+
+  .decorativeElements {
+    opacity: 0.3;
+  }
+}
+
+/* Dark Mode Support */
+:global(html[data-theme='dark']) .patternCard {
+  background-color: #2b2b2d;
+  border-color: #666;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+:global(html[data-theme='dark']) .patternVisualization {
+  background-color: #1a1a1a;
+}
+
+:global(html[data-theme='dark']) .patternCell {
+  border-color: #444;
+  background-color: #333;
+}
+
+:global(html[data-theme='dark']) .patternCellAlive {
+  background-color: white;
+}
+
+:global(html[data-theme='dark']) .patternMeta {
+  border-top-color: #444;
+}
+
+:global(html[data-theme='dark']) .submissionDate {
+  color: #aaa;
+}
+
+:global(html[data-theme='dark']) .filterButton {
+  background: #2b2b2d;
+  color: white;
+  border-color: #666;
+}
+
+:global(html[data-theme='dark']) .sortSelect {
+  background: #2b2b2d;
+  color: white;
+  border-color: #666;
+}
+
+:global(html[data-theme='dark']) .noResults,
+:global(html[data-theme='dark']) .submissionCta {
+  background-color: #2b2b2d;
+  border-color: #444;
+}
+
+:global(html[data-theme='dark']) .patternGrid {
+  border-color: #444;
+  background-color: #1a1a1a;
+}

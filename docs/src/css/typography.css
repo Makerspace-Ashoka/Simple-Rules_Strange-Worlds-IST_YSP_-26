@@ -1,0 +1,53 @@
+/* Typography styles */
+:root {
+  --font-primary: 'Inter', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 800;
+  
+  --color-text-primary: #252525;
+  --color-text-secondary: #5a5a5a;
+  --color-text-light: #f8f8f8;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 1.875rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+  font-weight: var(--font-weight-regular);
+}
+
+button {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

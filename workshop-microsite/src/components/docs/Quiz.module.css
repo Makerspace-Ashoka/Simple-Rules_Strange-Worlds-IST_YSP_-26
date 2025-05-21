@@ -1,0 +1,230 @@
+.quizContainer {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.question {
+  margin-bottom: 1.5rem;
+}
+
+.questionText {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: #343a40;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.option {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option:hover:not(.disabledOption) {
+  background-color: #e9ecef;
+  transform: translateY(-1px);
+}
+
+.selectedOption {
+  border-color: #4dabf7;
+  background-color: #e7f5ff;
+}
+
+.correctOption {
+  border-color: #40c057;
+  background-color: #d3f9d8;
+}
+
+.incorrectOption {
+  border-color: #fa5252;
+  background-color: #ffe3e3;
+}
+
+.disabledOption {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.feedback {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  animation: fadeIn 0.3s ease;
+  font-weight: 500;
+}
+
+.correct {
+  background-color: #d3f9d8;
+  color: #2b8a3e;
+  border: 1px solid #b2f2bb;
+}
+
+.incorrect {
+  background-color: #ffe3e3;
+  color: #c92a2a;
+  border: 1px solid #ffc9c9;
+}
+
+.retryButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: #339af0;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.retryButton:hover {
+  background-color: #1c7ed6;
+}
+
+.fillInBlank {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.textInput {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  font-size: 0.95rem;
+}
+
+.textInput:focus {
+  outline: none;
+  border-color: #4dabf7;
+  box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+}
+
+.submitButton {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  background-color: #339af0;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.submitButton:hover {
+  background-color: #1c7ed6;
+}
+
+.explanation {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  background-color: #f1f3f5;
+  animation: fadeIn 0.3s ease;
+}
+
+.correctExplanation {
+  background-color: #d3f9d8;
+  color: #2b8a3e;
+}
+
+.incorrectExplanation {
+  background-color: #ffe3e3;
+  color: #c92a2a;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Dark Mode Support */
+:global(.dark-theme) .quizContainer {
+  background-color: #2d333b;
+  border-color: #444c56;
+}
+
+:global(.dark-theme) .questionText {
+  color: #adbac7;
+}
+
+:global(.dark-theme) .option {
+  background-color: #22272e;
+  border-color: #444c56;
+  color: #adbac7;
+}
+
+:global(.dark-theme) .option:hover:not(.disabledOption) {
+  background-color: #2d333b;
+}
+
+:global(.dark-theme) .selectedOption {
+  border-color: #1f6feb;
+  background-color: #1a365d;
+}
+
+:global(.dark-theme) .correctOption {
+  border-color: #2b8a3e;
+  background-color: #1b4332;
+}
+
+:global(.dark-theme) .incorrectOption {
+  border-color: #c92a2a;
+  background-color: #5c2021;
+}
+
+:global(.dark-theme) .correct {
+  background-color: #1b4332;
+  color: #40c057;
+  border-color: #2b8a3e;
+}
+
+:global(.dark-theme) .incorrect {
+  background-color: #5c2021;
+  color: #fa5252;
+  border-color: #c92a2a;
+}
+
+:global(.dark-theme) .textInput {
+  background-color: #22272e;
+  border-color: #444c56;
+  color: #adbac7;
+}
+
+:global(.dark-theme) .textInput:focus {
+  border-color: #1f6feb;
+  box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.2);
+}
+
+:global(.dark-theme) .explanation {
+  background-color: #2d333b;
+}
+
+:global(.dark-theme) .correctExplanation {
+  background-color: #1b4332;
+  color: #40c057;
+}
+
+:global(.dark-theme) .incorrectExplanation {
+  background-color: #5c2021;
+  color: #fa5252;
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Workshop Gallery</title>
+  <link rel="stylesheet" href="./src/css/reset.css">
+  <link rel="stylesheet" href="./src/css/typography.css">
+  <link rel="stylesheet" href="./src/css/layout.css">
+  <link rel="stylesheet" href="./src/css/animations.css">
+  <link rel="stylesheet" href="./src/css/gallery.css">
+  <link rel="stylesheet" href="./src/css/modal.css">
+  <link rel="stylesheet" href="./src/css/responsive.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-container">
+      <div class="geometric-element circle"></div>
+      <h1>Student Submission Gallery</h1>
+      <div class="geometric-element square"></div>
+    </div>
+    <p class="subtitle">Showcasing start states submitted by students as part of the IST Makerspace workshop</p>
+  </header>
+
+  <nav class="filters">
+    <div class="filter-container">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="photography">Photography</button>
+      <button class="filter-btn" data-filter="digital-art">Digital Art</button>
+      <button class="filter-btn" data-filter="mixed-media">Mixed Media</button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="gallery-container" id="gallery">
+      <!-- Gallery items will be loaded here dynamically -->
+      <div class="loading-indicator">
+        <div class="geometric-element triangle"></div>
+        <p>Loading gallery...</p>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal" id="image-modal">
+    <div class="modal-content">
+      <button class="close-modal">&times;</button>
+      <div class="modal-image-container">
+        <img src="" alt="" id="modal-image">
+      </div>
+      <div class="modal-info">
+        <h2 id="modal-title"></h2>
+        <p class="modal-author" id="modal-author"></p>
+        <div class="modal-description" id="modal-description"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-container">
+      <p>&copy; Deepraj Pandey</p>
+      <div class="geometric-elements">
+        <div class="geometric-element triangle"></div>
+        <div class="geometric-element square"></div>
+        <div class="geometric-element circle"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="./src/js/main.js"></script>
+</body>
+
+</html>

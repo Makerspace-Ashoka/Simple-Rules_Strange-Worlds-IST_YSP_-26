@@ -1,0 +1,107 @@
+[
+  {
+    "id": "1",
+    "patternName": "Glider",
+    "studentName": "Aishwarya Kumar",
+    "category": "spaceship",
+    "representation": [
+      [0, 1, 0],
+      [0, 0, 1],
+      [1, 1, 1]
+    ],
+    "behavior": "Moves diagonally across the grid while maintaining its shape.",
+    "submissionDate": "2025-03-15"
+  },
+  {
+    "id": "2",
+    "patternName": "Blinker",
+    "studentName": "Rahul Sharma",
+    "category": "oscillator",
+    "representation": [
+      [0, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0]
+    ],
+    "behavior": "Alternates between horizontal and vertical line every generation.",
+    "submissionDate": "2025-03-16"
+  },
+  {
+    "id": "3",
+    "patternName": "Block",
+    "studentName": "Priya Patel",
+    "category": "still_life",
+    "representation": [
+      [1, 1],
+      [1, 1]
+    ],
+    "behavior": "Remains stable with no changes between generations.",
+    "submissionDate": "2025-03-14"
+  },
+  {
+    "id": "4",
+    "patternName": "R-pentomino",
+    "studentName": "Dev Singh",
+    "category": "methuselah",
+    "representation": [
+      [0, 1, 1],
+      [1, 1, 0],
+      [0, 1, 0]
+    ],
+    "behavior": "Evolves for over 1000 generations before stabilizing with multiple patterns.",
+    "submissionDate": "2025-03-17"
+  },
+  {
+    "id": "5",
+    "patternName": "Beacon",
+    "studentName": "Nisha Reddy",
+    "category": "oscillator",
+    "representation": [
+      [1, 1, 0, 0],
+      [1, 1, 0, 0],
+      [0, 0, 1, 1],
+      [0, 0, 1, 1]
+    ],
+    "behavior": "Oscillates between two states with corners \"flashing\".",
+    "submissionDate": "2025-03-18"
+  },
+  {
+    "id": "6",
+    "patternName": "Toad",
+    "studentName": "Arjun Mehta",
+    "category": "oscillator",
+    "representation": [
+      [0, 1, 1, 1],
+      [1, 1, 1, 0]
+    ],
+    "behavior": "Period 2 oscillator that appears to hop from side to side.",
+    "submissionDate": "2025-03-19"
+  },
+  {
+    "id": "7",
+    "patternName": "Loaf",
+    "studentName": "Meera Kapoor",
+    "category": "still_life",
+    "representation": [
+      [0, 1, 1, 0],
+      [1, 0, 0, 1],
+      [0, 1, 0, 1],
+      [0, 0, 1, 0]
+    ],
+    "behavior": "Stable pattern resembling a loaf of bread.",
+    "submissionDate": "2025-03-15"
+  },
+  {
+    "id": "8",
+    "patternName": "Lightweight Spaceship",
+    "studentName": "Vikram Choudhury",
+    "category": "spaceship",
+    "representation": [
+      [0, 1, 1, 0, 0],
+      [1, 1, 1, 1, 0],
+      [1, 1, 0, 1, 1],
+      [0, 1, 1, 1, 0]
+    ],
+    "behavior": "Moves horizontally across the grid while maintaining its shape.",
+    "submissionDate": "2025-03-20"
+  }
+]
