@@ -1,10 +1,14 @@
 .conceptCheckContainer {
   margin: 1.5rem 0;
   padding: 1.25rem;
-  border-radius: 8px;
-  background-color: #fff3cd;
-  border: 1px solid #ffeeba;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  border-radius: 0;
+  /* Bauhaus prefers clean lines and geometric shapes */
+  background-color: white;
+  border-left: 6px solid #E53935;
+  /* Bauhaus primary red */
+  border-bottom: 2px solid black;
+  font-family: 'Helvetica Neue', sans-serif;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
 }
 
 .questionContainer {
@@ -17,12 +21,23 @@
 .conceptIcon {
   font-size: 1.25rem;
   margin-top: 0.1rem;
+  color: #1E88E5;
+  /* Bauhaus blue */
 }
 
 .questionText {
   font-size: 1.05rem;
-  color: #664d03;
+  color: black;
   flex: 1;
+}
+
+.questionText code {
+  background-color: #FDD835;
+  /* Bauhaus yellow */
+  color: black;
+  padding: 2px 4px;
+  font-family: monospace;
+  font-weight: 500;
 }
 
 .inputContainer {
@@ -36,47 +51,61 @@
   flex: 1;
   min-width: 200px;
   padding: 0.6rem 0.75rem;
-  border-radius: 4px;
-  border: 1px solid #ced4da;
+  border-radius: 0;
+  /* Bauhaus geometric style */
+  border: 2px solid black;
   font-size: 0.95rem;
+  background-color: white;
 }
 
 .answerInput:focus {
   outline: none;
-  border-color: #4dabf7;
-  box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+  border-color: #1E88E5;
+  /* Bauhaus blue */
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .checkButton {
   padding: 0.6rem 1rem;
-  border-radius: 4px;
-  background-color: #0d6efd;
+  border-radius: 0;
+  /* Bauhaus geometric style */
+  background-color: #1E88E5;
+  /* Bauhaus blue */
   color: white;
-  border: none;
+  border: 2px solid black;
   cursor: pointer;
   font-size: 0.95rem;
-  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 2px 2px 0 black;
 }
 
 .checkButton:hover {
-  background-color: #0b5ed7;
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 black;
 }
 
 .revealButton,
 .hideButton {
   padding: 0.6rem 1rem;
-  border-radius: 4px;
-  background-color: #6c757d;
+  border-radius: 0;
+  /* Bauhaus geometric style */
+  background-color: black;
   color: white;
-  border: none;
+  border: 2px solid black;
   cursor: pointer;
   font-size: 0.95rem;
-  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .revealButton:hover,
 .hideButton:hover {
-  background-color: #5a6268;
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
 }
 
 .answerContainer {
@@ -89,36 +118,49 @@
 
 .answerLabel {
   font-weight: 600;
-  color: #664d03;
+  color: black;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
 }
 
 .answerText {
   font-weight: 500;
-  color: #664d03;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+  border-radius: 0;
+  /* Bauhaus geometric style */
+  background-color: #FDD835;
+  /* Bauhaus yellow */
   padding: 0.5rem 0.75rem;
   flex: 1;
+  border-bottom: 2px solid black;
 }
 
 .feedback {
   margin-top: 1rem;
   padding: 0.6rem 1rem;
-  border-radius: 4px;
+  border-radius: 0;
+  /* Bauhaus geometric style */
   font-weight: 500;
   animation: fadeIn 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+  border-bottom: 2px solid black;
 }
 
 .correctFeedback {
-  background-color: #d1e7dd;
-  color: #0f5132;
-  border: 1px solid #badbcc;
+  background-color: #FDD835;
+  /* Bauhaus yellow */
+  color: black;
+  border-left: 4px solid #FDD835;
 }
 
 .incorrectFeedback {
-  background-color: #f8d7da;
-  color: #842029;
-  border: 1px solid #f5c2c7;
+  background-color: #E53935;
+  /* Bauhaus red */
+  color: white;
+  border-left: 4px solid #E53935;
 }
 
 @keyframes fadeIn {
@@ -147,43 +189,70 @@
 
 /* Dark Mode Support */
 :global(.dark-theme) .conceptCheckContainer {
-  background-color: #3b2e00;
-  border-color: #4d3c00;
-  color: #ffe066;
+  background-color: #121212;
+  border-left: 6px solid #FF5252;
+  /* Darker Bauhaus red */
+  border-bottom: 2px solid white;
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.2);
 }
 
 :global(.dark-theme) .questionText {
-  color: #ffe066;
+  color: white;
+}
+
+:global(.dark-theme) .questionText code {
+  background-color: #FFEB3B;
+  /* Brighter Bauhaus yellow for dark mode */
+  color: black;
 }
 
 :global(.dark-theme) .answerInput {
-  background-color: #2d333b;
-  border-color: #444c56;
-  color: #adbac7;
+  background-color: #1E1E1E;
+  border-color: white;
+  color: white;
 }
 
 :global(.dark-theme) .answerInput:focus {
-  border-color: #1f6feb;
-  box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.2);
+  border-color: #42A5F5;
+  /* Brighter Bauhaus blue for dark mode */
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark-theme) .checkButton {
+  background-color: #42A5F5;
+  /* Brighter Bauhaus blue for dark mode */
+  border-color: white;
+  box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+:global(.dark-theme) .revealButton,
+:global(.dark-theme) .hideButton {
+  background-color: #333;
+  border-color: white;
+  box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.2);
 }
 
 :global(.dark-theme) .answerLabel {
-  color: #ffe066;
+  color: white;
 }
 
 :global(.dark-theme) .answerText {
-  color: #ffe066;
-  background-color: rgba(45, 35, 0, 0.5);
+  background-color: #FFEB3B;
+  /* Brighter Bauhaus yellow for dark mode */
+  color: black;
+  border-bottom: 2px solid white;
 }
 
 :global(.dark-theme) .correctFeedback {
-  background-color: #132e1b;
-  color: #57ab67;
-  border-color: #1e4529;
+  background-color: #FFEB3B;
+  /* Brighter Bauhaus yellow for dark mode */
+  border-left: 4px solid #FFEB3B;
+  border-bottom: 2px solid white;
 }
 
 :global(.dark-theme) .incorrectFeedback {
-  background-color: #3c1618;
-  color: #f37d83;
-  border-color: #5c2021;
+  background-color: #FF5252;
+  /* Brighter Bauhaus red for dark mode */
+  border-left: 4px solid #FF5252;
+  border-bottom: 2px solid white;
 }
