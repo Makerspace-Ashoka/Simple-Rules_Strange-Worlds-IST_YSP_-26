@@ -28,8 +28,19 @@ export enum CellState {
   NOT_CREATED = null
 }
 
-// Define specific grid state type
-type GridState = (CellState | number)[][][] | any[][][];
+// Define a specific type for array operation items
+interface ArrayOperationItem {
+  value: number;
+  operation: string | null;
+}
+
+// Define different grid state types
+type CellGrid = (CellState | number)[][];
+type HistogramGrid = number[][];
+type ArrayGrid = ArrayOperationItem[];
+
+// Combined type for all possible grid states
+type GridState = (CellGrid | HistogramGrid | ArrayGrid)[];
 
 export interface VisualDemoProps {
   type: DemoType;
@@ -142,7 +153,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
   };
 
   // Individual state generators (moved out for clarity)
-  const createGridCreationState = (): GridState => {
+  const createGridCreationState = (): CellGrid[] => {
     const cols = Math.floor(width / resolution);
     const rows = Math.floor(height / resolution);
 
@@ -165,7 +176,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
     });
   };
 
-  const createNestedLoopsState = (): GridState => {
+  const createNestedLoopsState = (): CellGrid[] => {
     const { rows = 5, cols = 5 } = grid || {};
     const totalCells = rows * cols;
     const cellsPerStep = Math.max(1, Math.ceil(totalCells / steps));
@@ -186,7 +197,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
     });
   };
 
-  const createNestedLoopsGridState = (): GridState => {
+  const createNestedLoopsGridState = (): CellGrid[] => {
     const { rows = 5, cols = 5 } = grid || {};
 
     return Array(steps).fill(0).map((_, step) => {
@@ -213,7 +224,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
     });
   };
 
-  const createRandomDistributionState = (): GridState => {
+  const createRandomDistributionState = (): HistogramGrid[] => {
     return Array(steps).fill(0).map((_, step) => {
       const grid = Array(10).fill(0).map(() => Array(10).fill(0));
       const sampleCount = Math.ceil(((step + 1) / steps) * samples);
@@ -229,7 +240,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
     });
   };
 
-  const createArrayModificationState = (): GridState => {
+  const createArrayModificationState = (): ArrayGrid[] => {
     const initialArray = [10, 20, 30, 40, 50];
     const operations = [
       { type: 'initial', array: [...initialArray] },
@@ -245,14 +256,15 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
       const opIndex = Math.min(operations.length - 1, Math.floor(step / stepsPerOperation));
       const { array, type, index } = operations[opIndex];
 
-      // Create a grid to represent the array
-      return Array(array.length).fill(0).map((_, i) => {
-        return [array[i], i === index ? type : null];
-      });
+      // Create array to represent the operation - with proper typing
+      return array.map((value, i) => ({
+        value,
+        operation: i === index ? type : null
+      }));
     });
   };
 
-  const createCreate2DArrayState = (): GridState => {
+  const createCreate2DArrayState = (): CellGrid[] => {
     const { rows = 3, cols = 4 } = grid || {};
 
     return Array(steps).fill(0).map((_, step) => {
@@ -291,7 +303,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
     });
   };
 
-  const createGridWrappingState = (): GridState => {
+  const createGridWrappingState = (): CellGrid[] => {
     const gridSize = 7;
     const center = Math.floor(gridSize / 2);
 
@@ -336,7 +348,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
     });
   };
 
-  const createNeighborsState = (): GridState => {
+  const createNeighborsState = (): CellGrid[] => {
     const gridSize = 5;
     const center = Math.floor(gridSize / 2);
 
@@ -369,7 +381,7 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
       return <div className={styles.loading}>Loading visualization...</div>;
     }
 
-    const currentGrid = gridState[currentStep];
+    const currentGrid = gridState[currentStep] as CellGrid;
 
     return (
       <div className={styles.gridDemo}>
@@ -381,8 +393,8 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
             gridTemplateColumns: `repeat(${currentGrid.length}, 1fr)`
           }}
         >
-          {currentGrid.map((col: any[], i: number) =>
-            col.map((cell: any, j: number) => (
+          {currentGrid.map((col, i) =>
+            col.map((cell, j) => (
               <div
                 key={`${i}-${j}`}
                 className={`
@@ -416,13 +428,13 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
       return <div className={styles.loading}>Loading visualization...</div>;
     }
 
-    const currentGrid = gridState[currentStep];
-    const maxValue = Math.max(...currentGrid.map((col: number[]) => Math.max(...col)));
+    const currentGrid = gridState[currentStep] as HistogramGrid;
+    const maxValue = Math.max(...currentGrid.map(col => Math.max(...col)));
 
     return (
       <div className={styles.distributionDemo}>
         <div className={styles.histogram}>
-          {currentGrid.map((col: number[], i: number) => {
+          {currentGrid.map((col, i) => {
             const height = col[0] ? (col[0] / maxValue) * 100 : 0;
             return (
               <div key={i} className={styles.histogramColumn}>
@@ -462,28 +474,25 @@ const VisualDemo: React.FC<VisualDemoProps> = ({
       return <div className={styles.loading}>Loading visualization...</div>;
     }
 
-    const currentGrid = gridState[currentStep];
+    const currentGrid = gridState[currentStep] as ArrayGrid;
 
     return (
       <div className={styles.arrayDemo}>
         <div className={styles.arrayContainer}>
-          {currentGrid.map((item: [number, string | null], i: number) => {
-            const [value, operation] = item;
-            return (
-              <div
-                key={i}
-                className={`
-                  ${styles.arrayCell}
-                  ${operation === 'change' ? styles.changed : ''}
-                  ${operation === 'add' ? styles.added : ''}
-                  ${operation === 'remove' ? styles.removed : ''}
-                  ${operation === 'insert' ? styles.inserted : ''}
-                `}
-              >
-                {value}
-              </div>
-            );
-          })}
+          {currentGrid.map((item, i) => (
+            <div
+              key={i}
+              className={`
+                ${styles.arrayCell}
+                ${item.operation === 'change' ? styles.changed : ''}
+                ${item.operation === 'add' ? styles.added : ''}
+                ${item.operation === 'remove' ? styles.removed : ''}
+                ${item.operation === 'insert' ? styles.inserted : ''}
+              `}
+            >
+              {item.value}
+            </div>
+          ))}
         </div>
 
         <DemoControls
