@@ -262,8 +262,36 @@ const Submit: React.FC = () => {
               <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
 
               {/* Pass basic info fields as hidden fields */}
+              {/*
               <input type="hidden" name="name" value={basicInfo.name} />
               <input type="hidden" name="email" value={basicInfo.email} />
+              */}
+
+              <div className={styles.formField}>
+                <label htmlFor="student-name">Your Name</label>
+                <input
+                  type="text"
+                  id="student-name"
+                  name="name"
+                  value={basicInfo.name}
+                  onChange={handleBasicInfoChange}
+                  placeholder="Enter your name"
+                  required
+                />
+              </div>
+
+              <div className={styles.formField}>
+                <label htmlFor="student-email">Email</label>
+                <input
+                  type="email"
+                  id="student-email"
+                  name="email"
+                  value={basicInfo.email}
+                  onChange={handleBasicInfoChange}
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
 
               <div className={styles.formField}>
                 <label htmlFor="pattern-name">Pattern Name</label>
@@ -374,6 +402,18 @@ const Submit: React.FC = () => {
                   rows={4}
                   required
                 ></textarea>
+              </div>
+
+              <div className={`${styles.formField} ${styles.checkbox}`}>
+                <input
+                  type="checkbox"
+                  id="permission"
+                  name="permission"
+                  checked={basicInfo.permission}
+                  onChange={handleBasicInfoChange}
+                  required
+                />
+                <label htmlFor="permission">I grant permission to showcase my submissions in the gallery</label>
               </div>
 
               <div className={styles.navigationButtons}>
