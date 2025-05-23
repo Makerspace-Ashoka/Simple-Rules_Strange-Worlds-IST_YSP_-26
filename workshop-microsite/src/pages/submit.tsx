@@ -1,6 +1,7 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react';
+import React, { useState, FormEvent, ChangeEvent, useEffect } from 'react';
 import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { useLocation, useHistory } from '@docusaurus/router';
 
 import styles from './submit.module.css';
 
@@ -13,6 +14,8 @@ interface BasicInfoState {
 
 const Submit: React.FC = () => {
   const { siteConfig } = useDocusaurusContext();
+  const location = useLocation();
+  const history = useHistory();
 
   // State for form data and status messages
   const [basicInfo, setBasicInfo] = useState<BasicInfoState>({
@@ -25,10 +28,30 @@ const Submit: React.FC = () => {
   const [patternCount, setPatternCount] = useState<number>(0);
   const [formError, setFormError] = useState<string>('');
 
-  // Handle tab changes
+  // Parse URL params on component mount
+  useEffect(() => {
+    // Get the tab parameter from the URL
+    const urlParams = new URLSearchParams(location.search);
+    const tabParam = urlParams.get('tab');
+
+    // If a valid tab is specified in the URL, set it as active
+    if (tabParam && ['info', 'project', 'patterns'].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [location]);
+
+  // Handle tab changes and update URL
   const handleTabChange = (tab: string): void => {
     setActiveTab(tab);
     setFormError(''); // Clear any error when changing tabs
+
+    // Update URL with the new tab parameter
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('tab', tab);
+    history.push({
+      pathname: location.pathname,
+      search: urlParams.toString()
+    });
   };
 
   // Handle changes in the basic info form
