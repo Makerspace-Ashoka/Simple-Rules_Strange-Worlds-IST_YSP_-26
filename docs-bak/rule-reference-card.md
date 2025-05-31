@@ -85,44 +85,6 @@ Binary: 01101110
 **Significance**: Proven to be Turing complete (can compute anything)
 **Implementation tip**: Look for persistent structures moving left-to-right
 
-### RULE 184 (Class 2) ★★★
-```
-Binary: 10111000
-        ······
-        ·····
-        ····
-        ···
-        ··
-```
-**Properties**: Particles move directionally
-**Models**: Traffic flow systems
-**Implementation tip**: Watch how "particles" merge and separate
-
-### RULE 150 (Class 3) ★★★★
-```
-Binary: 10010110
-         ·
-        ···
-       ·· ··
-      ······
-     ·      ·
-```
-**Properties**: Complex nested patterns
-**Mathematical basis**: XOR of all three cells (left, center, right)
-**Relationship**: Combination of Rules 90 and 60
-
-### RULE 22 (Class 3) ★★★
-```
-Binary: 00010110
-         ·
-        ···
-       ·· ··
-      ·······
-     ··     ··
-```
-**Properties**: Aperiodic, complex behavior
-**Implementation tip**: Creates triangular structures that interact in complex ways
-
 ---
 
 ## Implementation Checklist

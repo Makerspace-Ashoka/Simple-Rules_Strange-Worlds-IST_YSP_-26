@@ -7,11 +7,13 @@ sidebar_label: "2D Automata"
 
 ## Welcome to Your Game of Life Adventure!
 
-You're about to embark on an exploration of Conway's Game of Life - a world where simple rules create astonishingly complex behaviors. Unlike typical games, this "zero-player game" invented by mathematician John Conway in 1970 evolves on its own once you set up the initial conditions.
+You're about to embark on an exploration of [Conway's Game of Life](https://playgameoflife.com/)- a world where simple rules create astonishingly complex behaviors. Unlike typical games, this "zero-player game" invented by mathematician John Conway in 1970 evolves on its own once you set up the initial conditions.
 
 :::tip Fun Fact
-Conway initially offered a $50 prize to anyone who could create a pattern that would grow indefinitely. The prize was claimed within months!
+Conway initially offered a $50,000 prize to anyone who could create a pattern that would grow indefinitely. The prize was claimed within months!
 :::
+
+For this workshop we also made our [own implementation ](https://editor.p5js.org/DeeprajPandey/sketches/x6ZYwk4nx)of the Conway's Game of Life. 
 
 ## The Discovery Approach
 
@@ -26,38 +28,7 @@ Before jumping into pre-made patterns, spend some time exploring on your own:
 3. **Click on individual cells** to create your own starting patterns
 4. **Start developing your own classification system** for behaviors you observe
 
-**Group Activity**: With a partner, create 5 different small patterns (3-6 cells each). Compare what happens to each and discuss any patterns you notice in how they evolve.
 
-## Your Research Journal
-
-Scientists document their discoveries. Use this journal format to record yours:
-
-```
-PATTERN RESEARCH JOURNAL
-
-PATTERN NAME: ________________
-(Give your discovery a creative name!)
-
-INITIAL CONFIGURATION:
-[Draw or describe the pattern here]
-
-OBSERVED BEHAVIOR:
-□ Disappeared completely after ___ generations
-□ Stabilized into still pattern(s) after ___ generations
-□ Repeats in a cycle every ___ generations
-□ Moves across the grid
-□ Grows indefinitely
-□ Other: ___________________
-
-MY ANALYSIS:
-Why does this pattern behave this way? What's happening with the neighbors of each cell?
-
-CONNECTION TO CODE:
-How does this behavior connect to the rules in gameLogic.js?
-
-REAL-WORLD PARALLEL:
-Does this pattern or behavior remind you of anything in nature or society?
-```
 
 ## Look Under the Hood: Code Connections
 
@@ -73,22 +44,6 @@ The essence of Conway's Game of Life is counting neighbors and applying rules. W
 **Thinking Algorithmically**:
 Without seeing the code yet, can you sketch a flowchart or pseudocode for how you would implement the four Game of Life rules?
 
-```
-PSEUDOCODE CHALLENGE:
-
-For each cell in grid:
-   1. Count live neighbors
-   2. Apply these rules:
-      - ?
-      - ?
-      - ?
-      - ?
-   3. Store the result in next_grid (don't update the original grid yet!)
-
-After checking all cells, update original grid with next_grid values
-```
-
-Fill in the missing rules in your pseudocode. In the second half of the workshop, you'll implement these rules in actual code!
 
 ## Emergent Behaviors: Discovering Pattern Types
 
@@ -118,22 +73,8 @@ X··X
 Beehive was discovered in 1970, and is one of the most common naturally occurring patterns
 :::
 
-**Loaf:**
-```
-··XX
-X··X
-·X·X
-··X·
-```
 
-**Boat:**
-```
-·XX
-X·X
-·X·
-```
-
-**Code Connection**: During your exploration, notice how the patterns in `patterns.js` are defined as 2D arrays:
+**Code Connection**: During your exploration, notice how the patterns in `patterns.js` of our [implementation of Conway's Game of Life](https://editor.p5js.org/DeeprajPandey/sketches/x6ZYwk4nx) are defined as 2D arrays:
 
 ```javascript
 // This is how a glider pattern is defined in code:
@@ -162,15 +103,8 @@ XXX
 XXX·
 ```
 
-**Beacon** (Period 2):
-```
-XX··
-XX··
-··XX
-··XX
-```
 
-**Group Investigation**: With a partner, analyze a still life. Count the neighbors for every live cell and every dead cell adjacent to the pattern. How do the rules maintain its stability?
+**Investigation**: Analyze a still life. Count the neighbors for every live cell and every dead cell adjacent to the pattern. How do the rules maintain its stability?
 
 #### Spaceships
 The most fascinating discovery - patterns that move across the grid!
@@ -185,22 +119,6 @@ XXX
 Discovered by Richard K. Guy in 1969 while tracking the R-pentomino's evolution
 :::
 
-**Light Weight Spaceship (LWSS):**
-```
-·XX··
-XXXX·
-XX·XX
-·XXX·
-```
-
-**Heavy Weight Spaceship (HWSS):**
-```
-···XX··
-·X····X
-X······
-X·····X
-XXXXXX·
-```
 
 **Visualization Activity**: Create a step-by-step visualization of how a blinker transforms:
 - For each live cell, count and note the number of neighbors
@@ -243,52 +161,6 @@ In the second half of our workshop, you'll be coding the Game of Life from scrat
 - What if there were three cell states instead of two?
 
 Record your predictions about how these rule changes would affect pattern behavior!
-
-## Knowledge-Building Community
-
-Constructing knowledge together is more powerful than working alone:
-
-1. **Pattern Exchange**: Create a pattern and share it with a classmate. See if they can predict its behavior before running the simulation.
-
-2. **Code Jam**: In pairs, one person describes a pattern behavior they want to create, and the other suggests initial configurations that might produce it.
-
-3. **Gallery Walk**: Set up your most interesting pattern and let it run. Walk around to see what others have discovered.
-
-4. **Research Conference**: At the end of the exploration, each team presents their most interesting discovery to the class.
-
-## Beyond Conway: Advanced Extensions
-
-If you're moving quickly, explore these advanced topics:
-
-#### Methuselahs & Growth Patterns
-
-- **Methuselahs**: Tiny patterns that evolve for many generations before stabilizing
-  - Try the "R-pentomino": a small pattern that evolves for 1103 generations
-  ```
-  ·XX
-  XX·
-  ·X·
-  ```
-  :::tip Fun Fact
-  Discovered early in Conway's research; its surprising longevity was one of the first hints at Life's complexity
-  :::
-  - "Diehard": A 7-cell pattern that disappears after 130 generations
-  ```
-  ······X·
-  XX······
-  ·X···XXX
-  ```
-
-- **Puffer Trains**: Patterns that move and leave behind debris
-
-- **Guns**: Patterns that periodically emit spaceships
-  - The "Gosper Glider Gun" was the first pattern proven to grow indefinitely
-  :::tip Fun Fact
-  Created by Bill Gosper in 1970 to disprove Conway's conjecture that no patterns could grow indefinitely; the first pattern with unbounded growth
-  :::
-
-- **Turing Completeness**: How patterns in the Game of Life can compute anything computable
-  - Look up how logic gates (AND, OR, NOT) can be built using gliders
 
 ## Metacognition Corner: Reflect on Your Learning
 

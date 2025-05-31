@@ -186,6 +186,13 @@ Host your code repositories, collaborate with others, and share your implementat
 
 Share your creations in communities focused on algorithmic and generative art.
 </div>
+<div className="resource-card">
+
+### [This Workshop's Gallery](https://deeprajpandey.github.io/cellular-automata-workshop/submit)
+
+Share your creations directly on the digital gallery we have created specifically for this workshop.
+</div>
+
 
 </div>
 
