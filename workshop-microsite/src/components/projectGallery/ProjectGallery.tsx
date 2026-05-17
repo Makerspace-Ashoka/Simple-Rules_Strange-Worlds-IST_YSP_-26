@@ -90,10 +90,6 @@ export default function ProjectGallery({ showIntro = true }: ProjectGalleryProps
           <div>
             <p className={styles.sectionEyebrow}>Public Showcase</p>
             <h2 className={styles.sectionTitle}>Project Gallery</h2>
-            <p className={styles.sectionBody}>
-              Open each p5.js submission in a new tab, review the student&apos;s description, and compare how
-              different rule changes shaped the outcomes.
-            </p>
           </div>
           <Link className={styles.actionLink} to="/submit?tab=project">
             Submit A Project
@@ -109,9 +105,6 @@ export default function ProjectGallery({ showIntro = true }: ProjectGalleryProps
         ) : projects.length === 0 ? (
           <div className={styles.emptyState}>
             <p className={styles.emptyTitle}>No public projects yet.</p>
-            <p className={styles.emptyBody}>
-              Submit a p5.js Web Editor link and grant showcase permission to publish work here.
-            </p>
             <Link className={styles.actionLink} to="/submit?tab=project">
               Go To Submit
             </Link>

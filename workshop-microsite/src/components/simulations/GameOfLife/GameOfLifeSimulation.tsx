@@ -164,13 +164,7 @@ export default function GameOfLifeSimulation() {
     <div className={styles.shell}>
       <div className={styles.header}>
         <div>
-          <p className={styles.eyebrow}>Adapted from the provided p5.js sketch</p>
           <h2 className={styles.title}>Conway&apos;s Game of Life</h2>
-          <p className={styles.lead}>
-            This version keeps the original sketch&apos;s wraparound world, random start state,
-            classic patterns, and click-to-toggle editing, but places everything inside the
-            workshop site as an isolated p5 instance.
-          </p>
         </div>
 
         <div className={styles.statusPanel}>
