@@ -76,10 +76,6 @@ export default function StartStateGallery({ showIntro = true }: StartStateGaller
           <div>
             <p className={styles.sectionEyebrow}>Student Submissions</p>
             <h2 className={styles.sectionTitle}>Start states saved from the workshop server</h2>
-            <p className={styles.sectionBody}>
-              These cards come from the live submission API and keep the original matrix available for reset
-              and copy.
-            </p>
           </div>
           <Link className={styles.submitLink} to="/submit?tab=patterns">
             Submit A Start State

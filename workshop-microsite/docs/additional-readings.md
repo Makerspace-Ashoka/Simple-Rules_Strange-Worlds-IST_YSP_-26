@@ -153,6 +153,7 @@ But underneath, it is the same CA magic:</p>
 
 
 - [Forest-fire modeling paper (NPG, 2017)](https://npg.copernicus.org/articles/24/179/2017/npg-24-179-2017.pdf)
+- [Examples of Biological Cellular Automata Models - Mathematics LibreTexts](https://math.libretexts.org/Bookshelves/Scientific_Computing_Simulations_and_Modeling/Introduction_to_the_Modeling_and_Analysis_of_Complex_Systems_(Sayama)/11%3A_Cellular_Automata_I__Modeling/11.05%3A_Examples_of_Biological_Cellular_Automata_Models)
 
 ## A Good Way to Use This Page
 
