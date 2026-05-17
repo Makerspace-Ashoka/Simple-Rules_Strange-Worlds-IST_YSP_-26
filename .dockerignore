@@ -1,0 +1,10 @@
+.git
+.github
+**/node_modules
+**/build
+workshop-microsite/.docusaurus
+docs-bak
+game-of-life-p5js
+handouts
+code-templates
+.DS_Store

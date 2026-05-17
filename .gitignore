@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+**/node_modules
+backend/dist
+workshop-microsite/build
+workshop-microsite/.docusaurus
+.DS_Store
