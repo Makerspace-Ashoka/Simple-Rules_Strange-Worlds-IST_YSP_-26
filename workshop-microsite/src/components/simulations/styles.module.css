@@ -1,0 +1,347 @@
+.simulationShell {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.simulationHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-muted);
+}
+
+.simulationTitle {
+  margin: 0;
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--ifm-heading-color);
+}
+
+.simulationLead {
+  margin: 0.75rem 0 0;
+  max-width: 760px;
+  line-height: 1.65;
+  color: var(--ifm-font-color-base);
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid color-mix(in srgb, var(--brand-text) 24%, transparent);
+  box-shadow: 3px 3px 0 var(--brand-shadow);
+  color: var(--brand-text);
+}
+
+html[data-theme='dark'] .statusBadge {
+  background: rgba(22, 22, 23, 0.88);
+}
+
+.simulationLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(320px, 0.82fr);
+  gap: 1.1rem;
+  align-items: start;
+}
+
+.canvasColumn,
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.panel,
+.controlsPanel,
+.graphPanel,
+.legendPanel,
+.notePanel {
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--brand-text) 20%, transparent);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 4px 4px 0 var(--brand-shadow);
+}
+
+html[data-theme='dark'] .panel,
+html[data-theme='dark'] .controlsPanel,
+html[data-theme='dark'] .graphPanel,
+html[data-theme='dark'] .legendPanel,
+html[data-theme='dark'] .notePanel {
+  background: rgba(22, 22, 23, 0.88);
+}
+
+.canvasFrame {
+  width: 100%;
+  min-height: 320px;
+  border: 2px solid color-mix(in srgb, var(--brand-text) 84%, transparent);
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--brand-text) 78%, transparent);
+  background: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+
+html[data-theme='dark'] .canvasFrame {
+  background: rgba(15, 15, 16, 0.92);
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.canvasHint {
+  margin: 0;
+  padding: 0.85rem 0.95rem;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  border-left: 4px solid var(--brand-accent);
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--ifm-font-color-base);
+}
+
+html[data-theme='dark'] .canvasHint {
+  background: rgba(22, 22, 23, 0.82);
+}
+
+.sectionTitle {
+  margin: 0 0 0.7rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-muted);
+}
+
+.buttonGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.actionButton {
+  border: 2px solid color-mix(in srgb, var(--brand-text) 84%, transparent);
+  background: var(--brand-accent);
+  color: var(--brand-text);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.8rem 0.92rem;
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--brand-text) 78%, transparent);
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.actionButton:hover:not(:disabled) {
+  background: var(--brand-accent-hover);
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--brand-text) 78%, transparent);
+}
+
+.actionButton:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--brand-text) 28%, transparent);
+}
+
+.buttonPrimary {
+  background: var(--brand-primary);
+  color: #ffffff;
+}
+
+.buttonPrimary:hover:not(:disabled) {
+  background: var(--brand-primary-hover);
+}
+
+.buttonSecondary {
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--brand-text);
+}
+
+html[data-theme='dark'] .buttonSecondary {
+  background: rgba(42, 42, 42, 0.9);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  background: rgba(245, 245, 245, 0.95);
+}
+
+html[data-theme='dark'] .buttonSecondary:hover:not(:disabled) {
+  background: rgba(58, 58, 58, 0.95);
+}
+
+.fieldStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.controlField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.controlHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-muted);
+}
+
+.controlValue {
+  color: var(--ifm-heading-color);
+  white-space: nowrap;
+}
+
+.sliderInput,
+.selectInput {
+  width: 100%;
+  font: inherit;
+}
+
+.sliderInput {
+  margin: 0;
+  accent-color: var(--brand-accent);
+}
+
+.selectInput {
+  border: 2px solid color-mix(in srgb, var(--brand-text) 70%, transparent);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--brand-text);
+  padding: 0.7rem 0.75rem;
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--brand-text) 18%, transparent);
+}
+
+html[data-theme='dark'] .selectInput {
+  background: rgba(42, 42, 42, 0.9);
+  color: var(--brand-text);
+}
+
+.legendGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.7rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.legendSwatch {
+  width: 14px;
+  height: 14px;
+  border: 1px solid color-mix(in srgb, var(--brand-text) 36%, transparent);
+  flex: 0 0 auto;
+}
+
+.legendText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.legendLabel {
+  font-size: 0.92rem;
+  color: var(--ifm-font-color-base);
+}
+
+.legendHint {
+  font-size: 0.8rem;
+  color: var(--brand-muted);
+}
+
+.noteText {
+  margin: 0;
+  line-height: 1.62;
+  color: var(--ifm-font-color-base);
+}
+
+.questionText {
+  margin: 0.55rem 0 0;
+  font-weight: 700;
+  color: var(--ifm-heading-color);
+}
+
+.graphFrame {
+  width: 100%;
+  height: 180px;
+}
+
+.graphCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.graphLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1rem;
+  margin-top: 0.8rem;
+}
+
+.graphLegendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.86rem;
+  color: var(--ifm-font-color-base);
+}
+
+.graphDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+@media screen and (max-width: 1080px) {
+  .simulationLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .simulationHeader {
+    flex-direction: column;
+  }
+
+  .buttonGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .canvasFrame {
+    min-height: 260px;
+    box-shadow: 6px 6px 0 color-mix(in srgb, var(--brand-text) 78%, transparent);
+  }
+
+  .legendGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -6,25 +6,170 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --brand-bg: #ffffff;
+  --brand-surface: #f5f5f5;
+  --brand-surface-alt: #e6e6e6;
+  --brand-text: #2c2c2c;
+  --brand-muted: #6a6a6a;
+  --brand-primary: #6b1e2a;
+  --brand-primary-hover: #581822;
+  --brand-accent: #ffab00;
+  --brand-accent-hover: #e39a00;
+  --brand-shadow: rgba(44, 44, 44, 0.12);
+  --ifm-color-primary: #6b1e2a;
+  --ifm-color-primary-dark: #5e1a25;
+  --ifm-color-primary-darker: #561821;
+  --ifm-color-primary-darkest: #45131a;
+  --ifm-color-primary-light: #7d2430;
+  --ifm-color-primary-lighter: #882837;
+  --ifm-color-primary-lightest: #a03143;
+  --ifm-background-color: var(--brand-bg);
+  --ifm-background-surface-color: var(--brand-surface);
+  --ifm-navbar-background-color: rgba(255, 255, 255, 0.86);
+  --ifm-footer-background-color: var(--brand-surface);
+  --ifm-font-color-base: var(--brand-text);
+  --ifm-font-color-secondary: var(--brand-muted);
+  --ifm-heading-color: var(--brand-text);
+  --ifm-color-content: var(--brand-text);
+  --ifm-color-content-secondary: var(--brand-muted);
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(107, 30, 42, 0.08);
+}
+
+html,
+body {
+  background: var(--ifm-background-color);
+}
+
+.navbar {
+  backdrop-filter: blur(14px);
+  background: var(--ifm-navbar-background-color);
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-text) 14%, transparent);
+  z-index: 1200;
+}
+
+.footer {
+  background: var(--ifm-footer-background-color);
+  border-top: 1px solid color-mix(in srgb, var(--brand-text) 10%, transparent);
+}
+
+.navbar__brand,
+.navbar__link {
+  color: var(--ifm-heading-color);
+}
+
+.navbar__brand {
+  color: var(--brand-accent);
+}
+
+.navbar__title {
+  color: var(--brand-accent);
+  font-weight: 700;
+}
+
+.navbar__brand:hover,
+.navbar__brand:hover .navbar__title {
+  color: var(--brand-accent-hover);
+}
+
+.navbar__link--active {
+  color: var(--ifm-color-primary);
+}
+
+.navbar__logo img {
+  display: block;
+}
+
+.footer__bottom {
+  display: none;
+}
+
+.footer-copyright-placeholder {
+  display: none;
+}
+
+.main-wrapper {
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+.footer__title,
+.footer__link-item {
+  color: #ffffff !important;
+}
+
+.footer__link-item:hover {
+  color: var(--brand-accent) !important;
+}
+
+.footer .footer__link-item svg {
+  display: none;
+}
+
+.footer-contributor-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #ffffff !important;
+  text-decoration: none;
+}
+
+.footer-contributor-link:hover {
+  color: var(--brand-accent) !important;
+  text-decoration: none;
+}
+
+.footer-contributor-name,
+.footer-contributor-text {
+  color: #ffffff;
+}
+
+.footer-contributor-icon {
+  color: inherit;
+  font-size: 0.95em;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --brand-bg: #0f0f10;
+  --brand-surface: #161617;
+  --brand-surface-alt: #2a2a2a;
+  --brand-text: #f5f5f5;
+  --brand-muted: #bdbdbd;
+  --brand-primary: #6b1e2a;
+  --brand-primary-hover: #7a2432;
+  --brand-accent: #ffab00;
+  --brand-accent-hover: #ffc247;
+  --brand-shadow: rgba(0, 0, 0, 0.34);
+  --ifm-color-primary: #ffab00;
+  --ifm-color-primary-dark: #e69a00;
+  --ifm-color-primary-darker: #d18d00;
+  --ifm-color-primary-darkest: #ad7600;
+  --ifm-color-primary-light: #ffb61f;
+  --ifm-color-primary-lighter: #ffbd33;
+  --ifm-color-primary-lightest: #ffcc66;
+  --ifm-background-color: var(--brand-bg);
+  --ifm-background-surface-color: var(--brand-surface);
+  --ifm-navbar-background-color: rgba(15, 15, 16, 0.9);
+  --ifm-footer-background-color: var(--brand-surface);
+  --ifm-font-color-base: var(--brand-text);
+  --ifm-font-color-secondary: var(--brand-muted);
+  --ifm-heading-color: var(--brand-text);
+  --ifm-color-content: var(--brand-text);
+  --ifm-color-content-secondary: var(--brand-muted);
+  --docusaurus-highlighted-code-line-bg: rgba(255, 171, 0, 0.14);
+}
+
+[data-theme='dark'] .navbar {
+  border-bottom-color: color-mix(in srgb, var(--brand-muted) 16%, transparent);
+}
+
+[data-theme='dark'] .footer {
+  border-top-color: color-mix(in srgb, var(--brand-muted) 14%, transparent);
 }

@@ -1,0 +1,64 @@
+.pageShell {
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  padding: 4.6rem 0 2rem;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+html[data-theme='dark'] .hero {
+  background: rgba(15, 15, 16, 0.74);
+}
+
+.eyebrow {
+  margin: 0;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  color: var(--brand-muted);
+}
+
+.title {
+  margin: 0.55rem 0 0;
+  font-size: clamp(2.7rem, 6vw, 4.5rem);
+  letter-spacing: -0.05em;
+  line-height: 0.96;
+  position: relative;
+  display: inline-block;
+  color: var(--ifm-heading-color);
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.7rem;
+  width: min(12rem, 42%);
+  height: 4px;
+  background: var(--brand-accent);
+}
+
+.subtitle {
+  margin: 1.7rem 0 0;
+  max-width: 860px;
+  font-size: clamp(1.05rem, 2vw, 1.28rem);
+  line-height: 1.6;
+  color: var(--ifm-font-color-base);
+}
+
+.contentSection {
+  padding: 2rem 0 4rem;
+  background: rgba(245, 245, 245, 0.48);
+}
+
+html[data-theme='dark'] .contentSection {
+  background: rgba(15, 15, 16, 0.52);
+}
+
+@media (max-width: 996px) {
+  .hero {
+    padding-top: 3.75rem;
+  }
+}

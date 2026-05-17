@@ -1,0 +1,221 @@
+.galleryShell {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.sectionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.introPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid color-mix(in srgb, var(--brand-text) 12%, transparent);
+  box-shadow: 3px 3px 0 var(--brand-shadow);
+}
+
+html[data-theme='dark'] .introPanel {
+  background: rgba(22, 22, 23, 0.82);
+  border-color: rgba(189, 189, 189, 0.16);
+}
+
+.sectionEyebrow,
+.cardEyebrow,
+.ruleTitle,
+.metaLabel {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-muted);
+}
+
+.sectionTitle {
+  margin: 0.45rem 0 0;
+  font-size: clamp(1.6rem, 2.8vw, 2.3rem);
+  line-height: 1.12;
+  color: var(--ifm-heading-color);
+}
+
+.sectionBody,
+.ruleBody,
+.cardMeta,
+.cardBody,
+.detailText {
+  margin: 0.8rem 0 0;
+  line-height: 1.55;
+  color: var(--ifm-font-color-base);
+}
+
+.sectionHeadingRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.rulePanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 1rem 1.1rem;
+  border-left: 4px solid var(--brand-accent);
+  background: color-mix(in srgb, var(--brand-accent) 10%, transparent);
+}
+
+html[data-theme='dark'] .rulePanel {
+  background: color-mix(in srgb, var(--brand-accent) 10%, rgba(15, 15, 16, 0.4));
+}
+
+.actionLink,
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.72rem 1rem;
+  border: 2px solid color-mix(in srgb, var(--brand-text) 84%, transparent);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.actionLink,
+.primaryButton {
+  background: var(--brand-primary);
+  color: #fff;
+}
+
+.secondaryButton {
+  background: var(--brand-accent);
+  color: var(--brand-text);
+}
+
+.actionLink:hover,
+.primaryButton:hover,
+.secondaryButton:hover {
+  text-decoration: none;
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
+}
+
+.actionLink:hover,
+.primaryButton:hover {
+  color: #fff;
+}
+
+.secondaryButton:hover {
+  color: var(--brand-text);
+}
+
+.messagePanel,
+.emptyState {
+  padding: 1.4rem 1.5rem;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid color-mix(in srgb, var(--brand-text) 12%, transparent);
+  box-shadow: 3px 3px 0 var(--brand-shadow);
+}
+
+html[data-theme='dark'] .messagePanel,
+html[data-theme='dark'] .emptyState {
+  background: rgba(22, 22, 23, 0.8);
+  border-color: rgba(189, 189, 189, 0.16);
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--ifm-heading-color);
+}
+
+.emptyBody {
+  margin: 0.75rem 0 1rem;
+  color: var(--ifm-font-color-base);
+  line-height: 1.6;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.3rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid color-mix(in srgb, var(--brand-text) 12%, transparent);
+  border-left: 4px solid var(--brand-primary);
+  box-shadow: 3px 3px 0 var(--brand-shadow);
+}
+
+html[data-theme='dark'] .card {
+  background: rgba(22, 22, 23, 0.88);
+  border-color: rgba(189, 189, 189, 0.14);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cardTitle {
+  margin: 0.35rem 0 0;
+  font-size: 1.35rem;
+  line-height: 1.15;
+  color: var(--ifm-heading-color);
+}
+
+.ruleBadge {
+  flex-shrink: 0;
+  padding: 0.45rem 0.7rem;
+  background: color-mix(in srgb, var(--brand-primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 32%, transparent);
+  color: var(--ifm-heading-color);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.detailBlock {
+  padding: 0.8rem 0.9rem;
+  background: color-mix(in srgb, var(--brand-surface) 74%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-text) 10%, transparent);
+}
+
+html[data-theme='dark'] .detailBlock {
+  background: color-mix(in srgb, var(--brand-surface-alt) 66%, transparent);
+  border-color: rgba(189, 189, 189, 0.14);
+}
+
+.linkRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: auto;
+}
+
+@media (max-width: 996px) {
+  .introPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionHeadingRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

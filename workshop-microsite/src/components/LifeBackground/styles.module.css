@@ -1,0 +1,25 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: transparent;
+}
+
+html[data-theme='dark'] .layer::before {
+  background: transparent;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.86;
+}

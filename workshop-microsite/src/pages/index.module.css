@@ -1,230 +1,125 @@
 /**
- * CSS styles for the homepage with Bauhaus design inspiration and dark mode support
+ * Homepage styles with translucent layers so the site-wide Conway background
+ * remains visible behind the landing page content.
  */
 
+.pageShell {
+  position: relative;
+  z-index: 1;
+}
+
 .heroBanner {
-  padding: 6rem 0;
-  margin-bottom: 2rem;
+  padding: 5rem 0 2.75rem;
+  margin-bottom: 1.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
-  background-color: var(--ifm-background-color);
-  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  background: rgba(255, 255, 255, 0.72);
+  transition: background var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
-/* Typography with Bauhaus inspiration */
+html[data-theme='dark'] .heroBanner {
+  background: rgba(15, 15, 16, 0.72);
+}
+
 .title {
-  font-size: 4rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.5rem;
+  font-size: clamp(3rem, 7vw, 5.3rem);
+  font-weight: 760;
+  letter-spacing: -0.05em;
+  margin-bottom: 1rem;
   font-family: 'Helvetica Neue', sans-serif;
-  text-transform: uppercase;
   position: relative;
   display: inline-block;
   color: var(--ifm-heading-color);
   transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
-/* Add a decorative underline to the title */
 .title::after {
   content: '';
   position: absolute;
-  bottom: -10px;
-  left: 25%;
-  width: 50%;
+  bottom: -0.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(13rem, 45%);
   height: 4px;
-  background-color: #FDD835;
-}
-
-html[data-theme='dark'] .title::after {
-  background-color: #FFEB3B;
+  background-color: var(--brand-accent);
 }
 
 .subtitle {
-  font-size: 1.8rem;
-  line-height: 1.5;
-  max-width: 800px;
-  margin: 2rem auto 3rem;
-  font-weight: 300;
+  font-size: clamp(1.25rem, 2.5vw, 1.9rem);
+  line-height: 1.45;
+  max-width: 860px;
+  margin: 1.75rem auto 0;
+  font-weight: 320;
   color: var(--ifm-color-content);
   transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
-/* Canvas styling */
-.canvas {
-  border: 2px solid var(--ifm-color-emphasis-700);
-  max-width: 100%;
-  height: auto;
-  background-color: var(--ifm-background-surface-color);
-  box-shadow: 5px 5px 0 var(--ifm-color-emphasis-700);
-  transition: border-color var(--ifm-transition-fast) var(--ifm-transition-timing-default),
-    box-shadow var(--ifm-transition-fast) var(--ifm-transition-timing-default),
-    background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
-}
-
 .visualization {
-  margin: 3rem auto;
+  margin: 2.75rem auto 0;
   display: flex;
   justify-content: center;
-  position: relative;
+  width: min(100%, 980px);
 }
 
-/* Bauhaus-inspired shape decorations */
-.bauhausShapes {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.circle {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: #FDD835;
-  top: 15%;
-  left: 10%;
-  opacity: 0.7;
-  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
-}
-
-.darkCircle {
-  background-color: #FFEB3B;
-}
-
-.square {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background-color: #E53935;
-  top: 60%;
-  right: 10%;
-  transform: rotate(15deg);
-  opacity: 0.7;
-  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
-}
-
-.darkSquare {
-  background-color: #FF5252;
-}
-
-.triangle {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 70px solid transparent;
-  border-right: 70px solid transparent;
-  border-bottom: 120px solid #1E88E5;
-  bottom: 10%;
-  left: 15%;
-  opacity: 0.7;
-  transition: border-bottom-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
-}
-
-.darkTriangle {
-  border-bottom-color: #42A5F5;
-}
-
-.rectangle {
-  position: absolute;
-  width: 150px;
-  height: 60px;
-  background-color: #000000;
-  top: 20%;
-  right: 15%;
-  transform: rotate(-10deg);
-  opacity: 0.7;
-  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
-}
-
-.darkRectangle {
-  background-color: #FFFFFF;
-}
-
-/* Bauhaus-inspired buttons */
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   margin-top: 2rem;
-  position: relative;
-  z-index: 1;
 }
 
 .buttonPrimary {
-  background-color: #E53935;
+  background-color: var(--brand-primary);
   color: white;
-  border: 2px solid var(--ifm-color-emphasis-700);
+  border: 2px solid color-mix(in srgb, var(--brand-text) 84%, transparent);
   padding: 0.8rem 1.5rem;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 0.05em;
   transition: all 0.2s ease;
-  box-shadow: 3px 3px 0 var(--ifm-color-emphasis-700);
-}
-
-html[data-theme='dark'] .buttonPrimary {
-  background-color: #FF5252;
-  border-color: var(--ifm-color-emphasis-600);
-  box-shadow: 3px 3px 0 var(--ifm-color-emphasis-600);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--brand-text) 82%, transparent);
 }
 
 .buttonPrimary:hover {
-  background-color: #C62828;
+  background-color: var(--brand-primary-hover);
   transform: translate(1px, 1px);
-  box-shadow: 2px 2px 0 var(--ifm-color-emphasis-700);
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--brand-text) 82%, transparent);
   text-decoration: none;
   color: white;
 }
 
-html[data-theme='dark'] .buttonPrimary:hover {
-  background-color: #D32F2F;
-  box-shadow: 2px 2px 0 var(--ifm-color-emphasis-600);
-}
-
 .buttonSecondary {
-  background-color: #1E88E5;
-  color: white;
-  border: 2px solid var(--ifm-color-emphasis-700);
+  background-color: var(--brand-accent);
+  color: var(--brand-text);
+  border: 2px solid color-mix(in srgb, var(--brand-text) 84%, transparent);
   padding: 0.8rem 1.5rem;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 0.05em;
   transition: all 0.2s ease;
-  box-shadow: 3px 3px 0 var(--ifm-color-emphasis-700);
-}
-
-html[data-theme='dark'] .buttonSecondary {
-  background-color: #42A5F5;
-  border-color: var(--ifm-color-emphasis-600);
-  box-shadow: 3px 3px 0 var(--ifm-color-emphasis-600);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--brand-text) 82%, transparent);
 }
 
 .buttonSecondary:hover {
-  background-color: #1565C0;
+  background-color: var(--brand-accent-hover);
   transform: translate(1px, 1px);
-  box-shadow: 2px 2px 0 var(--ifm-color-emphasis-700);
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--brand-text) 82%, transparent);
   text-decoration: none;
-  color: white;
+  color: var(--brand-text);
 }
 
-html[data-theme='dark'] .buttonSecondary:hover {
-  background-color: #1976D2;
-  box-shadow: 2px 2px 0 var(--ifm-color-emphasis-600);
-}
-
-/* Main content area */
 .main {
-  padding: 4rem 0;
-  background-color: var(--ifm-background-surface-color);
-  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  padding: 2.5rem 0 4rem;
+  position: relative;
+  z-index: 1;
+  background: rgba(245, 245, 245, 0.5);
+  transition: background var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+html[data-theme='dark'] .main {
+  background: rgba(15, 15, 16, 0.56);
 }
 
 .workshopInfo {
@@ -235,23 +130,22 @@ html[data-theme='dark'] .buttonSecondary:hover {
 }
 
 .infoBlock {
-  background-color: var(--ifm-card-background-color);
+  background: rgba(255, 255, 255, 0.88);
   padding: 3rem;
-  border-left: 5px solid var(--ifm-color-emphasis-700);
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
-  margin-bottom: 1rem;
-  transition: transform 0.3s ease,
-    background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default),
-    border-left-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  border: 1px solid rgba(44, 44, 44, 0.08);
+  border-left: 5px solid var(--brand-primary);
+  box-shadow: 3px 3px 0 var(--brand-shadow);
+  transition: transform 0.3s ease, background var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 html[data-theme='dark'] .infoBlock {
-  box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.05);
+  background: rgba(22, 22, 23, 0.84);
+  border-color: rgba(189, 189, 189, 0.12);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.32);
 }
 
-/* Add a subtle hover effect to info blocks */
 .infoBlock:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
 }
 
 .infoHeading {
@@ -262,7 +156,6 @@ html[data-theme='dark'] .infoBlock {
   letter-spacing: 0.03em;
   position: relative;
   color: var(--ifm-heading-color);
-  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 .infoHeading::after {
@@ -272,12 +165,7 @@ html[data-theme='dark'] .infoBlock {
   left: 0;
   width: 50px;
   height: 3px;
-  background-color: #FDD835;
-  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
-}
-
-html[data-theme='dark'] .infoHeading::after {
-  background-color: #FFEB3B;
+  background-color: var(--brand-accent);
 }
 
 .infoList {
@@ -292,7 +180,6 @@ html[data-theme='dark'] .infoHeading::after {
   position: relative;
   line-height: 1.6;
   color: var(--ifm-font-color-base);
-  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 .infoList li::before {
@@ -302,12 +189,13 @@ html[data-theme='dark'] .infoHeading::after {
   top: 10px;
   width: 8px;
   height: 8px;
-  background-color: #E53935;
-  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  background-color: var(--brand-accent);
 }
 
-html[data-theme='dark'] .infoList li::before {
-  background-color: #FF5252;
+.infoEmphasis {
+  margin: 1.4rem 0 0;
+  line-height: 1.6;
+  color: var(--ifm-font-color-base);
 }
 
 .timeline {
@@ -316,104 +204,49 @@ html[data-theme='dark'] .infoList li::before {
 
 .timelineItem {
   display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
+  align-items: flex-start;
+  margin-bottom: 1.15rem;
   padding-left: 1rem;
   position: relative;
   color: var(--ifm-font-color-base);
-  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
 
 .timelineDot {
   width: 12px;
   height: 12px;
-  background-color: #1E88E5;
+  background-color: var(--brand-accent);
   margin-right: 1rem;
-  transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  margin-top: 0.45rem;
+  flex-shrink: 0;
 }
 
-html[data-theme='dark'] .timelineDot {
-  background-color: #42A5F5;
+.activityButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.1rem;
+  background-color: var(--brand-accent);
+  color: var(--brand-text);
+  border: 2px solid color-mix(in srgb, var(--brand-text) 84%, transparent);
+  padding: 0.8rem 1.1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--brand-text) 82%, transparent);
+  transition: all 0.2s ease;
 }
 
-/* Add floating pixels animation */
-.floatingPixels {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  pointer-events: none;
+.activityButton:hover {
+  background-color: var(--brand-accent-hover);
+  color: var(--brand-text);
+  text-decoration: none;
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--brand-text) 82%, transparent);
 }
 
-.pixel {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  opacity: 0.7;
-  top: 100%;
-  animation: floatUp 15s infinite linear;
-}
-
-@keyframes floatUp {
-  0% {
-    top: 100%;
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 0.7;
-  }
-
-  90% {
-    opacity: 0.7;
-  }
-
-  100% {
-    top: -5%;
-    opacity: 0;
-    transform: rotate(360deg);
-  }
-}
-
-/* Add a fun hover effect to the canvas */
-.canvas {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.canvas:hover {
-  transform: scale(1.02);
-  box-shadow: 8px 8px 0 var(--ifm-color-emphasis-700);
-}
-
-html[data-theme='dark'] .canvas:hover {
-  box-shadow: 8px 8px 0 var(--ifm-color-emphasis-600);
-}
-
-/* Responsive styles */
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: 3rem 0;
-  }
-
-  .title {
-    font-size: 3rem;
-  }
-
-  .subtitle {
-    font-size: 1.4rem;
-    padding: 0 1rem;
-  }
-
-  .bauhausShapes {
-    opacity: 0.3;
-  }
-
-  .canvas {
-    width: 90%;
-    /* Ensure canvas fits smaller screens */
-    height: auto;
+    padding: 3.5rem 0 2rem;
   }
 
   .buttons {
@@ -422,20 +255,11 @@ html[data-theme='dark'] .canvas:hover {
 }
 
 @media screen and (max-width: 480px) {
-  .title {
-    font-size: 2.2rem;
-  }
-
-  .subtitle {
-    font-size: 1.2rem;
-  }
-
   .workshopInfo {
     grid-template-columns: 1fr;
-    /* Single column on very small screens */
   }
 
   .infoBlock {
-    padding: 1.5rem;
+    padding: 1.75rem;
   }
 }

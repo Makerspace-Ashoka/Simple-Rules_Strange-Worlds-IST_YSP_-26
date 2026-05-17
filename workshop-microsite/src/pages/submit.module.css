@@ -1,228 +1,169 @@
 /**
- * CSS Module styles for the submission form page
- * Follows Bauhaus design principles with primary colors, geometric shapes, and functional design
+ * Submission form page styles aligned with the shared brand palette.
  */
 
 .bauhausFormContainer {
-  max-width: 800px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2.5rem 1.5rem 4rem;
   position: relative;
-  overflow: hidden;
-}
-
-bauhausFormHeader {
-  margin-bottom: 3rem;
-  position: relative;
-}
-
-bauhausFormHeader h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  position: relative;
-  z-index: 2;
-}
-
-.formIntroduction {
-  font-size: 1.2rem;
-  line-height: 1.5;
-  max-width: 600px;
-  margin-bottom: 2rem;
-  position: relative;
-  z-index: 2;
-}
-
-/* Bauhaus decorative elements */
-.decorativeElements {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
   z-index: 1;
 }
 
-.redSquare {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  background-color: #E53935;
-  top: -20px;
-  right: 10%;
-  transform: rotate(15deg);
-  z-index: 0;
+.bauhausFormHeader {
+  margin-bottom: 2.5rem;
 }
 
-.blueCircle {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: #1E88E5;
-  bottom: -30px;
-  right: 30%;
-  opacity: 0.8;
-}
-
-.yellowTriangle {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-bottom: 80px solid #FDD835;
-  top: 20px;
-  left: -35px;
-  opacity: 0.7;
-}
-
-.blackRectangle {
-  position: absolute;
-  width: 120px;
-  height: 40px;
-  background-color: #000000;
-  top: 50px;
-  right: -20px;
-  transform: rotate(-10deg);
-  opacity: 0.7;
-}
-
-/* Bauhaus-style tabs */
-.bauhausTabs {
-  margin-bottom: 2rem;
+.bauhausFormHeader h1 {
+  margin: 0 0 1rem;
+  display: inline-block;
   position: relative;
-  z-index: 2;
-}
-
-.bauhausTabs [role="tablist"] {
-  border: none;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-
-.bauhausTabs [role="tab"] {
-  background: white;
-  border: 2px solid black;
-  border-radius: 0;
-  font-weight: bold;
+  font-size: clamp(2.8rem, 6vw, 4.35rem);
+  font-weight: 760;
+  letter-spacing: -0.05em;
+  line-height: 0.96;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 1rem;
-  transition: all 0.2s ease;
+  color: var(--ifm-heading-color);
 }
 
-.bauhausTabs [role="tab"][aria-selected="true"] {
-  background: #E53935;
-  color: white;
-  box-shadow: 4px 4px 0 black;
-  transform: translateY(-4px);
+.bauhausFormHeader h1::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.65rem;
+  width: min(13rem, 52%);
+  height: 4px;
+  background: var(--brand-accent);
 }
 
-/* Custom tab navigation */
+.formIntroduction {
+  margin: 1.5rem 0 0;
+  max-width: 720px;
+  font-size: clamp(1.08rem, 2vw, 1.3rem);
+  line-height: 1.65;
+  color: var(--ifm-color-content);
+}
+
 .customTabNavigation {
   margin-bottom: 2rem;
-  position: relative;
-  z-index: 2;
 }
 
 .customTabNavigation ul {
-  border: none;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+  margin: 0;
   padding: 0;
   list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
 }
 
 .customTabNavigation li {
-  background: white;
-  border: 2px solid black;
-  border-radius: 0;
-  font-weight: bold;
+  padding: 1rem 1.1rem;
+  text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 1rem;
-  transition: all 0.2s ease;
+  font-weight: 700;
+  color: var(--brand-text);
+  background: color-mix(in srgb, var(--brand-bg) 90%, var(--brand-surface) 10%);
+  border: 2px solid color-mix(in srgb, var(--brand-text) 84%, transparent);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
   cursor: pointer;
-  text-align: center;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.customTabNavigation li:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
 }
 
 .customTabNavigation li.activeTab {
-  background: #E53935;
-  color: white;
-  box-shadow: 4px 4px 0 black;
-  transform: translateY(-4px);
+  background: var(--brand-primary);
+  color: #fff;
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
 }
 
 .tabContent {
   position: relative;
 }
 
-/* Form sections */
 .bauhausFormSection {
-  background: white;
-  padding: 2rem;
-  border-left: 5px solid #1E88E5;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
+  padding: 2rem;
+  background: color-mix(in srgb, var(--brand-bg) 92%, var(--brand-surface) 8%);
+  border: 1px solid color-mix(in srgb, var(--brand-text) 12%, transparent);
+  border-left: 5px solid var(--brand-primary);
+  box-shadow: 3px 3px 0 var(--brand-shadow);
 }
 
 .bauhausFormSection h2 {
-  font-family: sans-serif;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin: 0 0 0.95rem;
+  display: inline-block;
+  position: relative;
+  font-size: 1.75rem;
+  line-height: 1.05;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  position: relative;
-  display: inline-block;
+  color: var(--ifm-heading-color);
 }
 
 .bauhausFormSection h2::after {
   content: '';
   position: absolute;
-  bottom: -5px;
   left: 0;
-  width: 50px;
+  bottom: -0.45rem;
+  width: 52px;
   height: 3px;
-  background-color: #FDD835;
+  background: var(--brand-accent);
+}
+
+.bauhausFormSection p {
+  color: var(--ifm-color-content);
 }
 
 .bauhausForm {
   margin-top: 1.5rem;
 }
 
-/* Form fields */
 .formField {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.35rem;
 }
 
 .formField label {
   display: block;
-  font-weight: bold;
   margin-bottom: 0.5rem;
-  text-transform: uppercase;
+  font-size: 0.92rem;
+  font-weight: 700;
   letter-spacing: 0.05em;
-  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: var(--ifm-heading-color);
 }
 
-.formField input[type="text"],
-.formField input[type="email"],
-.formField input[type="url"],
+.formField input[type='text'],
+.formField input[type='email'],
+.formField input[type='url'],
 .formField textarea,
 .formField select {
   width: 100%;
-  padding: 0.8rem;
-  border: 2px solid black;
-  font-family: inherit;
-  font-size: 1rem;
-  background: #f8f8f8;
+  padding: 0.85rem 0.9rem;
+  border: 2px solid color-mix(in srgb, var(--brand-text) 82%, transparent);
+  background: color-mix(in srgb, var(--brand-bg) 95%, var(--brand-surface) 5%);
+  color: var(--ifm-font-color-base);
+  font: inherit;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.formField input::placeholder,
+.formField textarea::placeholder {
+  color: var(--brand-muted);
+}
+
+.formField input:focus,
+.formField textarea:focus,
+.formField select:focus {
+  outline: none;
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-accent) 22%, transparent);
 }
 
 .formField textarea {
@@ -232,83 +173,95 @@ bauhausFormHeader h1 {
 .formField.checkbox {
   display: flex;
   align-items: flex-start;
+  gap: 0.65rem;
 }
 
 .formField.checkbox input {
-  margin-top: 0.25rem;
-  margin-right: 0.5rem;
+  width: auto;
+  margin: 0.25rem 0 0;
+  accent-color: var(--brand-primary);
 }
 
-/* Bauhaus-inspired buttons */
+.formField.checkbox label {
+  margin: 0;
+  line-height: 1.5;
+}
+
 .navigationButtons {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 2rem;
-  flex-wrap: wrap;
 }
 
 .bauhausButton {
-  background: white;
-  color: black;
-  border: 2px solid black;
-  padding: 0.8rem 1.5rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  transition: all 0.2s ease;
   flex: 1;
-  min-width: 120px;
-  box-shadow: 2px 2px 0 black;
+  min-width: 150px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.25rem;
+  border: 2px solid color-mix(in srgb, var(--brand-text) 84%, transparent);
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
 }
 
 .bauhausButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0 black;
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
+  text-decoration: none;
 }
 
 .bauhausButton.next {
-  background-color: #1E88E5;
-  color: white;
+  background: var(--brand-accent);
+  color: var(--brand-text);
 }
 
 .bauhausButton.prev {
-  background-color: #f8f8f8;
+  background: color-mix(in srgb, var(--brand-bg) 88%, var(--brand-surface) 12%);
 }
 
 .bauhausButton.submit {
-  background-color: #E53935;
-  color: white;
+  background: var(--brand-primary);
+  color: #fff;
 }
 
-/* Pattern counter */
 .patternCounter {
-  display: inline-block;
-  background-color: #FDD835;
-  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   margin-bottom: 1.5rem;
-  border: 2px solid black;
-  font-weight: bold;
+  padding: 0.65rem 0.95rem;
+  background: color-mix(in srgb, var(--brand-accent) 14%, var(--brand-bg));
+  border: 1px solid color-mix(in srgb, var(--brand-accent) 44%, transparent);
+  color: var(--brand-text);
+  font-weight: 600;
 }
 
-/* Pattern representation styles */
 .patternInputHelp {
-  background-color: #f5f5f5;
+  margin-bottom: 0.75rem;
   padding: 1rem;
-  border-left: 4px solid #1E88E5;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  background: color-mix(in srgb, var(--brand-surface) 82%, var(--brand-bg));
+  border: 1px solid color-mix(in srgb, var(--brand-text) 10%, transparent);
+  border-left: 4px solid var(--brand-accent);
+  font-size: 0.95rem;
 }
 
 .codeExample {
-  background-color: #2b2b2d;
-  color: #fff;
-  padding: 0.5rem;
-  border-radius: 4px;
+  margin: 0.65rem 0;
+  padding: 0.75rem;
   overflow-x: auto;
+  background: #1d1d20;
+  color: #f5f5f5;
   font-family: monospace;
   white-space: pre;
-  margin: 0.5rem 0;
+  border-radius: 4px;
 }
 
 .codeTextarea {
@@ -319,31 +272,39 @@ bauhausFormHeader h1 {
 }
 
 .patternFormatButton {
-  background-color: #1E88E5;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.25rem;
+  border: 2px solid color-mix(in srgb, var(--brand-text) 78%, transparent);
+  background: var(--brand-accent);
+  color: var(--brand-text);
+  padding: 0.55rem 0.95rem;
+  font-weight: 700;
   font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
 }
 
 .patternFormatButton:hover {
-  background-color: #1565C0;
-  transform: translateY(-2px);
+  background: var(--brand-accent-hover);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
 }
 
 .patternPreview {
-  margin-top: 1rem;
-  border: 1px dashed #ccc;
-  padding: 1rem;
   min-height: 100px;
+  margin-top: 1rem;
+  padding: 1rem;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   overflow-x: auto;
+  border: 1px dashed color-mix(in srgb, var(--brand-text) 20%, transparent);
+  background: color-mix(in srgb, var(--brand-surface) 62%, transparent);
 }
 
 .patternGrid {
@@ -357,21 +318,20 @@ bauhausFormHeader h1 {
 .patternCell {
   width: 12px;
   height: 12px;
-  border: 1px solid #ddd;
   margin: 1px;
-  background-color: #f8f8f8;
+  border: 1px solid color-mix(in srgb, var(--brand-text) 14%, transparent);
+  background: color-mix(in srgb, var(--brand-bg) 80%, var(--brand-surface) 20%);
 }
 
 .patternCellAlive {
-  background-color: #000;
+  background: var(--brand-primary);
 }
 
 .patternError {
-  color: #E53935;
+  color: #b42318;
   font-style: italic;
 }
 
-/* Status messages */
 .formStatus {
   margin-top: 2rem;
   padding: 1rem;
@@ -380,23 +340,62 @@ bauhausFormHeader h1 {
 }
 
 .formStatus.success {
-  background-color: #E8F5E9;
-  border-color: #4CAF50;
+  background-color: #e8f5e9;
+  border-color: #4caf50;
 }
 
 .formStatus.error {
-  background-color: #FFEBEE;
-  border-color: #F44336;
+  background-color: #ffebee;
+  border-color: #f44336;
 }
 
 .formError {
-  background-color: #ffebee;
-  color: #d32f2f;
-  padding: 10px 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  border-left: 4px solid #d32f2f;
-  font-weight: 500;
+  margin-bottom: 1.25rem;
+  padding: 0.95rem 1rem;
+  background: color-mix(in srgb, #d92d20 10%, var(--brand-bg));
+  border-left: 4px solid #d92d20;
+  color: #8f1d14;
+  font-weight: 600;
+}
+
+.successPanel {
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.1rem;
+  background: color-mix(in srgb, #2e7d32 12%, var(--brand-bg));
+  border-left: 4px solid #2e7d32;
+}
+
+.successMessage {
+  margin: 0;
+  color: color-mix(in srgb, #1b5e20 88%, var(--brand-text));
+  font-weight: 600;
+}
+
+.statusActions {
+  margin-top: 0.9rem;
+}
+
+.statusLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.68rem 1rem;
+  background: var(--brand-accent);
+  color: var(--brand-text);
+  border: 2px solid color-mix(in srgb, var(--brand-text) 84%, transparent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.statusLink:hover {
+  color: var(--brand-text);
+  text-decoration: none;
+  background: var(--brand-accent-hover);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 color-mix(in srgb, var(--brand-text) 72%, transparent);
 }
 
 @keyframes fadeIn {
@@ -411,127 +410,37 @@ bauhausFormHeader h1 {
   }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
-  bauhausFormContainer {
-    padding: 1rem;
+  .bauhausFormContainer {
+    padding: 1.5rem 1rem 3rem;
   }
 
-  bauhausFormHeader h1 {
-    font-size: 2.2rem;
-  }
-
-  .bauhausTabs [role="tablist"] {
+  .customTabNavigation ul {
     grid-template-columns: 1fr;
+  }
+
+  .bauhausFormSection {
+    padding: 1.35rem;
   }
 
   .navigationButtons {
     flex-direction: column;
   }
 
-  .bauhausButton {
+  .bauhausButton,
+  .statusLink {
     width: 100%;
   }
-
-  .decorativeElements {
-    opacity: 0.4;
-  }
-
-  .customTabNavigation ul {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Enhanced dark mode support */
-:global(html[data-theme='dark']) .bauhausFormSection {
-  background: #2b2b2d;
-  border-left-color: #64B5F6;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
-}
-
-:global(html[data-theme='dark']) .bauhausTabs [role="tab"] {
-  background: #2b2b2d;
-  color: white;
-  border-color: #666;
-}
-
-:global(html[data-theme='dark']) .bauhausTabs [role="tab"][aria-selected="true"] {
-  background: #E53935;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
-}
-
-:global(html[data-theme='dark']) .formField input,
-:global(html[data-theme='dark']) .formField textarea,
-:global(html[data-theme='dark']) .formField select {
-  background: #3a3a3c;
-  color: white;
-  border-color: #666;
-}
-
-:global(html[data-theme='dark']) .formField label {
-  color: #f0f0f0;
-}
-
-:global(html[data-theme='dark']) .bauhausButton {
-  background: #2b2b2d;
-  color: white;
-  border-color: #666;
-  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
-}
-
-:global(html[data-theme='dark']) .bauhausButton.prev {
-  background-color: #444;
-}
-
-:global(html[data-theme='dark']) .patternCounter {
-  background-color: #9e7b0e;
-  border-color: #666;
-  color: white;
-}
-
-:global(html[data-theme='dark']) .formStatus.success {
-  background-color: #0a3b12;
-  border-color: #2d8a3a;
-  color: #e8f5e9;
-}
-
-:global(html[data-theme='dark']) .formStatus.error {
-  background-color: #4a0c0f;
-  border-color: #cf352e;
-  color: #ffebee;
-}
-
-:global(html[data-theme='dark']) .bauhausFormSection h2::after {
-  background-color: #fbc02d;
-}
-
-/* Pattern representation styles */
-:global(html[data-theme='dark']) .patternInputHelp {
-  background-color: #3a3a3c;
-  border-left-color: #64B5F6;
-}
-
-:global(html[data-theme='dark']) .codeExample {
-  background-color: #1a1a1a;
-}
-
-:global(html[data-theme='dark']) .patternCell {
-  border-color: #444;
-  background-color: #333;
 }
 
 :global(html[data-theme='dark']) .patternCellAlive {
-  background-color: #fff;
+  background: var(--brand-accent);
 }
 
-/* Custom tabs */
-:global(html[data-theme='dark']) .customTabNavigation li {
-  background: #2b2b2d;
-  color: white;
-  border-color: #666;
+:global(html[data-theme='dark']) .formError {
+  color: #ffd4cf;
 }
 
-:global(html[data-theme='dark']) .customTabNavigation li.activeTab {
-  background: #E53935;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+:global(html[data-theme='dark']) .successMessage {
+  color: #d6f5d9;
 }

@@ -4,16 +4,18 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+const siteUrl = process.env.SITE_URL || 'http://localhost';
+const baseUrl = process.env.BASE_URL || '/';
+
 const config: Config = {
-  title: 'Pixels That Think',
+  title: 'Simple Rules, Strange Worlds',
   tagline: 'Exploring Complexity through Cellular Automata',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo.svg',
 
   // Set the production url of your site here
-  url: 'https://deeprajpandey.github.io/',
+  url: siteUrl,
   // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/cellular-automata-workshop/',
+  baseUrl,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -58,7 +60,6 @@ const config: Config = {
       playgroundPosition: 'bottom',
     },
     navbar: {
-      title: 'Home',
       logo: {
         alt: 'Logo',
         src: 'img/logo.svg',
@@ -72,11 +73,36 @@ const config: Config = {
         },
         {
           position: 'left',
-          label: 'Submit Your Work',
-          href: '/cellular-automata-workshop/submit'
+          label: 'Sandpile Game',
+          to: '/sandpile-game',
         },
         {
-          href: 'https://github.com/Makerspace-Ashoka',
+          position: 'left',
+          label: 'Applications',
+          to: '/applications',
+        },
+        {
+          position: 'left',
+          label: 'Game of Life',
+          to: '/game-of-life',
+        },
+        {
+          position: 'left',
+          label: 'Submit Your Work',
+          to: '/submit',
+        },
+        {
+          position: 'left',
+          label: 'Start State Gallery',
+          to: '/start-state-gallery',
+        },
+        {
+          position: 'left',
+          label: 'Project Gallery',
+          to: '/project-gallery',
+        },
+        {
+          href: 'https://github.com/Yesy01',
           label: 'GitHub',
           position: 'right',
         },
@@ -103,7 +129,7 @@ const config: Config = {
             },
             {
               label: 'Email',
-              href: 'mailto:makerspace@ashoka.edu.in',
+              href: 'mailto:yesirat.sanni_ug2023@ashoka.edu.in',
             },
           ],
         },
@@ -112,12 +138,23 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/Makerspace-Ashoka',
+              href: 'https://github.com/Yesy01',
+            },
+          ],
+        },
+        {
+          title: 'Contributors',
+          items: [
+            {
+              html: '<a class="footer-contributor-link" href="https://yesy01.github.io/YesiratSanni/" target="_blank" rel="noopener noreferrer"><span class="footer-contributor-name">Yesirat Adesola Sanni</span><span class="footer-contributor-icon" aria-hidden="true">↗</span></a>',
+            },
+            {
+              html: '<span class="footer-contributor-text">Kanishka Girish Shetty</span>',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Deepraj Pandey.`,
+      copyright: '<span class="footer-copyright-placeholder" aria-hidden="true">&nbsp;</span>',
     },
     prism: {
       theme: prismThemes.github,
