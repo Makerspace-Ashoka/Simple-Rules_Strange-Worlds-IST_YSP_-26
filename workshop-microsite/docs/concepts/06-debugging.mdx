@@ -1,0 +1,426 @@
+---
+id: debugging
+title: Debugging
+sidebar_label: Debugging
+sidebar_position: 8
+description: Learn how debugging helps programmers find, understand, fix, and test mistakes in code.
+tags: ["programming", "concepts", "debugging", "javascript"]
+---
+
+# Debugging
+
+**Debugging** means finding and fixing mistakes in a program.
+
+A mistake in code is often called a **bug**.
+
+A bug does not mean you failed.  
+A bug is a clue that the program is not doing what you expected.
+
+---
+
+## Expected vs Actual
+
+Debugging starts with one question:
+
+> What did I expect, and what actually happened?
+
+Example:
+
+```js
+let price = 100;
+let discount = 20;
+let finalPrice = price + discount;
+```
+
+Expected result:
+
+```js
+80
+```
+
+Actual result:
+
+```js
+120
+```
+
+The program runs, but the answer is wrong.
+
+That tells us there is a bug.
+
+The correct line should be:
+
+```js
+let finalPrice = price - discount;
+```
+
+---
+
+## Debugging Is Detective Work
+
+Debugging is like solving a mystery.
+
+You do not just guess randomly.
+
+You investigate step by step:
+
+1. Predict what should happen.
+2. Run or read the code.
+3. Find where the result becomes wrong.
+4. Fix one thing.
+5. Test again.
+
+Good debugging is calm and careful.
+
+---
+
+## Visual Explanation
+
+If you are a visual learner, this short video may help:
+
+<iframe width="1020" height="574" src="https://www.youtube.com/embed/UoyZS_WEiiU?list=PLIXWOo84JhCLCBAYelV2KM94oNuVCGRVF" title="Debugging Explained: How Programmers Find and Fix Bugs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The video explains debugging as detective work: finding clues, tracing values, fixing one thing, and testing again.
+
+---
+
+## Common Types of Bugs
+
+### 1. Syntax Bugs
+
+A **syntax bug** happens when the code is written in a way the computer cannot understand.
+
+Example:
+
+```js
+if (score > 10) {
+  console.log("You win");
+```
+
+The code is missing a closing `}`.
+
+Correct version:
+
+```js
+if (score > 10) {
+  console.log("You win");
+}
+```
+
+Syntax bugs are often caused by:
+
+- missing brackets
+- missing quotation marks
+- wrong spelling
+- wrong punctuation
+- incorrect indentation or structure
+
+---
+
+### 2. Runtime Bugs
+
+A **runtime bug** happens while the program is running.
+
+Example:
+
+```js
+let animals = ["rabbit", "fox"];
+
+console.log(animals[2]);
+```
+
+This is a problem because the array only has two values:
+
+| Index | Value |
+|---|---|
+| `0` | `"rabbit"` |
+| `1` | `"fox"` |
+
+There is no value at index `2`.
+
+---
+
+### 3. Logic Bugs
+
+A **logic bug** happens when the program runs, but gives the wrong result.
+
+Example:
+
+```js
+let price = 100;
+let discount = 20;
+let finalPrice = price + discount;
+```
+
+The program does not crash.
+
+But the logic is wrong because a discount should be subtracted, not added.
+
+Correct version:
+
+```js
+let finalPrice = price - discount;
+```
+
+Logic bugs can be harder to find because the code may still run.
+
+---
+
+## Tracing Code
+
+**Tracing** means following the code one step at a time.
+
+Example:
+
+```js
+let score = 0;
+score = score + 5;
+score = score * 2;
+```
+
+Trace:
+
+| Step | Value of `score` |
+|---|---|
+| start | `0` |
+| after `score + 5` | `5` |
+| after `score * 2` | `10` |
+
+Tracing helps you see where a value changes.
+
+If the value becomes wrong, the bug is probably near that step.
+
+---
+
+## Use Checkpoints
+
+One simple way to debug is to print values while the program runs.
+
+```js
+console.log("Before update:", score);
+
+score = score + points;
+
+console.log("After update:", score);
+```
+
+This helps you see what is happening inside the program.
+
+Checkpoints are useful when you are not sure where the bug is.
+
+---
+
+## Debugging Simulations
+
+Simulations can also have bugs.
+
+Examples:
+
+- a cell changes when it should not
+- a fire spreads too quickly
+- an animal moves outside the grid
+- a value becomes negative
+- the simulation freezes
+- the display does not match the stored data
+
+When debugging a simulation, check:
+
+1. **state**: is the data correct?
+2. **rules**: are the conditions correct?
+3. **loops**: are all objects being updated?
+4. **arrays**: are the indexes correct?
+5. **functions**: is each function doing one clear job?
+6. **display**: is the program showing the correct state?
+
+---
+
+## Test Small First
+
+Large simulations are harder to debug.
+
+Start with a small test.
+
+Instead of this:
+
+```js
+let grid = createLargeGrid(100, 100);
+```
+
+try this first:
+
+```js
+let grid = [
+  [0, 1, 0],
+  [1, 1, 0],
+  [0, 0, 1]
+];
+```
+
+A small grid is easier to check by hand.
+
+Once the small version works, you can scale up.
+
+---
+
+## Key Idea
+
+Debugging means comparing:
+
+```js
+expected result
+```
+
+with:
+
+```js
+actual result
+```
+
+Then finding where the difference started.
+
+A good debugging process is:
+
+```js
+predict → run → trace → fix → test again
+```
+
+---
+
+## Challenge Cards
+
+### Challenge Card 1: Find the Logic Bug
+
+This code is supposed to calculate the final price after a discount.
+
+```js
+let price = 100;
+let discount = 20;
+let finalPrice = price + discount;
+```
+
+Answer:
+
+1. What result does the code give?
+2. What result should it give?
+3. Which line is wrong?
+4. How would you fix it?
+
+---
+
+### Challenge Card 2: Trace the Value
+
+Trace the value of `energy`.
+
+```js
+let energy = 100;
+energy = energy - 20;
+energy = energy - 30;
+energy = energy + 10;
+```
+
+Fill in the table:
+
+| Step | Value of `energy` |
+|---|---|
+| start |  |
+| after `energy - 20` |  |
+| after `energy - 30` |  |
+| after `energy + 10` |  |
+
+---
+
+### Challenge Card 3: Find the Array Bug
+
+This code tries to print the third animal.
+
+```js
+let animals = ["rabbit", "fox"];
+
+console.log(animals[2]);
+```
+
+Answer:
+
+1. How many values are in the array?
+2. What indexes exist?
+3. Why is `animals[2]` a problem?
+4. How could you fix the code?
+
+---
+
+### Challenge Card 4: Debug a Loop
+
+This loop is supposed to print numbers from `0` to `4`.
+
+```js
+for (let i = 0; i <= 5; i++) {
+  console.log(i);
+}
+```
+
+Answer:
+
+1. What numbers does it actually print?
+2. Why is that wrong?
+3. What should the condition be?
+
+---
+
+### Challenge Card 5: Debug a Simulation Rule
+
+Imagine this rule for a fire simulation:
+
+```js
+if (cellState === "tree") {
+  cellState = "fire";
+}
+```
+
+Problem:
+
+Every tree becomes fire immediately.
+
+Answer:
+
+1. Why is this rule too simple?
+2. What extra condition should we check?
+3. How could we make the rule more realistic?
+
+Hint:
+
+```js
+if (cellState === "tree" && hasBurningNeighbor) {
+  cellState = "fire";
+}
+```
+
+---
+
+### Challenge Card 6: Make a Debugging Checklist
+
+Create a checklist for debugging a simulation.
+
+Use these questions:
+
+1. Is the starting state correct?
+2. Are the rules correct?
+3. Are the loops visiting every object?
+4. Are the array indexes correct?
+5. Are the functions returning the right values?
+6. Is the display showing the actual data?
+
+---
+
+## Quick Check
+
+Answer these in your own words:
+
+1. What is debugging?
+2. Why is a bug not the same as failure?
+3. What is the difference between expected and actual results?
+4. What is a syntax bug?
+5. What is a logic bug?
+6. Why should we test small examples first?
+7. Why is debugging important for simulations?
+
+---

@@ -1,0 +1,272 @@
+---
+id: data-types
+title: Data Types
+sidebar_label: Data Types
+sidebar_position: 3
+description: Learn how data types help computers understand the kind of information stored in a program.
+tags: ["programming", "concepts", "data-types", "javascript"]
+---
+
+# Data Types
+
+A **data type** tells the computer what kind of value it is working with.
+
+Different values behave differently.
+
+For example:
+
+```js
+let score = 10;
+let name = "Ada";
+let isAlive = true;
+```
+
+These values are not the same kind of information.
+
+- `10` is a number
+- `"Ada"` is text
+- `true` is a true-or-false value
+
+Data types help the computer know what it can do with each value.
+
+---
+
+## Three Common Data Types
+
+### 1. Numbers
+
+Numbers are used for counting, measuring, and calculations.
+
+```js
+let score = 100;
+let speed = 5;
+let temperature = 28;
+```
+
+Numbers can be added, subtracted, multiplied, divided, and compared.
+
+```js
+score = score + 10;
+temperature = temperature - 2;
+```
+
+---
+
+### 2. Text / Strings
+
+Text values are called **strings**.
+
+Strings are used for words, names, labels, and messages.
+
+```js
+let playerName = "Ada";
+let cellType = "tree";
+let message = "Simulation started";
+```
+
+Strings usually go inside quotation marks.
+
+```js
+"hello"
+"fire"
+"rabbit"
+```
+
+---
+
+### 3. Booleans
+
+A **boolean** stores only one of two values:
+
+```js
+true
+false
+```
+
+Booleans are useful for yes-or-no information.
+
+```js
+let isAlive = true;
+let isBurning = false;
+let simulationRunning = true;
+```
+
+A boolean can answer questions like:
+
+- Is the cell active?
+- Is the object moving?
+- Is the simulation still running?
+- Is the condition true?
+
+---
+
+## Visual Explanation
+
+If you are a visual learner, this short video may help:
+
+<iframe width="1020" height="574" src="https://www.youtube.com/embed/QZkggohKK-E?list=PLIXWOo84JhCLCBAYelV2KM94oNuVCGRVF" title="Data Types Explained: Numbers, Text, and True/False" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+
+The video explains data types using simple boxes for numbers, text, and true-or-false values.
+
+---
+
+## Why Data Types Matter
+
+The computer treats different data types differently.
+
+For example:
+
+```js
+10 + 5
+```
+
+gives:
+
+```js
+15
+```
+
+But:
+
+```js
+"10" + "5"
+```
+
+gives:
+
+```js
+"105"
+```
+
+The first example uses numbers.
+
+The second example uses strings.
+
+Same symbol, different data type, different result.
+
+---
+
+## Data Types in Simulations
+
+Simulations use many data types at the same time.
+
+For example:
+
+```js
+let cellAge = 3;
+let cellType = "tree";
+let isBurning = false;
+```
+
+Here:
+
+| Variable | Value | Data Type |
+| --- | --- | --- |
+| `cellAge` | `3` | number |
+| `cellType` | `"tree"` | string |
+| `isBurning` | `false` | boolean |
+
+This lets the simulation store different kinds of information about the same cell or object.
+
+---
+
+## Key Idea
+
+A data type tells the computer what kind of value it is using.
+
+| Data Type | Example | Used For |
+| --- | --- | --- |
+| Number | `42` | counting and calculations |
+| String | `"rabbit"` | words and labels |
+| Boolean | `true` | yes-or-no states |
+
+---
+
+## Challenge Cards
+
+### Challenge Card 1: Sort the Values
+
+Classify each value as a number, string, or boolean.
+
+```js
+7
+"rabbit"
+true
+3.5
+"fire"
+false
+"cell"
+100
+```
+
+Fill this in:
+
+| Value | Data Type |
+| --- | --- |
+| `7` | |
+| `"rabbit"` | |
+| `true` | |
+| `3.5` | |
+| `"fire"` | |
+| `false` | |
+
+---
+
+### Challenge Card 2: Create Three Variables
+
+Create one variable for each data type.
+
+```js
+let score = 0;
+let playerName = "Ada";
+let isAlive = true;
+```
+
+Your turn:
+
+```js
+let __________ = __________; // number
+let __________ = __________; // string
+let __________ = __________; // boolean
+```
+
+---
+
+### Challenge Card 3: Simulation Data
+
+Imagine a simulation object.
+
+It could be:
+
+- a rabbit
+- a tree
+- a cell
+- a raindrop
+- a fire particle
+- a moving object
+
+Create three variables for it:
+
+1. one number
+2. one string
+3. one boolean
+
+Example:
+
+```js
+let rabbitEnergy = 80;
+let rabbitState = "moving";
+let isHungry = true;
+```
+
+---
+
+## Quick Check
+
+Answer these in your own words:
+
+1. What is a data type?
+2. What data type is `"hello"`?
+3. What data type is `25`?
+4. What data type is `false`?
+5. Why are booleans useful in simulations?

@@ -1,199 +1,334 @@
 ---
-title: "Conditionals in JavaScript"
-sidebar_position: 2
-description: "Making decisions in your code with if statements"
+id: conditionals
+title: Conditionals
+sidebar_label: Conditionals
+sidebar_position: 4
+description: Learn how conditionals help programs make decisions using true-or-false rules.
 tags: ["programming", "concepts", "conditionals", "javascript"]
 ---
 
-# Conditionals in JavaScript
+# Conditionals
 
-## What Are Conditionals?
+A **conditional** lets a program make a decision.
 
-Conditionals are programming structures that let your code make decisions. They're like forks in a road - depending on certain conditions, your program will take different paths.
+It checks whether something is true or false, then chooses what to do next.
 
-In JavaScript, the main way to create conditionals is with **if statements**.
-
-## Basic If Statements
-
-The simplest conditional uses the `if` keyword to execute code only when a condition is true:
-
-```javascript
-let temperature = 75;
-
-if (temperature > 70) {
-  console.log("It's warm outside!");
-}
-```
-
-This code will only print the message if the temperature is above 70.
-
-## If-Else Statements
-
-Often, you'll want to do one thing if a condition is true and something else if it's false. For this, use `if-else`:
-
-```javascript
-let hour = 15;  // 3:00 PM in 24-hour time
-
-if (hour < 12) {
-  console.log("Good morning!");
+```js
+if (isRaining) {
+  takeUmbrella();
 } else {
-  console.log("Good afternoon/evening!");
+  wearSunglasses();
 }
 ```
 
-## Multiple Conditions with Else-If
+This means:
 
-For more than two possibilities, use `else if`:
+> If it is raining, take an umbrella.  
+> Otherwise, wear sunglasses.
 
-```javascript
-let score = 85;
+---
 
-if (score >= 90) {
-  console.log("You got an A!");
-} else if (score >= 80) {
-  console.log("You got a B!");
-} else if (score >= 70) {
-  console.log("You got a C!");
+## Why Do We Need Conditionals?
+
+Programs often need to choose between different actions.
+
+Examples:
+
+- if the player has no lives left, end the game
+- if a cell is active, update it
+- if the temperature is high, spread fire
+- if the simulation is running, keep updating
+- if the rabbit is hungry, make it search for food
+
+Conditionals let code respond to what is happening.
+
+---
+
+## If Statements
+
+An `if` statement runs code only when a condition is true.
+
+```js
+let score = 80;
+
+if (score > 50) {
+  console.log("You passed!");
+}
+```
+
+Here, the condition is:
+
+```js
+score > 50
+```
+
+Since `80 > 50` is true, the message will run.
+
+---
+
+## Else Statements
+
+An `else` statement runs when the condition is false.
+
+```js
+let score = 30;
+
+if (score > 50) {
+  console.log("You passed!");
 } else {
-  console.log("You need to study more.");
+  console.log("Try again.");
 }
 ```
+
+Since `30 > 50` is false, the program runs the `else` block.
+
+---
+
+## Else If Statements
+
+Sometimes there are more than two possible paths.
+
+```js
+let score = 72;
+
+if (score >= 80) {
+  console.log("Gold badge");
+} else if (score >= 50) {
+  console.log("Silver badge");
+} else {
+  console.log("Try again");
+}
+```
+
+This lets the program check several conditions in order.
+
+---
+
+## Visual Explanation
+
+If you are a visual learner, this short video may help:
+
+<iframe width="1020" height="574" src="https://www.youtube.com/embed/i1l5bppel5Q?list=PLIXWOo84JhCLCBAYelV2KM94oNuVCGRVF" title="Conditionals Explained: Teaching Code to Make Decisions" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+
+The video explains conditionals using everyday decisions like choosing whether to take an umbrella.
+
+---
 
 ## Comparison Operators
 
-To create conditions, we use comparison operators:
+Conditionals often use comparison operators.
 
 | Operator | Meaning | Example |
-|----------|---------|---------|
-| `==` | Equal to | `if (x == 5)` |
-| `===` | Equal value and type | `if (x === 5)` |
-| `!=` | Not equal | `if (x != 10)` |
-| `!==` | Not equal value or type | `if (x !== "5")` |
-| `>` | Greater than | `if (x > 7)` |
-| `<` | Less than | `if (x < 3)` |
-| `>=` | Greater than or equal | `if (x >= 5)` |
-| `<=` | Less than or equal | `if (x <= 9)` |
+| --- | --- | --- |
+| `>` | greater than | `score > 50` |
+| `<` | less than | `temperature < 20` |
+| `>=` | greater than or equal to | `score >= 80` |
+| `<=` | less than or equal to | `energy <= 0` |
+| `===` | equal to | `cellState === "alive"` |
+| `!==` | not equal to | `cellState !== "empty"` |
 
-**Note**: In JavaScript, use `===` (three equals signs) for comparison, not `=` (which is for assignment).
+Each comparison gives a boolean result:
 
-## Logical Operators
+```js
+true
+```
 
-You can combine conditions using logical operators:
+or
 
-| Operator | Meaning | Example |
-|----------|---------|---------|
-| `&&` | AND | `if (x > 5 && x < 10)` |
-| `||` | OR | `if (x < 5 || x > 10)` |
-| `!` | NOT | `if (!isPaused)` |
+```js
+false
+```
 
-The `&&` (AND) operator means both conditions must be true.
-The `||` (OR) operator means at least one condition must be true.
-The `!` (NOT) operator reverses a condition.
+---
 
-## Conditionals in Conway's Game of Life
+## Booleans and Conditionals
 
-In our Game of Life project, conditionals determine whether cells live or die:
+A condition usually asks a true-or-false question.
 
-```javascript
-// Applying Conway's rules to a cell
-function applyRules(cellState, neighbors) {
-  // For a living cell (state = 1)
-  if (cellState === 1) {
-    if (neighbors < 2) {
-      return 0;  // Dies from underpopulation
-    } else if (neighbors === 2 || neighbors === 3) {
-      return 1;  // Survives
-    } else {
-      return 0;  // Dies from overpopulation
-    }
-  }
-  // For a dead cell (state = 0)
-  else {
-    if (neighbors === 3) {
-      return 1;  // Becomes alive
-    } else {
-      return 0;  // Stays dead
-    }
-  }
+```js
+let isAlive = true;
+
+if (isAlive) {
+  console.log("The cell is alive.");
 }
 ```
 
-This function determines a cell's next state by applying Conway's four rules through a series of conditionals.
+The variable `isAlive` already stores a boolean value, so it can be used directly inside the condition.
 
-## The Ternary Operator: A Shorthand Conditional
+---
 
-For simple if-else conditions, JavaScript offers a compact form called the ternary operator:
+## Conditionals in Simulations
 
-```javascript
-// Long form
-let message;
-if (age >= 18) {
-  message = "You can vote!";
+Simulations use conditionals to apply rules.
+
+Example:
+
+```js
+if (temperature > 30) {
+  fireSpreads = true;
 } else {
-  message = "Too young to vote.";
-}
-
-// Ternary form
-let message = age >= 18 ? "You can vote!" : "Too young to vote.";
-```
-
-The syntax is: `condition ? valueIfTrue : valueIfFalse`
-
-## Switch Statements
-
-When you have many possible values for a single variable, a `switch` statement can be clearer than multiple `if/else` statements:
-
-```javascript
-let day = "Tuesday";
-
-switch (day) {
-  case "Monday":
-    console.log("Start of the work week");
-    break;
-  case "Tuesday":
-  case "Wednesday":
-  case "Thursday":
-    console.log("Middle of the work week");
-    break;
-  case "Friday":
-    console.log("End of the work week");
-    break;
-  default:
-    console.log("It's the weekend!");
+  fireSpreads = false;
 }
 ```
 
-The `break` statements are important - they make sure only one case executes.
+Another example:
 
-## Common Patterns and Best Practices
+```js
+if (cellState === "active") {
+  updateCell();
+}
+```
 
-1. **Check boundaries** to prevent errors:
-   ```javascript
-   if (index >= 0 && index < array.length) {
-     // Now it's safe to access array[index]
-   }
-   ```
+Conditionals help the simulation decide what happens next.
 
-2. **Early returns** can simplify complex logic:
-   ```javascript
-   function isValidMove(x, y) {
-     // Return false early if out of bounds
-     if (x < 0 || x >= boardWidth) return false;
-     if (y < 0 || y >= boardHeight) return false;
+They are useful for rules like:
 
-     // Otherwise check other conditions...
-     return true;
-   }
-   ```
+- if a cell is alive, check whether it survives
+- if a tree is burning, turn it into ash
+- if an animal has low energy, make it search for food
+- if a raindrop reaches the ground, stop falling
+- if the simulation is paused, stop updating
 
-3. **Avoid unnecessary nesting** of if statements when possible.
+---
 
-## Summary
+## Key Idea
 
-- Conditionals let your program make decisions
-- `if` statements execute code only when conditions are true
-- `else` provides an alternative option
-- `else if` handles multiple conditions
-- Comparison operators (`===`, `>`, `<=`, etc.) create conditions
-- Logical operators (`&&`, `||`, `!`) combine conditions
+A conditional lets the program choose between actions.
 
+```js
+if (condition) {
+  // do this when true
+} else {
+  // do this when false
+}
+```
+
+The program checks the condition first.
+
+Then it follows the correct path.
+
+---
+
+## Challenge Cards
+
+### Challenge Card 1: Everyday Decisions
+
+Choose one everyday decision and write it as an `if / else` statement.
+
+Examples:
+
+- if I am hungry, I eat
+- if it is raining, I take an umbrella
+- if my battery is low, I charge my phone
+- if I finish my homework, I can play
+
+Example:
+
+```js
+let isHungry = true;
+
+if (isHungry) {
+  eatFood();
+} else {
+  keepWorking();
+}
+```
+
+Your turn:
+
+```js
+let __________ = __________;
+
+if (__________) {
+  __________;
+} else {
+  __________;
+}
+```
+
+---
+
+### Challenge Card 2: Game Decision
+
+Write a conditional for a game score.
+
+Rules:
+
+- if score is 100 or more, the player wins
+- otherwise, the player keeps playing
+
+Starter code:
+
+```js
+let score = 85;
+
+if (__________) {
+  console.log("You win!");
+} else {
+  console.log("Keep playing.");
+}
+```
+
+---
+
+### Challenge Card 3: Simulation Rule
+
+Create a rule for a simulation object.
+
+Example:
+
+```js
+let energy = 20;
+
+if (energy <= 0) {
+  console.log("The animal stops moving.");
+} else {
+  console.log("The animal keeps moving.");
+}
+```
+
+Your turn: choose one object.
+
+Options:
+
+- rabbit
+- tree
+- fire
+- cell
+- raindrop
+- car
+
+Then write a condition that changes what it does.
+
+---
+
+### Challenge Card 4: True or False?
+
+Predict whether each condition is true or false.
+
+```js
+let score = 70;
+let temperature = 25;
+let isAlive = true;
+let cellState = "active";
+```
+
+| Condition | True or False? |
+| --- | --- |
+| `score > 50` | |
+| `score === 100` | |
+| `temperature < 30` | |
+| `isAlive === true` | |
+| `cellState === "empty"` | |
+
+---
+
+## Quick Check
+
+Answer these in your own words:
+
+1. What is a conditional?
+2. What does an `if` statement do?
+3. What does `else` mean?
+4. What kind of value does a condition produce?
+5. Why are conditionals useful in simulations?

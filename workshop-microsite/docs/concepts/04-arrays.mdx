@@ -1,260 +1,417 @@
 ---
-title: "Arrays and 2D Arrays"
-sidebar_position: 4
-description: "Understanding how to use arrays to store multiple values"
+id: arrays-and-2d-arrays
+title: Arrays and 2D Arrays
+sidebar_label: Arrays and 2D Arrays
+sidebar_position: 6
+description: Learn how arrays and 2D arrays store many values using rows, indexes, and grids.
 tags: ["programming", "concepts", "arrays", "data structures"]
 ---
 
-import { Quiz, Question, Option } from '@site/src/components/docs/Quiz';
-import ConceptCheck from '@site/src/components/docs/ConceptCheck';
-import CodeEditor from '@site/src/components/docs/CodeEditor';
-import ArrayVisualizer from '@site/src/components/docs/ArrayVisualizer';
-import GridVisualizer from '@site/src/components/docs/GridVisualizer';
-import VisualDemo from '@site/src/components/docs/VisualDemo';
-import ChallengeBadge from '@site/src/components/docs/ChallengeBadge';
-
 # Arrays and 2D Arrays
 
-<div className="concept-intro">
-  <div className="concept-intro__icon"></div>
-  <div className="concept-intro__text">
-    <p>Arrays let you store multiple values in a single variable - like a row of boxes where each box holds a value.</p>
-  </div>
-</div>
+An **array** stores many values under one name.
 
-## What is an Array?
+Instead of creating many separate variables:
 
-An array is a collection of values. In JavaScript, we create arrays using square brackets:
-
-```javascript
-let fruits = ["apple", "banana", "orange", "grape", "kiwi"];
+```js
+let score1 = 8;
+let score2 = 12;
+let score3 = 15;
+let score4 = 10;
 ```
 
-<ArrayVisualizer
-  array={["apple", "banana", "orange", "grape", "kiwi"]}
-  caption="An array of fruit names"
-  highlightIndices={true}
-/>
+we can store the values together:
 
-### Accessing Array Elements
-
-Each element has a position called an **index**, starting at 0. To access an element, use its index:
-
-```javascript
-let fruits = ["apple", "banana", "orange"];
-let firstFruit = fruits[0];  // "apple"
-let secondFruit = fruits[1];  // "banana"
+```js
+let scores = [8, 12, 15, 10];
 ```
 
-<ConceptCheck
-  question={<>If `let colors = ["red", "green", "blue", "yellow"]`, what is `colors[3]`?</>}
-  answer="yellow"
-/>
+This is an array.
 
-### Modifying Arrays
+---
 
-You can change array values or find out how many items are in an array:
+## Why Do We Need Arrays?
 
-```javascript
-let numbers = [10, 20, 30, 40, 50];
-numbers[2] = 35;  // Changes third element to 35
-console.log(numbers.length);  // 5
+Programs often need to work with many related values.
+
+Examples:
+
+- many scores
+- many names
+- many cells
+- many particles
+- many animals
+- many positions in a simulation
+
+Arrays help us keep related values organized.
+
+```js
+let animals = ["rabbit", "fox", "bird"];
+let temperatures = [25, 27, 30, 28];
+let cellStates = [0, 1, 0, 1];
 ```
 
-## 2D Arrays (Grids)
+---
 
-A 2D array is an array of arrays - like a grid with rows and columns.
+## Indexes
 
-<GridVisualizer
-  grid={[
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-  ]}
-  caption="A 3×3 grid represented as a 2D array"
-  showIndices={true}
-/>
+Each value in an array has a position called an **index**.
 
-Creating a 2D array:
+In JavaScript, indexes start at `0`.
 
-```javascript
+```js
+let scores = [8, 12, 15, 10];
+```
+
+| Index | Value |
+| --- | --- |
+| `0` | `8` |
+| `1` | `12` |
+| `2` | `15` |
+| `3` | `10` |
+
+To access a value, use its index:
+
+```js
+console.log(scores[0]); // 8
+console.log(scores[2]); // 15
+```
+
+---
+
+## Updating an Array
+
+Values inside an array can change.
+
+```js
+let scores = [8, 12, 15, 10];
+
+scores[1] = 20;
+```
+
+Now the array becomes:
+
+```js
+[8, 20, 15, 10]
+```
+
+The array name stays the same, but one value inside it changes.
+
+---
+
+## Loops and Arrays
+
+Loops work well with arrays because a loop can visit each value one by one.
+
+```js
+let scores = [8, 20, 15, 10];
+
+for (let i = 0; i < scores.length; i++) {
+  console.log(scores[i]);
+}
+```
+
+This means:
+
+> Start at the first value, then visit each value until the array ends.
+
+This is useful when we want to update many things in a program or simulation.
+
+---
+
+## Visual Explanation
+
+If you are a visual learner, this short video may help:
+
+<iframe width="1020" height="574" src="https://www.youtube.com/embed/KRrp4tq-jHE?list=PLIXWOo84JhCLCBAYelV2KM94oNuVCGRVF" title="Arrays and 2D Arrays Explained With Grids" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+
+The video explains arrays as rows of boxes and 2D arrays as grids made from rows and columns.
+
+---
+
+# 2D Arrays
+
+A **2D array** stores values in rows and columns.
+
+It is like a grid.
+
+```js
 let grid = [
-  [1, 2, 3],  // Row 0
-  [4, 5, 6],  // Row 1
-  [7, 8, 9]   // Row 2
+  [1, 0, 1],
+  [0, 1, 0],
+  [1, 1, 0]
 ];
 ```
 
-### Accessing Grid Elements
+This grid has:
 
-To access elements in a 2D array, we need two indices: row and column.
+- 3 rows
+- 3 columns
+- 9 total values
 
-```javascript
-let value = grid[1][2];  // Row 1, Column 2: value 6
+---
+
+## Rows and Columns
+
+To access a value in a 2D array, we use two indexes:
+
+```js
+grid[row][column]
 ```
 
-<ConceptCheck
-  question={<>What is the value of `grid[2][0]` in the example above?</>}
-  answer="7"
-/>
+Example:
 
-## Arrays in Conway's Game of Life
+```js
+let grid = [
+  [1, 0, 1],
+  [0, 1, 0],
+  [1, 1, 0]
+];
 
-In our Game of Life simulation, we use a 2D array to represent the grid:
-- Each cell can be 0 (dead) or 1 (alive)
-- We need to loop through all cells to apply the rules
+console.log(grid[0][0]); // 1
+console.log(grid[1][2]); // 0
+console.log(grid[2][1]); // 1
+```
 
-<GridVisualizer
-  grid={[
-    [0, 1, 0, 0, 1],
-    [0, 0, 1, 0, 0],
-    [1, 1, 1, 0, 0],
-    [0, 0, 0, 0, 1],
-    [0, 1, 0, 0, 0]
-  ]}
-  caption="Game of Life grid (1 = alive, 0 = dead)"
-  aliveColor="#000"
-  deadColor="#fff"
-/>
+The first index chooses the row.
 
-### Creating the Game Grid
+The second index chooses the column.
 
-```javascript
-// Calculate grid dimensions
-cols = Math.floor(width / resolution);
-rows = Math.floor(height / resolution);
+---
 
-// Create and initialize the grid
-grid = new Array(cols);
-for (let i = 0; i < cols; i++) {
-  grid[i] = new Array(rows);
-  for (let j = 0; j < rows; j++) {
-    grid[i][j] = 0;  // All cells start dead
+## 2D Arrays in Simulations
+
+2D arrays are useful for simulations because many simulations happen on grids.
+
+Examples:
+
+- cells changing state
+- fire spreading
+- rain falling
+- animals moving
+- particles flowing
+- terrain changing
+
+A grid can store the current state of the simulation.
+
+```js
+let grid = [
+  [0, 0, 0],
+  [0, 1, 0],
+  [0, 0, 0]
+];
+```
+
+Here, we could say:
+
+```js
+0 = empty
+1 = active
+```
+
+The program can then update the grid over time.
+
+---
+
+## Updating Every Cell in a Grid
+
+To update a 2D array, we often use one loop inside another loop.
+
+```js
+for (let row = 0; row < grid.length; row++) {
+  for (let col = 0; col < grid[row].length; col++) {
+    updateCell(row, col);
   }
 }
 ```
 
-### Looping Through the Grid
+The first loop visits each row.
 
-To apply rules to each cell, we use nested loops:
+The second loop visits each cell in that row.
 
-```javascript
-// Loop through every cell
-for (let i = 0; i < cols; i++) {
-  for (let j = 0; j < rows; j++) {
-    // Do something with grid[i][j]
-  }
+This lets the program check and update every position in the grid.
+
+---
+
+## Key Idea
+
+An array stores many values in a row.
+
+```js
+let scores = [8, 12, 15, 10];
+```
+
+A 2D array stores values in rows and columns.
+
+```js
+let grid = [
+  [0, 1, 0],
+  [1, 1, 0],
+  [0, 0, 1]
+];
+```
+
+Arrays help us store many related values.
+
+2D arrays help us store grid-based worlds.
+
+---
+
+## Challenge Cards
+
+### Challenge Card 1: Create an Array
+
+Create an array with five values.
+
+Example:
+
+```js
+let scores = [8, 12, 15, 10, 20];
+```
+
+Your turn:
+
+```js
+let ________ = [____, ____, ____, ____, ____];
+```
+
+Answer:
+
+1. What is the value at index `0`?
+2. What is the value at index `3`?
+3. How many values are in the array?
+
+---
+
+### Challenge Card 2: Update an Array
+
+Start with this array:
+
+```js
+let energyLevels = [100, 80, 60, 40];
+```
+
+Change the value at index `2` to `50`.
+
+Starter code:
+
+```js
+energyLevels[____] = ____;
+```
+
+---
+
+### Challenge Card 3: Loop Through an Array
+
+Complete the loop:
+
+```js
+let animals = ["rabbit", "fox", "bird"];
+
+for (let i = 0; i < animals.length; i++) {
+  console.log(__________);
 }
 ```
 
-<VisualDemo type="nested-loops-grid" rows={4} cols={4} />
-<VisualDemo type="nested-loops-grid" rows={4} cols={4} />
+Question:
 
-### Finding Neighbors
+What does the loop print?
 
-In Conway's Game of Life, we need to check the 8 surrounding cells:
+---
 
-```javascript
-// Count neighbors around cell at (x,y)
-function countNeighbors(grid, x, y) {
-  let sum = 0;
-  for (let i = -1; i <= 1; i++) {
-    for (let j = -1; j <= 1; j++) {
-      // Skip the cell itself
-      if (i === 0 && j === 0) continue;
+### Challenge Card 4: Create a 2D Array
 
-      // Handle edge wrapping
-      let col = (x + i + cols) % cols;
-      let row = (y + j + rows) % rows;
+Create a 3 by 3 grid.
 
-      sum += grid[col][row];
-    }
-  }
-  return sum;
-}
+Use:
+
+```js
+0 = empty
+1 = active
 ```
 
-<GridVisualizer
-  grid={[
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-  ]}
-  highlightCell={[2, 2]}
-  highlightNeighbors={true}
-  caption="The 8 neighbors of a cell"
-/>
+Example:
 
-## Practice: Count Live Neighbors
+```js
+let grid = [
+  [0, 1, 0],
+  [1, 1, 0],
+  [0, 0, 1]
+];
+```
 
-<ChallengeBadge level="intermediate" concepts={["arrays", "loops", "conditionals"]} />
+Your turn:
 
-Complete the function to count the number of live neighbors for a cell:
+```js
+let grid = [
+  [__, __, __],
+  [__, __, __],
+  [__, __, __]
+];
+```
 
-<CodeEditor
-  id="count-neighbors"
-  mode="javascript"
-  initialCode={`// Count neighbors for a cell at (x,y)
-function countNeighbors(grid, x, y) {
-  let sum = 0;
+---
 
-  // YOUR CODE: Check all 8 surrounding cells
-  // Remember to handle grid wrapping
+### Challenge Card 5: Find the Cell
 
+Use this grid:
 
+```js
+let grid = [
+  [0, 1, 0],
+  [1, 1, 0],
+  [0, 0, 1]
+];
+```
 
+Answer:
 
-  return sum;
-}`}
-  solution={`// Count neighbors for a cell at (x,y)
-function countNeighbors(grid, x, y) {
-  let sum = 0;
+1. What is `grid[0][1]`?
+2. What is `grid[1][0]`?
+3. What is `grid[2][2]`?
+4. Which row and column contains the last `1`?
 
-  // Check all 8 surrounding cells
-  for (let i = -1; i <= 1; i++) {
-    for (let j = -1; j <= 1; j++) {
-      // Skip the cell itself
-      if (i === 0 && j === 0) continue;
+---
 
-      // Calculate wrapped coordinates
-      let col = (x + i + cols) % cols;
-      let row = (y + j + rows) % rows;
+### Challenge Card 6: Simulation Grid
 
-      // Add this neighbor's state (0 or 1)
-      sum += grid[col][row];
-    }
-  }
+Imagine a fire-spread simulation.
 
-  return sum;
-}`}
-  hint="Use nested loops from -1 to 1 to check all 8 positions. Skip the center cell and use modulo (%) for wrapping."
-/>
+Use:
+
+```js
+0 = empty
+1 = tree
+2 = fire
+```
+
+Create a small grid that contains empty spaces, trees, and fire.
+
+Example:
+
+```js
+let forest = [
+  [1, 1, 0],
+  [1, 2, 1],
+  [0, 1, 1]
+];
+```
+
+Questions:
+
+1. Where is the fire?
+2. Which cells are trees?
+3. What rule could make the fire spread?
+
+---
 
 ## Quick Check
 
-<Quiz>
-  <Question type="multiple-choice" answer={1}>
-    What is the index of the first element in a JavaScript array?
-    <Option>1</Option>
-    <Option>0</Option>
-    <Option>-1</Option>
-    <Option>Depends on the array</Option>
-  </Question>
-</Quiz>
+Answer these in your own words:
 
-<Quiz>
-  <Question type="multiple-choice" answer={1}>
-    How would you access the element at the second row, third column of a 2D array?
-    <Option>array[1, 2]</Option>
-    <Option>array[1][2]</Option>
-    <Option>array[2][3]</Option>
-    <Option>array(1)(2)</Option>
-  </Question>
-</Quiz>
-
-<div className="navigation-buttons">
-  <a className="button" href="loops">Previous: Loops and Iteration</a>
-  <a className="button button--primary" href="functions">Next: Functions</a>
-</div>
+1. What is an array?
+2. What is an index?
+3. Why do indexes often start at `0`?
+4. What is a 2D array?
+5. Why are 2D arrays useful for simulations?
+6. How can loops help us update a grid?

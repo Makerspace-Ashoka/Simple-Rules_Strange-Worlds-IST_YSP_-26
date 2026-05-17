@@ -1,31 +1,277 @@
 ---
-title: "Loops in JavaScript"
-sidebar_position: 3
-description: "Repeating actions with loops"
+id: loops
+title: Loops
+sidebar_label: Loops
+sidebar_position: 5
+description: Learn how loops help programs repeat instructions without rewriting the same code many times.
 tags: ["programming", "concepts", "loops", "javascript"]
 ---
 
-# Loops in JavaScript
+# Loops
 
-## What Are Loops?
+A **loop** lets a program repeat instructions.
 
-Loops allow you to repeat code multiple times without having to write it over and over. Think of a loop like a washing machine cycle – it repeats the same steps until the task is complete.
+Instead of writing the same instruction again and again, we can tell the computer:
 
-In programming, loops are essential for processing lists of data, running simulations, or repeating actions until a certain condition is met.
+> Repeat this action.
+
+Example:
+
+```js
+for (let i = 0; i < 5; i++) {
+  console.log("Hello");
+}
+```
+
+This prints `"Hello"` five times.
+
+---
+
+## Why Do We Need Loops?
+
+Programs often need to repeat actions.
+
+Examples:
+
+- count from 1 to 10
+- move a character step by step
+- check every item in a list
+- update every cell in a grid
+- keep a simulation running over time
+
+Without loops, repeated code becomes messy.
+
+Bad:
+
+```js
+console.log("Hello");
+console.log("Hello");
+console.log("Hello");
+console.log("Hello");
+console.log("Hello");
+```
+
+Better:
+
+```js
+for (let i = 0; i < 5; i++) {
+  console.log("Hello");
+}
+```
+
+A loop keeps the code shorter and easier to change.
+
+---
 
 ## For Loops
 
-The most common type of loop is the `for` loop. It has three parts: initialization, condition, and increment.
+A **for loop** is useful when we know how many times something should repeat.
 
-```javascript
-// Print numbers from 1 to 5
-for (let i = 1; i <= 5; i++) {
+```js
+for (let i = 0; i < 5; i++) {
   console.log(i);
 }
 ```
 
-This loop will print:
+This gives:
+
+```js
+0
+1
+2
+3
+4
 ```
+
+The variable `i` is the counter.
+
+It starts at `0`, increases each time, and stops when the condition is no longer true.
+
+---
+
+## Understanding the Parts
+
+```js
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+```
+
+| Part | Meaning |
+| --- | --- |
+| `let i = 0` | start counting from 0 |
+| `i < 5` | keep going while this is true |
+| `i++` | increase `i` by 1 each time |
+| `console.log(i)` | repeat this instruction |
+
+---
+
+## While Loops
+
+A **while loop** repeats while a condition is true.
+
+```js
+let energy = 100;
+
+while (energy > 0) {
+  console.log("Keep running");
+  energy = energy - 25;
+}
+```
+
+This means:
+
+> While energy is greater than 0, keep running.
+
+When `energy` becomes `0`, the loop stops.
+
+---
+
+## For Loop vs While Loop
+
+| Loop Type | Best Used When |
+| --- | --- |
+| `for` loop | you know how many times to repeat |
+| `while` loop | you repeat until a condition changes |
+
+Example:
+
+```js
+for (let i = 0; i < 10; i++) {
+  jump();
+}
+```
+
+Use this when you know the action should happen 10 times.
+
+```js
+while (simulationRunning) {
+  updateSimulation();
+}
+```
+
+Use this when the action should continue until something changes.
+
+---
+
+## Visual Explanation
+
+If you are a visual learner, this short video may help:
+
+<iframe width="1020" height="574" src="https://www.youtube.com/embed/qBX_JAxVMog?list=PLIXWOo84JhCLCBAYelV2KM94oNuVCGRVF" title="Loops Explained: How Code Repeats Without Rewriting" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+
+The video explains loops using repeated actions, counters, and simulations that update over time.
+
+---
+
+## Loops in Simulations
+
+Simulations need loops because they change over time.
+
+A simulation usually does not update only once.
+
+It updates again and again.
+
+```js
+while (simulationRunning) {
+  updateWorld();
+  drawWorld();
+}
+```
+
+This lets the simulation keep moving.
+
+Loops can also update many objects:
+
+```js
+for (let i = 0; i < cells.length; i++) {
+  updateCell(cells[i]);
+}
+```
+
+This means:
+
+> Visit each cell and update it.
+
+Loops are important because simulations often contain many things changing at once.
+
+---
+
+## Loops and Time Steps
+
+A simulation often moves in **time steps**.
+
+At each time step:
+
+1. check the current state
+2. apply the rules
+3. update the system
+4. display the result
+
+Example:
+
+```js
+while (simulationRunning) {
+  applyRules();
+  updateState();
+  drawSimulation();
+}
+```
+
+Each repeat of the loop is one step forward in time.
+
+---
+
+## Key Idea
+
+A loop repeats instructions.
+
+```js
+for (let i = 0; i < 5; i++) {
+  doSomething();
+}
+```
+
+This means:
+
+> Do something five times.
+
+Loops help us avoid repeated code and make simulations run over time.
+
+---
+
+## Challenge Cards
+
+### Challenge Card 1: Repeat an Action
+
+Write a loop that prints `"Jump"` 10 times.
+
+Starter code:
+
+```js
+for (let i = 0; i < ______; i++) {
+  console.log("Jump");
+}
+```
+
+---
+
+### Challenge Card 2: Count With a Loop
+
+Write a loop that counts from `0` to `5`.
+
+Starter code:
+
+```js
+for (let i = 0; i <= ______; i++) {
+  console.log(i);
+}
+```
+
+Expected output:
+
+```js
+0
 1
 2
 3
@@ -33,208 +279,74 @@ This loop will print:
 5
 ```
 
-Let's break down how it works:
-1. `let i = 1`: Start with i equal to 1
-2. `i <= 5`: Keep looping as long as i is less than or equal to 5
-3. `i++`: After each loop, increase i by 1
-4. The code inside `{ }` runs each time
+---
 
-## While Loops
+### Challenge Card 3: Energy Loop
 
-A `while` loop repeats as long as a condition is true:
+Complete the loop.
 
-```javascript
-let count = 1;
+The player should keep running while `energy` is greater than `0`.
 
-while (count <= 5) {
-  console.log(count);
-  count++;
+```js
+let energy = 100;
+
+while (__________) {
+  console.log("The player is running");
+  energy = energy - 20;
 }
 ```
 
-This produces the same output as the `for` loop example. Use `while` loops when you don't know in advance how many times you need to loop.
+Question:
 
-## Looping Through Arrays
+How many times does the loop run?
 
-Loops are often used to process each item in an array:
+---
 
-```javascript
-let colors = ["red", "green", "blue", "yellow"];
+### Challenge Card 4: Simulation Loop
 
-// Loop through each color
-for (let i = 0; i < colors.length; i++) {
-  console.log("Color: " + colors[i]);
+Imagine a simulation where raindrops fall.
+
+Complete the loop:
+
+```js
+while (simulationRunning) {
+  update__________();
+  draw__________();
 }
 ```
 
-This code visits each element in the array and prints it.
+Now answer:
 
-## Nested Loops
+1. What is being updated?
+2. What is being drawn?
+3. What condition should stop the simulation?
 
-You can put loops inside other loops. These are called nested loops:
+---
 
-```javascript
-// Print a 3x3 grid
-for (let row = 0; row < 3; row++) {
-  for (let col = 0; col < 3; col++) {
-    console.log("Position: " + row + "," + col);
-  }
+### Challenge Card 5: Find the Bug
+
+This loop is supposed to print numbers from `0` to `4`.
+
+```js
+for (let i = 0; i <= 5; i++) {
+  console.log(i);
 }
 ```
 
-The outer loop runs 3 times, and for each of those times, the inner loop runs 3 times – resulting in 9 total iterations.
+Questions:
 
-## Loop Control: Break and Continue
+1. What numbers does it actually print?
+2. Why is that wrong?
+3. How would you fix it?
 
-Sometimes you need special control within loops:
+---
 
-- `break` exits the loop completely
-- `continue` skips the rest of the current iteration and moves to the next one
+## Quick Check
 
-```javascript
-// Find the first even number and stop
-for (let i = 1; i <= 10; i++) {
-  if (i % 2 === 0) {  // If i is even
-    console.log("Found even number: " + i);
-    break;  // Stop the loop
-  }
-}
+Answer these in your own words:
 
-// Print only odd numbers
-for (let i = 1; i <= 10; i++) {
-  if (i % 2 === 0) {  // If i is even
-    continue;  // Skip this iteration
-  }
-  console.log("Odd number: " + i);
-}
-```
-
-## For...Of Loops
-
-Modern JavaScript offers a simpler way to loop through arrays:
-
-```javascript
-let fruits = ["apple", "banana", "orange"];
-
-for (let fruit of fruits) {
-  console.log("I like " + fruit);
-}
-```
-
-This automatically loops through each element without needing an index variable.
-
-## Loops in Conway's Game of Life
-
-Loops are essential in our Game of Life project:
-
-1. We use loops to create and initialize the grid:
-
-```javascript
-// Create a 2D grid
-for (let i = 0; i < cols; i++) {
-  grid[i] = new Array(rows);
-  for (let j = 0; j < rows; j++) {
-    grid[i][j] = 0;  // Initialize all cells as dead
-  }
-}
-```
-
-2. We use nested loops to visit every cell in the grid:
-
-```javascript
-// Process every cell
-for (let i = 0; i < cols; i++) {
-  for (let j = 0; j < rows; j++) {
-    // Do something with grid[i][j]
-  }
-}
-```
-
-3. We use loops to count neighbors around a cell:
-
-```javascript
-// Count live neighbors
-function countNeighbors(grid, x, y) {
-  let sum = 0;
-  for (let i = -1; i <= 1; i++) {
-    for (let j = -1; j <= 1; j++) {
-      // Skip the cell itself
-      if (i === 0 && j === 0) continue;
-
-      // Add up the neighbors
-      let col = (x + i + cols) % cols;
-      let row = (y + j + rows) % rows;
-      sum += grid[col][row];
-    }
-  }
-  return sum;
-}
-```
-
-## Common Loop Patterns
-
-Here are some frequent uses of loops:
-
-1. **Counting**: Going through numbers in a range
-   ```javascript
-   for (let i = 0; i < 10; i++) {
-     console.log(i);
-   }
-   ```
-
-2. **Summing**: Adding up values
-   ```javascript
-   let sum = 0;
-   for (let i = 1; i <= 100; i++) {
-     sum += i;  // Add each number to sum
-   }
-   console.log("Sum of 1-100:", sum);
-   ```
-
-3. **Finding**: Searching for a value
-   ```javascript
-   let found = false;
-   for (let i = 0; i < items.length; i++) {
-     if (items[i] === "target") {
-       found = true;
-       break;  // Stop looking
-     }
-   }
-   ```
-
-## Loop Pitfalls to Avoid
-
-Some common mistakes with loops:
-
-1. **Off-by-one errors**: Make sure your loop starts and ends at the right indices
-   ```javascript
-   // Correct: for arrays, start at 0 and use < length
-   for (let i = 0; i < array.length; i++) { }
-   ```
-
-2. **Infinite loops**: Always ensure your loop condition will eventually become false
-   ```javascript
-   // Dangerous: might never end!
-   while (x !== 10) {
-     // If x is never exactly 10, this continues forever
-   }
-   ```
-
-3. **Forgetting to update the counter**: In while loops, don't forget to update your counter variable
-   ```javascript
-   let i = 0;
-   while (i < 10) {
-     console.log(i);
-     i++;  // Important! Without this, the loop never ends
-   }
-   ```
-
-## Summary
-
-- Loops repeat code until a condition is met
-- `for` loops are used when you know how many iterations you need
-- `while` loops are used when the number of iterations is uncertain
-- Nested loops put one loop inside another
-- `break` exits the loop, `continue` skips to the next iteration
-- Loops are essential for working with arrays and grids
-
+1. What is a loop?
+2. Why are loops useful?
+3. When would you use a `for` loop?
+4. When would you use a `while` loop?
+5. Why do simulations need loops?

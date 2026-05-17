@@ -1,237 +1,452 @@
 ---
-title: "Functions in JavaScript"
-sidebar_position: 5
-description: "Creating reusable blocks of code with functions"
+id: functions
+title: Functions
+sidebar_label: Functions
+sidebar_position: 7
+description: Learn how functions help us organize and reuse instructions in a program.
 tags: ["programming", "concepts", "functions", "javascript"]
 ---
 
-# Functions in JavaScript
+# Functions
 
-## What Are Functions?
+A **function** is a named block of reusable instructions.
 
-Functions are reusable blocks of code designed to perform specific tasks. Think of functions like recipes - they take ingredients (inputs), follow a set of instructions, and produce a result (output).
+Instead of writing the same steps again and again, we can give the steps a name and use them whenever we need them.
 
-Functions help you:
-- Organize your code into logical parts
-- Avoid repeating the same code
-- Make your program easier to understand and maintain
-
-## Creating Basic Functions
-
-In JavaScript, you define a function using the `function` keyword:
-
-```javascript
-function sayHello() {
-  console.log("Hello, world!");
+```js
+function greetPlayer() {
+  console.log("Welcome to the simulation!");
 }
-
-// Call the function to run it
-sayHello();
 ```
 
-When we "call" (or "invoke") the function by writing `sayHello()`, the code inside the function runs.
+To use the function, we **call** it:
 
-## Functions with Parameters
-
-Most functions need information to work with. We provide this information using parameters:
-
-```javascript
-function greet(name) {
-  console.log("Hello, " + name + "!");
-}
-
-greet("Alex");  // Displays: Hello, Alex!
-greet("Taylor");  // Displays: Hello, Taylor!
+```js
+greetPlayer();
 ```
 
-You can have multiple parameters separated by commas:
+---
 
-```javascript
-function add(a, b) {
-  console.log(a + b);
+## Why Do We Need Functions?
+
+Programs can become messy when the same instructions are repeated many times.
+
+Without a function:
+
+```js
+console.log("Draw cell");
+console.log("Check state");
+console.log("Update cell");
+
+console.log("Draw cell");
+console.log("Check state");
+console.log("Update cell");
+```
+
+With a function:
+
+```js
+function updateCell() {
+  console.log("Draw cell");
+  console.log("Check state");
+  console.log("Update cell");
 }
 
-add(5, 3);  // Displays: 8
-add(2, 7);  // Displays: 9
+updateCell();
+updateCell();
 ```
+
+Functions make code:
+
+- easier to read
+- easier to reuse
+- easier to test
+- easier to debug
+- easier to improve
+
+---
+
+## A Function Is Like a Recipe
+
+Think of a function like a recipe card.
+
+A recipe has:
+
+1. a name
+2. ingredients
+3. steps
+4. a result
+
+A function works in a similar way.
+
+It can have:
+
+1. a name
+2. inputs
+3. instructions
+4. an output
+
+Example:
+
+```js
+function makeJuice(fruit) {
+  return fruit + " juice";
+}
+```
+
+Calling the function:
+
+```js
+makeJuice("orange");
+```
+
+Output:
+
+```js
+"orange juice"
+```
+
+---
+
+## Function Names
+
+A function name should describe what the function does.
+
+Good function names:
+
+```js
+drawCell();
+updateGrid();
+countNeighbors();
+moveRabbit();
+spreadFire();
+```
+
+Bad function names:
+
+```js
+doThing();
+x();
+stuff();
+```
+
+Clear names make code easier to understand.
+
+---
+
+## Inputs / Parameters
+
+Some functions need information before they can work.
+
+That information is called an **input** or **parameter**.
+
+```js
+function double(number) {
+  return number * 2;
+}
+```
+
+Here, `number` is the input.
+
+Calling the function:
+
+```js
+double(5);
+```
+
+Output:
+
+```js
+10
+```
+
+---
 
 ## Return Values
 
-Often, we want functions to give back a result that we can use. For this, we use `return`:
+A function can give back a result using `return`.
 
-```javascript
-function multiply(a, b) {
-  return a * b;
-}
-
-let result = multiply(4, 5);
-console.log(result);  // Displays: 20
-
-// You can also use the return value directly
-console.log(multiply(3, 6));  // Displays: 18
-```
-
-Once a function reaches a `return` statement, it immediately stops and gives back the specified value.
-
-## Function Scope
-
-Variables created inside a function can only be used within that function. This is called "local scope":
-
-```javascript
-function calculateArea() {
-  let width = 5;  // Local variable
-  let height = 10;  // Local variable
-  let area = width * height;
-  return area;
-}
-
-let roomArea = calculateArea();
-console.log(roomArea);  // Works: 50
-
-// This would cause an error - width is not defined outside the function
-// console.log(width);
-```
-
-However, functions can access variables from outside their own scope:
-
-```javascript
-let multiplier = 2;  // Global variable
-
-function doubleIt(number) {
-  return number * multiplier;  // Can use the global variable
-}
-
-console.log(doubleIt(5));  // Displays: 10
-```
-
-## Functions as Building Blocks
-
-A key advantage of functions is that you can use them as building blocks, letting each function do one job well:
-
-```javascript
-function calculateArea(width, height) {
-  return width * height;
-}
-
-function calculateCost(area, pricePerSquareFoot) {
-  return area * pricePerSquareFoot;
-}
-
-// Use functions together
-let roomWidth = 12;
-let roomLength = 15;
-let area = calculateArea(roomWidth, roomLength);
-let cost = calculateCost(area, 8.50);
-
-console.log("Area: " + area + " square feet");
-console.log("Cost: $" + cost);
-```
-
-## Arrow Functions
-
-Modern JavaScript offers a shorter way to write functions called "arrow functions":
-
-```javascript
-// Regular function
+```js
 function add(a, b) {
   return a + b;
 }
-
-// Same function as an arrow function
-const addArrow = (a, b) => {
-  return a + b;
-};
-
-// For simple functions with just a return, you can make it even shorter
-const addShort = (a, b) => a + b;
 ```
 
-All three functions do the same thing, just with different syntax.
+Calling the function:
 
-## Functions in Conway's Game of Life
-
-Our Game of Life project uses many functions:
-
-1. **Grid Management Functions**:
-```javascript
-function createEmptyGrids() {
-  // Creates empty grid arrays
-}
-
-function randomizeGrid() {
-  // Fills grid with random values
-}
+```js
+let answer = add(3, 4);
 ```
 
-2. **Game Logic Functions**:
-```javascript
-function countNeighbors(grid, x, y) {
-  // Counts neighbors around a cell
-  let sum = 0;
-  // ... counting logic ...
-  return sum;
-}
+Now:
 
-function applyRules(cellState, neighbors) {
-  // Determines if a cell lives or dies
-  // ... rules logic ...
-  return newState;
-}
+```js
+answer = 7;
 ```
 
-3. **Simulation Control Functions**:
-```javascript
-function computeNextGeneration() {
-  // Updates the entire grid for one step
+The function calculates a value and gives it back.
+
+---
+
+## Visual Explanation
+
+If you are a visual learner, this short video may help:
+
+<iframe width="1020" height="574" src="https://www.youtube.com/embed/F_OkEV4-bz0?list=PLIXWOo84JhCLCBAYelV2KM94oNuVCGRVF" title="Functions Explained: Reusable Code Made Simple" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+The video explains functions using recipe cards and mini-machines that take inputs and produce outputs.
+
+---
+
+## Functions in Simulations
+
+Functions are very useful in simulations because simulations often repeat the same actions.
+
+For example, a simulation might need functions like:
+
+```js
+function updateCell() {
+  // update one cell
 }
 
-function toggleSimulation() {
-  // Starts or stops the simulation
+function drawGrid() {
+  // display the grid
+}
+
+function countNeighbors() {
+  // count nearby cells
 }
 ```
 
-Each function handles a specific task, making our code organized and easier to understand.
+Instead of writing all the code in one large block, we can organize the simulation into smaller functions.
 
-## Common Function Patterns
+---
 
-Here are some common ways to use functions:
+## Example: Updating a Cell
 
-1. **Data transformation**: Functions that change data from one form to another
-```javascript
-function fahrenheitToCelsius(fahrenheit) {
-  return (fahrenheit - 32) * 5/9;
+A simulation might have a function that updates one cell.
+
+```js
+function updateCell(cellState, neighborCount) {
+  if (neighborCount > 2) {
+    return "active";
+  } else {
+    return cellState;
+  }
 }
 ```
 
-2. **Event handlers**: Functions that respond to user actions
-```javascript
-function handleButtonClick() {
-  // Do something when a button is clicked
+This function takes:
+
+- the current cell state
+- the number of nearby active cells
+
+Then it returns the next state.
+
+This makes the simulation easier to understand and easier to debug.
+
+---
+
+## Example: Drawing a Grid
+
+A function can also handle drawing.
+
+```js
+function drawGrid(grid) {
+  for (let row = 0; row < grid.length; row++) {
+    for (let col = 0; col < grid[row].length; col++) {
+      drawCell(row, col);
+    }
+  }
 }
 ```
 
-3. **Helper functions**: Small functions that do simple tasks
-```javascript
-function isEven(number) {
-  return number % 2 === 0;
+This function loops through every cell and draws it.
+
+The function name tells us what the code does:
+
+```js
+drawGrid();
+```
+
+That is easier to understand than reading all the loop code every time.
+
+---
+
+## Key Idea
+
+A function is a reusable block of instructions.
+
+Basic structure:
+
+```js
+function functionName(input) {
+  // instructions
+  return output;
 }
 ```
 
-## Best Practices for Functions
+Example:
 
-Follow these guidelines to write good functions:
+```js
+function double(number) {
+  return number * 2;
+}
+```
 
-1. **Single responsibility**: Each function should do just one thing
-2. **Meaningful names**: Name functions based on what they do (`calculateTotal`, not `doStuff`)
-3. **Parameters**: Use parameters to make functions flexible rather than hardcoding values
-4. **Return values**: Have functions return results rather than modifying global variables
-5. **Size**: Keep functions small and focused - if a function gets too big, break it into smaller ones
+Use the function:
 
-## Summary
+```js
+let result = double(6);
+```
 
-- Functions are reusable blocks of code
-- They can take inputs (parameters) and provide outputs (return values)
-- Functions help organize code and avoid repetition
-- Variables inside functions have local scope
-- Well-designed functions make code easier to understand and maintain
+Now:
 
+```js
+result = 12;
+```
+
+---
+
+## Challenge Cards
+
+### Challenge Card 1: Name the Function
+
+Choose a repeated task and give it a clear function name.
+
+Examples:
+
+| Task | Function Name |
+|---|---|
+| draw one cell | `drawCell()` |
+| update the whole grid | `updateGrid()` |
+| move a rabbit | `moveRabbit()` |
+| spread fire | `spreadFire()` |
+
+Your turn:
+
+```js
+function __________() {
+  // instructions go here
+}
+```
+
+---
+
+### Challenge Card 2: Make a Simple Function
+
+Write a function that prints a message.
+
+Starter code:
+
+```js
+function sayHello() {
+  console.log("__________");
+}
+
+sayHello();
+```
+
+Question:
+
+What does the function print?
+
+---
+
+### Challenge Card 3: Function With an Input
+
+Complete this function:
+
+```js
+function double(number) {
+  return __________;
+}
+
+let result = double(5);
+```
+
+Question:
+
+What value should `result` store?
+
+---
+
+### Challenge Card 4: Function With Two Inputs
+
+Complete this function:
+
+```js
+function add(a, b) {
+  return __________;
+}
+
+let answer = add(3, 7);
+```
+
+Question:
+
+What should `answer` be?
+
+---
+
+### Challenge Card 5: Simulation Function
+
+Create a function for a simulation.
+
+Choose one:
+
+- `updateCell()`
+- `moveRabbit()`
+- `spreadFire()`
+- `drawGrid()`
+- `countNeighbors()`
+
+Then answer:
+
+1. What should the function be called?
+2. What input does it need?
+3. What instructions should it follow?
+4. What should it return or change?
+
+---
+
+### Challenge Card 6: Break a Simulation Into Functions
+
+Imagine a simulation where fire spreads through a forest.
+
+Instead of writing one huge program, break it into functions.
+
+Example:
+
+```js
+function setupForest() {
+  // create the starting forest
+}
+
+function spreadFire() {
+  // apply fire rules
+}
+
+function drawForest() {
+  // show the forest
+}
+```
+
+Your turn:
+
+Create three functions for a simulation of your choice.
+
+---
+
+## Quick Check
+
+Answer these in your own words:
+
+1. What is a function?
+2. Why do functions help us avoid repeated code?
+3. What is an input?
+4. What does `return` do?
+5. Why are functions useful in simulations?
+6. How can functions make debugging easier?
+
+---

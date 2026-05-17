@@ -1,82 +1,45 @@
 ---
-title: "Conclusion: Next Steps"
+title: "Challenge"
 sidebar_position: 10
-sidebar_label: "Wrapping up and looking ahead"
+sidebar_label: "Challenge"
 ---
 
-# Congratulations!
+# Challenge
 
-## What You've Accomplished
+## Programming vs Coding
 
-You've successfully built Conway's Game of Life! This is no small achievement - you've created a complete simulation that demonstrates how complex patterns can emerge from simple rules.
+People often use these words as if they mean the same thing, but they are not quite identical.
 
-Along the way, you learned several important programming concepts:
+**Coding** is the act of writing instructions in a language like JavaScript.
 
-- **Variables** to store and track information
-- **Conditionals** to make decisions in your code
-- **Loops** to process grid cells efficiently
-- **Arrays** to represent the grid of cells
-- **Functions** to organize your code into logical parts
+**Programming** is the bigger process around that code:
 
-Most importantly, you've experienced how these concepts work together to create something interactive and visually interesting.
+- understanding the problem
+- breaking it into steps
+- writing the instructions
+- testing them
+- fixing mistakes
+- improving the result
 
-## Key Insights
+In this workshop, you are doing both. You are learning how to think through a simulation as a system, and then how to express that thinking in code.
 
-Conway's Game of Life teaches us several important ideas:
+If you are a visual learner, this short video may help:
 
-1. **Emergence**: Complex patterns can arise from simple rules
-2. **Simulation**: We can model real-world phenomena with code
-3. **Systems Thinking**: Understanding how parts interact to create a whole
-4. **Pattern Recognition**: Identifying repeating structures and behaviors
+<iframe width="1020" height="574" src="https://www.youtube.com/embed/_pzqRka3H0I?list=PLIXWOo84JhCLCBAYelV2KM94oNuVCGRVF" title="Coding vs Programming: How Simulations Are Built" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-These concepts extend far beyond this project - they appear in fields ranging from biology and physics to economics and social sciences.
+## Short Intro to p5.js
 
-## Ways to Extend Your Project
+p5.js is a beginner-friendly JavaScript library for making visual, interactive projects in the browser. Instead of learning programming through plain text and abstract examples, you can draw shapes, animate objects, respond to mouse clicks, build games, and create simulations.
 
-Now that you have a working simulation, here are some ways you could enhance it:
+For this workshop, p5.js is our "code playground": a place where simple programming ideas become moving patterns, tiny worlds, and cellular automata experiments.
 
-### Customization Ideas
-- Change the colors to create your own visual style
-- Add different cell states (not just alive/dead)
-- Create your own patterns and see how they evolve
+Start here: [p5.js Get Started Tutorial](https://p5js.org/tutorials/get-started/)
 
-### Feature Ideas
-- Add a pattern library with buttons for different starting patterns
-- Create a way to save and load patterns
-- Add a population graph that tracks the number of live cells over time
-- Implement different rule sets to see how they change the simulation
+## The Challenge
 
-### Challenge Ideas
-- Make cells age visually (change color the longer they're alive)
-- Add a way to adjust the simulation speed
-- Create a larger grid with scrolling or zooming
-- Add statistics like population count and generation number
+You can find the challenge here:
+[https://editor.p5js.org/Yesy01/sketches/kq3zvfapB](https://editor.p5js.org/Yesy01/sketches/kq3zvfapB)
 
-## Real-World Connections
+Be sure to make a copy of this and duplicate it before you begin.
 
-The concepts in Conway's Game of Life connect to many real-world applications:
-
-- **Biology**: Cell growth, population dynamics, and pattern formation
-- **Computer Science**: Cellular automata, artificial intelligence, and simulations
-- **Physics**: Self-organizing systems and emergent behavior
-- **Mathematics**: Recursive patterns and computational theory
-
-Scientists and researchers use similar models to study everything from traffic patterns and crowd behavior to ecosystem dynamics and neural networks.
-
-## Resources for Further Learning
-
-If you're interested in exploring these ideas further, check out these resources:
-
-- [LifeWiki](https://conwaylife.com/wiki/Main_Page) - Encyclopedia of Game of Life patterns
-- [Golly](https://golly.sourceforge.io/) - Advanced Game of Life simulator
-- [Cellular Automata](https://natureofcode.com/book/chapter-7-cellular-automata/) - Learn about other cellular automata beyond Game of Life
-
-## Final Thoughts
-
-What you've built in this workshop is much more than just a game - it's a window into how complexity emerges from simplicity throughout our world. The skills you've learned apply to many other programming projects, and the concepts connect to countless real-world systems.
-
-Remember that all complex programs are built from the same basic building blocks you've learned here. With these foundations, you can continue to build increasingly sophisticated and interesting projects!
-
-Thank you for participating in this workshop. We hope you're inspired to keep exploring, learning, and creating with code!
-
-
+> Do not edit the actual template.

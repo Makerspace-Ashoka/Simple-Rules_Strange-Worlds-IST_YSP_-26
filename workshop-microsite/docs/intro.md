@@ -1,90 +1,164 @@
 ---
-title: "Welcome to Pixels That Think"
+title: "Simple Rules, Strange Worlds"
 sidebar_position: 1
 sidebar_label: Introduction
 ---
 
-# Pixels That Think: Exploring Cellular Automata with Conway's Game of Life
+# Simple Rules, Strange Worlds
 
-Welcome to an exploration of complexity through simple rules! In this workshop, you'll discover how basic interactions between cells on a grid can create fascinating patterns, behaviors, and even computational systems.
+## Models of Computation
 
-In this workshop, you'll build a fascinating simulation that shows how complex patterns can emerge from simple rules.
+A model of computation is an abstract, mathematical way of describing how a machine takes an input, follows a set of rules or instructions, and produces an output.
 
-## What is Conway's Game of Life?
+It is not a physical machine you can hold in your hand. It is more like a thinking framework: a way for us to ask, **what can be computed? How can it be computed? And what happens when simple instructions are repeated again and again?**
 
-Conway's Game of Life is not a traditional game with players. Instead, it's a "cellular automaton" – a grid of cells that follow simple rules to create surprisingly complex behaviors.
+A cellular automaton is one specific kind of model of computation. Every cell on the grid updates at the same time. Each cell follows the same ruleset, looks only at its immediate neighbours, and decides what it should become next.
 
-Invented by mathematician John Conway in 1970, the Game of Life demonstrates how simple rules can create emergent complexity – an important concept in mathematics, computer science, and biology.
+No cell waits for another cell. No cell asks for permission. The entire grid computes its next state in one simultaneous step.
 
-## How it Works
+That is what makes cellular automata so powerful: they turn simple rules into tiny digital worlds that can behave in surprisingly complex ways.
 
-The Game of Life takes place on a grid of cells, like a chess board. Each cell can be either "alive" or "dead." The state of each cell changes over time according to these four rules:
+## A Few Key Terms
 
-1. Any live cell with fewer than 2 live neighbors dies (underpopulation)
-2. Any live cell with 2 or 3 live neighbors survives
-3. Any live cell with more than 3 live neighbors dies (overpopulation)
-4. Any dead cell with exactly 3 live neighbors becomes alive (reproduction)
+Every CA, no matter what it models, is built from the same six ingredients:
 
-By applying these rules to every cell, then repeating the process, fascinating patterns emerge:
+### Cell
 
-- Some patterns remain stable
-- Some oscillate between different states
-- Some move across the grid
-- Some create new patterns that grow and evolve
+The most basic unit of a CA.
 
-## What We'll Build
+A cell is one location on the grid, and it holds one value at a time.
 
-In this workshop, you'll create a complete, interactive Game of Life simulation with:
+### State
 
-- A visual grid display
-- Controls to start, stop, and step through the simulation
-- The ability to draw patterns with your mouse
-- Buttons to create preset patterns
+The value a cell holds at a particular moment.
 
-Here's a preview of what you'll create:
+In the simplest CAs, this is usually binary:
+alive or dead, 1 or 0, ON or OFF.
+
+In more complex models, there can be many possible states:
+empty, prey, predator, burning, infected, and so on.
+
+### Neighbourhood
+
+The set of nearby cells that a cell looks at when deciding its next state.
+
+The two most common neighbourhoods in two-dimensional CAs are:
+
+- **Von Neumann neighbourhood**: four cells: up, down, left, right.
+- **Moore neighbourhood**: eight cells: up, down, left, right, plus the four diagonals.
+
+Basically, the cell checks its surroundings before making its next move.
+
+### Ruleset
+
+The rule set is the collection of instructions used by the CA.
+
+The same rule set is applied to every cell on the grid, all at the same time.
+
+### Rule
+
+A rule is the instruction that maps the current state of a cell and its neighbourhood to the cell's next state.
+
+In simpler terms:
+
+> "Given what I am, and what my neighbours are doing, what should I become next?"
+
+### Generation
+
+A generation is one discrete time step.
+
+Generation 0 is the starting condition, also called the seed. Every future pattern grows from that first state.
+
+The entire history of a CA is just a sequence of generations unfolding from one starting point.
+
+## Deterministic and Stochastic CA
+
+Not all CAs work the same way. There is an important difference between two types of rule behaviour, and it matters for understanding the models you will meet in this course.
+
+### Deterministic CA
+
+A deterministic CA gives the same output every time from the same starting condition.
+
+Every neighbourhood configuration maps to exactly one outcome. No randomness. No surprise plot twist. Just rules doing their rule thing.
+
+For example, if a rule says:
+
+```text
+101 -> 1
+```
+
+Then whenever the neighbourhood is `101`, the new cell is always `1`.
+Always.
+
+Run the simulation ten times from the same seed, and you will get the same result every time for all neighbourhoods that the rule applies to.
+
+Examples of deterministic CAs include:
+
+- Conway's Game of Life
+- Rule 30
+- Rule 110
+
+### Stochastic CA
+
+A stochastic CA includes probability in its rules, so the same starting condition can produce different outcomes in different runs.
+
+For example, if a prey cell has predator neighbours, it might die with 60% probability.
+
+That means sometimes it dies, sometimes it survives, and you cannot know in advance exactly what will happen.
+
+The forest fire model on the home page, the host-pathogen model, and the predator-prey biological models in this course are all examples of stochastic CAs.
 
 
-## What You'll Learn
 
-Through building this project, you'll learn important programming concepts:
+***The difference is not about which one is "better." Both are useful for different reasons.***
 
-- **Variables**: Storing and tracking information
-- **Conditionals**: Making decisions in your code
-- **Loops**: Repeating actions efficiently
-- **Arrays**: Working with grids of data
-- **Functions**: Creating reusable blocks of code
+Deterministic CAs are easier to analyse mathematically and easier to repeat exactly. Stochastic CAs are often more biologically realistic, because real systems are noisy.
 
-You'll also learn:
-- How complex systems can emerge from simple rules
-- How to build interactive simulations
-- The basics of cellular automata
+Growing colonies, spreading infections, and competing organisms do not behave like perfectly timed robots. Not every cell divides at the same moment. Not every infection spreads after contact. Not every predator catches its prey.
 
-## How This Workshop Works
+Sometimes biology just says: maybe.
 
-This workshop combines explanation with hands-on coding:
+## Conway's Game of Life
 
-1. First, we'll introduce key programming concepts
-2. Then, we'll guide you through building the simulation, step by step
-3. Along the way, we'll explain how each part works
-4. At the end, you'll have a working Game of Life simulation to explore and customize
+One of the most famous cellular automata ever constructed is Conway's Game of Life, created by mathematician John Conway.
 
-## Getting Started
+It is a two-dimensional, deterministic CA with two states:
+alive or dead.
 
-To get started, you'll need:
+Its rules are simple:
 
-- A computer with internet access
-- A web browser
-- Basic familiarity with using a computer
+- A live cell with fewer than two live neighbours dies, as if by underpopulation.
+- A live cell with two or three live neighbours survives to the next generation.
+- A live cell with more than three live neighbours dies, as if by overpopulation.
+- A dead cell with exactly three live neighbours becomes alive, as if by reproduction.
 
-No prior programming experience is required – we'll explain everything you need to know!
+Four rules. Two states. One grid.
 
-Ready to begin? Let's start by learning about the key programming concepts you'll use in this project.
+And somehow, from this tiny rulebook, an extraordinary range of behaviour appears.
 
-## Fun Facts About Game of Life
+Explore the Game of Life here:
+[https://playgameoflife.com/](https://playgameoflife.com/)
 
-- The Game of Life is Turing complete, meaning it can simulate any computer program
-- People have created calculators, clocks, and even self-replicating patterns within the Game of Life
-- The simplest moving pattern, called a "glider," was discovered by Richard Guy in 1970
-- The Game of Life has connections to biology, physics, mathematics, and computer science
-- Some patterns weren't discovered until decades after Conway invented the game
+Try it out and let us know which patterns you find interesting.
 
+The Game of Life is one of the clearest examples of the main idea behind cellular automata:
+You do not need complex rules to get complex behaviour.
+
+You need local rules, applied simultaneously, repeated across a large grid. The complexity is not hiding inside the instructions. It emerges from the interactions.
+
+**Have you played with the forest fire model on the home page yet?**
+
+`¯\_(ツ)_/¯`
+
+## Why This Matters
+
+Cellular automata are studied across mathematics, computer science, biology, physics, and many other fields because they reveal something very important:
+simple rules can create complex behaviour.
+
+The model is never a perfect copy of reality. It is a simplification; that is the point.
+
+A CA makes the assumptions visible.
+
+Every rule you write down is a claim about how the system works. Every parameter you adjust is a hypothesis about the biology, physics, or ecology behind the system. And when the simulation runs, it shows you what those assumptions predict: clearly, visually, and sometimes very dramatically.
+
+That is what makes cellular automata such a useful scientific tool. They do not just teach us how to code; they show us what programming really makes possible: **building small rule-based worlds that help us think about the real one.**
